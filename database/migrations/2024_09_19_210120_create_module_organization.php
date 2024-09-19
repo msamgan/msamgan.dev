@@ -11,12 +11,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        $moduleName = '{moduleName}';
-        $menuLabel = '{menuLabel}';
-        $menuIcon = '{menuIcon}';
-        $parentId = '{parentId}';
+        $moduleName = 'Organization';
+        $menuLabel = 'Organization';
+        $menuIcon = 'ri-organization-chart';
+        $parentId = 4;
 
-        // $classCase = Str::of($moduleName)->trim()->title()->replace(' ', '')->toString();
         $underscoreCase = Str::of($moduleName)->trim()->snake()->replace(' ', '_')->toString();
 
         $rolePermissions = [
@@ -41,7 +40,7 @@ return new class extends Migration
             route: $underscoreCase . '.index',
             icon: $menuIcon,
             permission: $underscoreCase . '.list',
-            parent: $parentId === '' ? null : $parentId,
+            parent: $parentId,
         );
     }
 

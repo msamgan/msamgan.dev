@@ -4,6 +4,11 @@ namespace App\Enums;
 
 enum PermissionEnum: string
 {
+    case OrganizationList = 'organization.list';
+    case OrganizationCreate = 'organization.create';
+    case OrganizationUpdate = 'organization.update';
+    case OrganizationDelete = 'organization.delete';
+
     case BusinessList = 'business.list';
     case BusinessCreate = 'business.create';
     case BusinessUpdate = 'business.update';
@@ -36,6 +41,11 @@ enum PermissionEnum: string
             self::UserCreate => 'can:user.create',
             self::UserUpdate => 'can:user.update',
             self::UserDelete => 'can:user.delete',
+
+            self::OrganizationList => 'can:organization.list',
+            self::OrganizationCreate => 'can:organization.create',
+            self::OrganizationUpdate => 'can:organization.update',
+            self::OrganizationDelete => 'can:organization.delete',
         };
     }
 }
