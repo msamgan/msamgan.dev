@@ -1,0 +1,35 @@
+<?php
+
+use App\Enums\PermissionEnum;
+use App\Http\Controllers\{classCase}Controller;
+use Illuminate\Support\Facades\Route;
+
+Route::middleware(['auth', 'check_has_business'])->group(function () {
+    Route::get('{underscoreCasePlural}', [{classCase}Controller::class, 'index'])
+        ->middleware([PermissionEnum::{classCase}List->can()])
+        ->name('{underscoreCase}.index');
+});
+
+Route::middleware(['auth', 'check_has_business'])->group(function () {
+    Route::post('{underscoreCase}/store', [{classCase}Controller::class, 'store'])
+        ->middleware([PermissionEnum::{classCase}Create->can()])
+        ->name('{underscoreCase}.store');
+
+    Route::post('{underscoreCase}/update/{{underscoreCase}}', [{classCase}Controller::class, 'update'])
+        ->middleware([PermissionEnum::{classCase}Update->can()])
+        ->name('{underscoreCase}.update');
+});
+
+Route::middleware(['auth', 'check_has_business'])->group(function () {
+    Route::get('service/{underscoreCasePlural}', [{classCase}Controller::class, '{underscoreCasePlural}'])
+        ->middleware([PermissionEnum::{classCase}List->can()])
+        ->name('service.{underscoreCasePlural}');
+
+    Route::get('service/{underscoreCase}/show/{{underscoreCase}}', [{classCase}Controller::class, 'show'])
+        ->middleware([PermissionEnum::{classCase}Update->can()])
+        ->name('service.{underscoreCase}.show');
+
+    Route::delete('service/{underscoreCase}/destroy/{{underscoreCase}}', [{classCase}Controller::class, 'destroy'])
+        ->middleware([PermissionEnum::{classCase}Delete->can()])
+        ->name('service.{underscoreCase}.destroy');
+});

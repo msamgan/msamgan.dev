@@ -1,0 +1,114 @@
+import Master from '@/Layouts/Master.jsx'
+import { Head } from '@inertiajs/react'
+import { hasPermission, makeGetCall } from '@/Utils/methods.js'
+import { permissions } from '@/Utils/permissions/index.js'
+import { useEffect, useState } from 'react'
+import Actions from '@/Components/helpers/Actions.jsx'
+import Name from '@/Components/helpers/Name.jsx'
+import ActiveBadge from '@/Components/helpers/ActiveBadge.jsx'
+import OffCanvasButton from '@/Components/off_canvas/OffCanvasButton.jsx'
+import Table from '@/Components/layout/Table.jsx'
+import { columns, pageObject } from '@/Pages/{classCase}/helper.js'
+import PageHeader from '@/Components/PageHeader.jsx'
+import OffCanvas from '@/Components/off_canvas/OffCanvas.jsx'
+import Form from '@/Pages/{classCase}/Partials/Form.jsx'
+import DeleteEntityForm from '@/Components/layout/DeleteEntityForm.jsx'
+
+export default function Index({ auth }) {
+    let hasListPermission = hasPermission(auth.user, permissions.{underscoreCase}.list)
+    let hasCreatePermission = hasPermission(auth.user, permissions.{underscoreCase}.create)
+    let hasUpdatePermission = hasPermission(auth.user, permissions.{underscoreCase}.update)
+    let hasDeletePermission = hasPermission(auth.user, permissions.{underscoreCase}.delete)
+
+    const [{underscoreCasePlural}, set{classCasePlural}] = useState([])
+    const [data, setData] = useState([])
+    const [{underscoreCase}, set{classCase}] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [pageData, setPageData] = useState(pageObject(null))
+
+    const get{classCasePlural} = () => {
+        makeGetCall(route('service.{underscoreCasePlural}'), set{classCasePlural}, setLoading)
+    }
+
+    const get{classCase} = (id) => {
+        makeGetCall(route('service.{underscoreCase}.show', id), set{classCase}, setLoading)
+    }
+
+    const process{classCase} = ({underscoreCase}) => {
+        return {
+            Name: <Name value={{underscoreCase}.name} />,
+            Actions: (
+                <Actions
+                    edit={
+                        hasUpdatePermission ? (
+                            <OffCanvasButton
+                                onClick={() => {
+                                    get{classCase}({underscoreCase}.id)
+                                    setPageData(pageObject({underscoreCase}))
+                                }}
+                                className={'dropdown-item'}
+                                id="{underscoreCase}FormCanvas"
+                            >
+                                <i className="ri-pencil-line me-1 text-primary"></i> Edit
+                            </OffCanvasButton>
+                        ) : null
+                    }
+                    deleteAction={
+                        hasDeletePermission ? (
+                            <DeleteEntityForm
+                                action={route('service.{underscoreCase}.destroy', {underscoreCase}.id)}
+                                refresh={get{classCasePlural}}
+                                className={'dropdown-item'}
+                            />
+                        ) : null
+                    }
+                />
+            ),
+        }
+    }
+
+    useEffect(() => {
+        if (hasListPermission) {
+            get{classCasePlural}()
+        }
+    }, [])
+
+    useEffect(() => {
+        setData({underscoreCasePlural}.map(({underscoreCase}) => process{classCase}({underscoreCase})))
+    }, [{underscoreCasePlural}])
+
+    return (
+        <Master user={auth.user} header={'{classCasePlural}'}>
+            <Head title="{classCasePlural}" />
+
+            <PageHeader
+                title={'Business {classCase} List'}
+                subtitle={'Find all of your business’s {underscoreCasePlural} and there associated details.'}
+                action={
+                    hasCreatePermission && (
+                        <OffCanvasButton
+                            onClick={() => {
+                                set{classCase}(null)
+                                setPageData(pageObject(null))
+                            }}
+                            id="{underscoreCase}FormCanvas"
+                        >
+                            <i className="ri-add-line me-2"></i>
+                            Create {classCase}
+                        </OffCanvasButton>
+                    )
+                }
+            ></PageHeader>
+
+            {hasCreatePermission && (
+                <OffCanvas id="{underscoreCase}FormCanvas" title={pageData.title}>
+                    <Form get{classCasePlural}={get{classCasePlural}} {underscoreCase}={{underscoreCase}} />
+                </OffCanvas>
+            )}
+
+            <div className="col-12">
+                <Table columns={columns} data={data} loading={loading} permission={hasListPermission} />
+            </div>
+        </Master>
+    )
+}

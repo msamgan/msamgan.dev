@@ -1,0 +1,6 @@
+export const {underscoreCase} = {
+    list: '{underscoreCase}.list',
+    create: '{underscoreCase}.create',
+    update: '{underscoreCase}.update',
+    delete: '{underscoreCase}.delete',
+}

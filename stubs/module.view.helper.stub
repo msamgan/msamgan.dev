@@ -1,0 +1,13 @@
+export const columns = ['Name', 'Actions']
+
+export const dataObject = ({underscoreCase}) => {
+    return {
+        name: {underscoreCase} ? {underscoreCase}.name : '',
+    }
+}
+
+export const pageObject = ({underscoreCase}) => {
+    return {
+        title: {underscoreCase} ? 'Edit {classCase}' : 'Create {classCase}',
+    }
+}

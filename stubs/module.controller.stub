@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Actions\Notification\NotifyUser;
+use App\Actions\{classCase}\Create{classCase};
+use App\Actions\{classCase}\Update{classCase};
+// use App\Http\Requests\Delete{classCase}Request;
+use App\Http\Requests\Store{classCase}Request;
+use App\Http\Requests\Update{classCase}Request;
+use App\Models\{classCase};
+use App\Notifications\{classCase}Created;
+// use App\Notifications\{classCase}Deleted;
+use App\Notifications\{classCase}Updated;
+use Exception;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
+use Inertia\Response;
+
+class {classCase}Controller extends Controller
+{
+    public function index(): Response
+    {
+        return Inertia::render('{classCase}/Index');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function store(Store{classCase}Request $request, Create{classCase} $create{classCase}, NotifyUser $notifyUser): void
+    {
+        DB::beginTransaction();
+
+        try {
+            ${underscoreCase} = $create{classCase}->handle($request->validated());
+
+            $notifyUser->handle(new {classCase}Created(auth()->user()));
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
+    public function show({classCase} ${underscoreCase}): {classCase}
+    {
+        // Access::businessCheck(businessId: $user->business_id);
+
+        return ${underscoreCase};
+    }
+
+    public function update(Update{classCase}Request $request, {classCase} ${underscoreCase}, Update{classCase} $update{classCase}, NotifyUser $notifyUser): void
+    {
+        $update{classCase}->handle(${underscoreCase}, $request->validated());
+
+        $notifyUser->handle(new {classCase}Updated(auth()->user()));
+    }
+
+    /*public function destroy(Delete{classCase}Request $request, {classCase} ${underscoreCase}, NotifyUser $notifyUser): void
+    {
+        $notifyUser->handle(new {classCase}Deleted(auth()->user()));
+
+        ${underscoreCase}->delete();
+    }*/
+
+    public function {underscoreCasePlural}(): Collection
+    {
+        return {classCase}::query()->get();
+    }
+}

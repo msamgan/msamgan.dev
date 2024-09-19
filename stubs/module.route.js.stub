@@ -1,0 +1,4 @@
+export const {underscoreCase} = {
+    store: route('{underscoreCase}.store'),
+    update: (id) => route('{underscoreCase}.update', id),
+}

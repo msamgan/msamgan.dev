@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Actions\{classCase};
+
+use App\Models\{classCase};
+
+class {actionName}
+{
+    public function handle({classCase} ${underscoreCase}, array $data): {classCase}
+    {
+        ${underscoreCase}->update($data);
+
+        return ${underscoreCase};
+    }
+}
+

@@ -1,0 +1,5 @@
+export const {underscoreCase} = {
+    list: route('service.{underscoreCasePlural}'),
+    show: (id) => route('service.{underscoreCase}.show', id),
+    destroy: (id) => route('service.{underscoreCase}.destroy', id),
+}
