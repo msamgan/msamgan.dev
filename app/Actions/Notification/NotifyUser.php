@@ -8,8 +8,8 @@ class NotifyUser
     {
         auth()->user()->notify($instance);
 
-        if (! auth()->user()->isBusiness()) {
+        /*if (! auth()->user()->isBusiness()) {
             (new NotifyBusiness)->handle($instance);
-        }
+        }*/
     }
 }

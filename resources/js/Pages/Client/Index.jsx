@@ -7,48 +7,56 @@ import Actions from '@/Components/helpers/Actions.jsx'
 import Name from '@/Components/helpers/Name.jsx'
 import OffCanvasButton from '@/Components/off_canvas/OffCanvasButton.jsx'
 import Table from '@/Components/layout/Table.jsx'
-import { columns, pageObject } from '@/Pages/Organization/helper.js'
+import { columns, pageObject } from '@/Pages/Client/helper.js'
 import PageHeader from '@/Components/PageHeader.jsx'
 import OffCanvas from '@/Components/off_canvas/OffCanvas.jsx'
-import Form from '@/Pages/Organization/Partials/Form.jsx'
+import Form from '@/Pages/Client/Partials/Form.jsx'
 import DeleteEntityForm from '@/Components/layout/DeleteEntityForm.jsx'
 import { services } from '@/Utils/services/index.js'
 
 export default function Index({ auth }) {
-    let hasListPermission = hasPermission(auth.user, permissions.organization.list)
-    let hasCreatePermission = hasPermission(auth.user, permissions.organization.create)
-    let hasUpdatePermission = hasPermission(auth.user, permissions.organization.update)
-    let hasDeletePermission = hasPermission(auth.user, permissions.organization.delete)
+    let hasListPermission = hasPermission(auth.user, permissions.client.list)
+    let hasCreatePermission = hasPermission(auth.user, permissions.client.create)
+    let hasUpdatePermission = hasPermission(auth.user, permissions.client.update)
+    let hasDeletePermission = hasPermission(auth.user, permissions.client.delete)
 
-    const [organizations, setOrganizations] = useState([])
+    const [clients, setClients] = useState([])
     const [data, setData] = useState([])
-    const [organization, setOrganization] = useState(null)
+    const [client, setClient] = useState(null)
     const [loading, setLoading] = useState(true)
     const [pageData, setPageData] = useState(pageObject(null))
+    const [organizations, setOrganizations] = useState([])
+
+    const getClients = () => {
+        makeGetCall(services.client.list, setClients, setLoading)
+    }
 
     const getOrganizations = () => {
         makeGetCall(services.organization.list, setOrganizations, setLoading)
     }
 
-    const getOrganization = (id) => {
-        makeGetCall(services.organization.show(id), setOrganization, setLoading)
+    const getClient = (id) => {
+        makeGetCall(services.client.show(id), setClient, setLoading)
     }
 
-    const processOrganization = (organization) => {
+    const processClient = (client) => {
         return {
-            Name: <Name value={organization.name} />,
-            Location: organization.location,
+            Name: <Name value={client.name} />,
+            Location: client.organization?.name,
+            // array of emails to coma separated string
+            Email: client.emails.map((email) => email.email).join(', '),
+            Phone: client.phones.map((phone) => phone.phone).join(', '),
             Actions: (
                 <Actions
                     edit={
                         hasUpdatePermission ? (
                             <OffCanvasButton
                                 onClick={() => {
-                                    getOrganization(organization.id)
-                                    setPageData(pageObject(organization))
+                                    getClient(client.id)
+                                    setPageData(pageObject(client))
                                 }}
                                 className={'dropdown-item'}
-                                id="organizationFormCanvas"
+                                id="clientFormCanvas"
                             >
                                 <i className="ri-pencil-line me-1 text-primary"></i> Edit
                             </OffCanvasButton>
@@ -57,8 +65,8 @@ export default function Index({ auth }) {
                     deleteAction={
                         hasDeletePermission ? (
                             <DeleteEntityForm
-                                action={route('service.organization.destroy', organization.id)}
-                                refresh={getOrganizations}
+                                action={services.client.destroy(client.id)}
+                                refresh={getClients}
                                 className={'dropdown-item'}
                             />
                         ) : null
@@ -70,40 +78,46 @@ export default function Index({ auth }) {
 
     useEffect(() => {
         if (hasListPermission) {
+            getClients()
             getOrganizations()
         }
     }, [])
 
     useEffect(() => {
-        setData(organizations.map((organization) => processOrganization(organization)))
-    }, [organizations])
+        setData(clients.map((client) => processClient(client)))
+    }, [clients])
 
     return (
-        <Master user={auth.user} header={'Organizations'}>
-            <Head title="Organizations" />
+        <Master user={auth.user} header={'Clients'}>
+            <Head title="Clients" />
 
             <PageHeader
-                title={'Business Organization List'}
-                subtitle={'Find all of your business’s organizations and there associated details.'}
+                title={'Business Client List'}
+                subtitle={'Find all of your business’s clients and there associated details.'}
                 action={
                     hasCreatePermission && (
                         <OffCanvasButton
                             onClick={() => {
-                                setOrganization(null)
+                                setClient(null)
                                 setPageData(pageObject(null))
                             }}
-                            id="organizationFormCanvas"
+                            id="clientFormCanvas"
                         >
                             <i className="ri-add-line me-2"></i>
-                            Create Organization
+                            Create Client
                         </OffCanvasButton>
                     )
                 }
             ></PageHeader>
 
             {hasCreatePermission && (
-                <OffCanvas id="organizationFormCanvas" title={pageData.title}>
-                    <Form getOrganizations={getOrganizations} organization={organization} />
+                <OffCanvas id="clientFormCanvas" title={pageData.title}>
+                    <Form
+                        getClients={getClients}
+                        client={client}
+                        organizations={organizations}
+                        getOrganizations={getOrganizations}
+                    />
                 </OffCanvas>
             )}
 
