@@ -239,7 +239,7 @@ class MakeModule extends Command
         file_put_contents(resource_path("js/Utils/permissions/{$this->cases['snake']}.js"), $permissionStubFil);
 
         $permissionImport = "import { {$this->cases['snake']} } from '@/Utils/permissions/{$this->cases['snake']}.js';";
-        $addStatement = "    $this->cases['snake'],";
+        $addStatement = "    {$this->cases['snake']},";
 
         $fileLines = file(resource_path('js/Utils/permissions/index.js'));
 
