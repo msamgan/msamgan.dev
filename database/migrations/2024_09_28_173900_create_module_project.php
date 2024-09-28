@@ -11,14 +11,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        $moduleName = '{moduleName}';
-        $menuLabel = '{menuLabel}';
-        $menuIcon = '{menuIcon}';
+        $moduleName = 'Project';
+        $menuLabel = 'Project';
+        $menuIcon = 'ri-projector-line';
 
-        $parentId = '{parentId}';
+        $parentId = null;
 
-        $newMenuLabel = '{newMenuLabel}';
-        $newMenuIcon = '{newMenuIcon}';
+        $newMenuLabel = 'CRM';
+        $newMenuIcon = 'ri-bubble-chart-line';
 
         if (! $parentId) {
             $parentId = ((new CreateMenu)->handle(

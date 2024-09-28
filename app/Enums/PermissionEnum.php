@@ -4,6 +4,11 @@ namespace App\Enums;
 
 enum PermissionEnum: string
 {
+    case ProjectList = 'project.list';
+    case ProjectCreate = 'project.create';
+    case ProjectUpdate = 'project.update';
+    case ProjectDelete = 'project.delete';
+
     case ClientList = 'client.list';
     case ClientCreate = 'client.create';
     case ClientUpdate = 'client.update';
@@ -56,6 +61,11 @@ enum PermissionEnum: string
             self::ClientCreate => 'can:client.create',
             self::ClientUpdate => 'can:client.update',
             self::ClientDelete => 'can:client.delete',
+
+            self::ProjectList => 'can:project.list',
+            self::ProjectCreate => 'can:project.create',
+            self::ProjectUpdate => 'can:project.update',
+            self::ProjectDelete => 'can:project.delete',
         };
     }
 }
