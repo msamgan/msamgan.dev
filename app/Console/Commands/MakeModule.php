@@ -117,7 +117,7 @@ class MakeModule extends Command
 
         $this->createView();
 
-        $this->createPermission($underscoreCase, $classCase);
+        $this->createPermission();
 
         $this->createService($underscoreCase, $underscoreCasePlural);
 
@@ -231,19 +231,15 @@ class MakeModule extends Command
         file_put_contents(resource_path("js/Pages/{$this->cases['studly']}/Index.jsx"), $viewIndexStubFile);
     }
 
-    private function createPermission(
-        string $underscoreCase,
-        string $classCase,
-    ): void {
+    private function createPermission(): void
+    {
         // JS Part..
         $permissionStubFile = file_get_contents(base_path('stubs/module.permission.stub'));
+        $permissionStubFil = $this->replaceCases($permissionStubFile);
+        file_put_contents(resource_path("js/Utils/permissions/{$this->cases['snake']}.js"), $permissionStubFil);
 
-        $permissionStubFile = str_replace('{underscoreCase}', $underscoreCase, $permissionStubFile);
-
-        file_put_contents(resource_path("js/Utils/permissions/{$underscoreCase}.js"), $permissionStubFile);
-
-        $permissionImport = "import { {$underscoreCase} } from '@/Utils/permissions/{$underscoreCase}.js';";
-        $addStatement = "    $underscoreCase,";
+        $permissionImport = "import { {$this->cases['snake']} } from '@/Utils/permissions/{$this->cases['snake']}.js';";
+        $addStatement = "    $this->cases['snake'],";
 
         $fileLines = file(resource_path('js/Utils/permissions/index.js'));
 
@@ -261,17 +257,17 @@ class MakeModule extends Command
         // PHP Part..
         $permissionEnumFile = file(app_path('Enums/PermissionEnum.php'));
 
-        $newPermission = "    case {$classCase}List = '{$underscoreCase}.list';\n";
-        $newPermission .= "    case {$classCase}Create = '{$underscoreCase}.create';\n";
-        $newPermission .= "    case {$classCase}Update = '{$underscoreCase}.update';\n";
-        $newPermission .= "    case {$classCase}Delete = '{$underscoreCase}.delete';\n";
+        $newPermission = "    case {$this->cases['studly']}List = '{$this->cases['snake']}.list';\n";
+        $newPermission .= "    case {$this->cases['studly']}Create = '{$this->cases['snake']}.create';\n";
+        $newPermission .= "    case {$this->cases['studly']}Update = '{$this->cases['snake']}.update';\n";
+        $newPermission .= "    case {$this->cases['studly']}Delete = '{$this->cases['snake']}.delete';\n";
         $newPermission .= "\n";
 
         $newPermissionCan = "\n";
-        $newPermissionCan .= "            self::{$classCase}List => 'can:{$underscoreCase}.list',\n";
-        $newPermissionCan .= "            self::{$classCase}Create => 'can:{$underscoreCase}.create',\n";
-        $newPermissionCan .= "            self::{$classCase}Update => 'can:{$underscoreCase}.update',\n";
-        $newPermissionCan .= "            self::{$classCase}Delete => 'can:{$underscoreCase}.delete',\n";
+        $newPermissionCan .= "            self::{$this->cases['studly']}List => 'can:{$this->cases['snake']}.list',\n";
+        $newPermissionCan .= "            self::{$this->cases['studly']}Create => 'can:{$this->cases['snake']}.create',\n";
+        $newPermissionCan .= "            self::{$this->cases['studly']}Update => 'can:{$this->cases['snake']}.update',\n";
+        $newPermissionCan .= "            self::{$this->cases['studly']}Delete => 'can:{$this->cases['snake']}.delete',\n";
 
         foreach ($permissionEnumFile as $key => $line) {
             if (str_starts_with($line, '{')) {
