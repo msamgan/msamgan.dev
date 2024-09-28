@@ -106,7 +106,7 @@ class MakeModule extends Command
 
         $this->createRoutes();
 
-        $this->createNotifications($classCase);
+        $this->createNotifications();
 
         sleep(2);
         $this->createModuleMigration(
@@ -143,6 +143,13 @@ class MakeModule extends Command
         $this->info('4. Run the Migrations.');
     }
 
+    private function createRoutes(): void
+    {
+        $routeStubFile = $this->replaceCases(file_get_contents(base_path('stubs/module.route.stub')));
+
+        file_put_contents(base_path("routes/modules/{$this->cases['snake']}.php"), $routeStubFile);
+    }
+
     private function replaceCases($fileName): array|string
     {
         foreach ($this->cases as $key => $value) {
@@ -152,14 +159,7 @@ class MakeModule extends Command
         return $fileName;
     }
 
-    private function createRoutes(): void
-    {
-        $routeStubFile = $this->replaceCases(file_get_contents(base_path('stubs/module.route.stub')));
-
-        file_put_contents(base_path("routes/modules/{$this->cases['snake']}.php"), $routeStubFile);
-    }
-
-    private function createNotifications(string $classCase): void
+    private function createNotifications(): void
     {
         $notifications = [
             'Created',
@@ -169,13 +169,14 @@ class MakeModule extends Command
 
         foreach ($notifications as $notification) {
             $notificationStubFile = file_get_contents(base_path('stubs/module.notification.stub'));
+            $notificationName = "{$this->cases['studly']}{$notification}";
 
             Artisan::call('make:notification', [
-                'name' => "{$classCase}{$notification}",
+                'name' => $notificationName,
             ]);
 
-            $notificationStubFile = str_replace('{notificationName}', "{$classCase}{$notification}", $notificationStubFile);
-            file_put_contents(app_path("Notifications/{$classCase}{$notification}.php"), $notificationStubFile);
+            $notificationStubFile = str_replace('{notificationName}', $notificationName, $notificationStubFile);
+            file_put_contents(app_path("Notifications/{$notificationName}.php"), $notificationStubFile);
         }
     }
 
