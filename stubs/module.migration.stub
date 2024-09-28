@@ -11,12 +11,8 @@ return new class extends Migration
 {
     public function up(): void
     {
-        $moduleName = '{moduleName}';
-        $menuLabel = '{menuLabel}';
         $menuIcon = '{menuIcon}';
-
         $parentId = '{parentId}';
-
         $newMenuLabel = '{newMenuLabel}';
         $newMenuIcon = '{newMenuIcon}';
 
@@ -29,30 +25,26 @@ return new class extends Migration
             ))->id;
         }
 
-        $underscoreCase = Str::of($moduleName)->trim()->snake()->replace(' ', '_')->toString();
+        $businessRole = Role::find(RoleEnum::Business->id());
 
-        $rolePermissions = [
+        collect([
             'list',
             'create',
             'update',
             'delete',
-        ];
-
-        $businessRole = Role::find(RoleEnum::Business->id());
-
-        foreach ($rolePermissions as $permission) {
+        ])->each(function ($permission) use ($businessRole) {
             (new AssignPermissionToRole)->handle(
                 role: $businessRole,
                 permission: $permission,
-                module: $underscoreCase,
+                module: '{snake}',
             );
-        }
+        });
 
         (new CreateMenu)->handle(
-            label: $menuLabel,
-            route: $underscoreCase . '.index',
+            label: '{plural}',
+            route: '{snake}' . '.index',
             icon: $menuIcon,
-            permission: $underscoreCase . '.list',
+            permission: '{snake}' . '.list',
             parent: $parentId,
         );
     }

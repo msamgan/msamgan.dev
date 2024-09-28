@@ -107,11 +107,17 @@ export default function Index({ auth }) {
             )}
 
             <div className="col-12">
-                <Table columns={columns} data={data} loading={loading} permission={hasListPermission}
-                       tdClassName={[{
-                           column: 'Title',
+                <Table
+                    columns={columns}
+                    data={data}
+                    loading={loading}
+                    permission={hasListPermission}
+                    tdClassName={[
+                        {
+                            column: 'Title',
                             className: 'text-wrap',
-                       }]}
+                        },
+                    ]}
                 />
             </div>
         </Master>

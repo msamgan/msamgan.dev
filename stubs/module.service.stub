@@ -1,5 +1,5 @@
-export const {underscoreCase} = {
-    list: route('service.{underscoreCasePlural}'),
-    show: (id) => route('service.{underscoreCase}.show', id),
-    destroy: (id) => route('service.{underscoreCase}.destroy', id),
+export const {snake} = {
+    list: route('service.{plural_snake}'),
+    show: (id) => route('service.{snake}.show', id),
+    destroy: (id) => route('service.{snake}.destroy', id),
 }

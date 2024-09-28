@@ -3,29 +3,29 @@ import TextInput from '@/Components/TextInput.jsx'
 import InputLabel from '@/Components/InputLabel.jsx'
 import InputError from '@/Components/InputError.jsx'
 import { Transition } from '@headlessui/react'
-import { dataObject } from '@/Pages/{classCase}/helper.js'
+import { dataObject } from '@/Pages/{studly}/helper.js'
 import { useEffect, useState } from 'react'
 import { routes } from '@/Utils/routes/index.js'
 
-export default function Form({ get{classCasePlural}, {underscoreCase} = null}) {
-    const [action, setAction] = useState(routes.{underscoreCase}.store)
+export default function Form({ get{plural_studly}, {camel} = null}) {
+    const [action, setAction] = useState(routes.{snake}.store)
     const { data, setData, post, errors, processing, recentlySuccessful, reset } = useForm(dataObject(null))
 
     useEffect(() => {
-        setAction({underscoreCase} ? routes.{underscoreCase}.update({underscoreCase}.id) : routes.{underscoreCase}.store)
-        setData(dataObject({underscoreCase}))
-    }, [{underscoreCase}])
+        setAction({camel} ? routes.{snake}.update({camel}.id) : routes.{snake}.store)
+        setData(dataObject({camel}))
+    }, [{camel}])
 
     const submit = (e) => {
         e.preventDefault()
 
         post(action, {
             onSuccess: (r) => {
-                if (!{underscoreCase}) {
+                if (!{camel}) {
                     reset('name')
                 }
 
-                get{classCasePlural}()
+                get{plural_studly}()
             },
             onError: () => {},
         })
@@ -35,7 +35,7 @@ export default function Form({ get{classCasePlural}, {underscoreCase} = null}) {
         <form onSubmit={submit}>
             <div className="card mb-6 w-2/3">
                 <div className="card-header">
-                    <h5 className="card-title m-0 text-lg">{classCase} Details</h5>
+                    <h5 className="card-title m-0 text-lg">{title} Details</h5>
                 </div>
                 <div className="card-body">
                     <div className="row g-5">

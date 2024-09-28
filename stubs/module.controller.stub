@@ -3,39 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Notification\NotifyUser;
-use App\Actions\{classCase}\Create{classCase};
-use App\Actions\{classCase}\Update{classCase};
-// use App\Http\Requests\Delete{classCase}Request;
-use App\Http\Requests\Store{classCase}Request;
-use App\Http\Requests\Update{classCase}Request;
-use App\Models\{classCase};
-use App\Notifications\{classCase}Created;
-// use App\Notifications\{classCase}Deleted;
-use App\Notifications\{classCase}Updated;
+use App\Actions\{studly}\Create{studly};
+use App\Actions\{studly}\Update{studly};
+// use App\Http\Requests\Delete{studly}Request;
+use App\Http\Requests\Store{studly}Request;
+use App\Http\Requests\Update{studly}Request;
+use App\Models\{studly};
+use App\Notifications\{studly}Created;
+// use App\Notifications\{studly}Deleted;
+use App\Notifications\{studly}Updated;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class {classCase}Controller extends Controller
+class {studly}Controller extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('{classCase}/Index');
+        return Inertia::render('{studly}/Index');
     }
 
     /**
      * @throws Exception
      */
-    public function store(Store{classCase}Request $request, Create{classCase} $create{classCase}, NotifyUser $notifyUser): void
+    public function store(Store{studly}Request $request, Create{studly} $create{studly}, NotifyUser $notifyUser): void
     {
         DB::beginTransaction();
 
         try {
-            ${underscoreCase} = $create{classCase}->handle($request->validated());
+            ${camel} = $create{studly}->handle($request->validated());
 
-            $notifyUser->handle(new {classCase}Created(auth()->user()));
+            $notifyUser->handle(new {studly}Created(request()->user()));
 
             DB::commit();
         } catch (Exception $e) {
@@ -44,29 +44,31 @@ class {classCase}Controller extends Controller
         }
     }
 
-    public function show({classCase} ${underscoreCase}): {classCase}
+    public function show({studly} ${camel}): {studly}
     {
         // Access::businessCheck(businessId: $user->business_id);
 
-        return ${underscoreCase};
+        return ${camel};
     }
 
-    public function update(Update{classCase}Request $request, {classCase} ${underscoreCase}, Update{classCase} $update{classCase}, NotifyUser $notifyUser): void
+    public function update(Update{studly}Request $request, {studly} ${camel}, Update{studly} $update{studly}, NotifyUser $notifyUser): void
     {
-        $update{classCase}->handle(${underscoreCase}, $request->validated());
+        $update{studly}->handle(${camel}, $request->validated());
 
-        $notifyUser->handle(new {classCase}Updated(auth()->user()));
+        $notifyUser->handle(new {studly}Updated(request()->user()));
     }
 
-    /*public function destroy(Delete{classCase}Request $request, {classCase} ${underscoreCase}, NotifyUser $notifyUser): void
+    /*public function destroy(Delete{studly}Request $request, {studly} ${camel}, NotifyUser $notifyUser): void
     {
-        $notifyUser->handle(new {classCase}Deleted(auth()->user()));
+        $notifyUser->handle(new {studly}Deleted(request()->user()));
 
-        ${underscoreCase}->delete();
+        ${camel}->delete();
     }*/
 
-    public function {underscoreCasePlural}(): Collection
+    public function {plural_camel}(): Collection
     {
-        return {classCase}::query()->get();
+        return {studly}::query()
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 }
