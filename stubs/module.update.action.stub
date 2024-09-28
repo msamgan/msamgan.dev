@@ -10,7 +10,7 @@ class Update{studly}
     {
         ${camel}->update($data);
 
-        return ${camel};
+        return ${camel}->refresh();
     }
 }
 
