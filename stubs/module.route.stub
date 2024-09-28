@@ -1,35 +1,35 @@
 <?php
 
 use App\Enums\PermissionEnum;
-use App\Http\Controllers\{classCase}Controller;
+use App\Http\Controllers\{studly}Controller;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'check_has_business'])->group(function () {
-    Route::get('{pluralSnake}', [{classCase}Controller::class, 'index'])
-        ->middleware([PermissionEnum::{classCase}List->can()])
-        ->name('{underscoreCase}.index');
+    Route::get('{pluralSnake}', [{studly}Controller::class, 'index'])
+        ->middleware([PermissionEnum::{studly}List->can()])
+        ->name('{snake}.index');
 });
 
 Route::middleware(['auth', 'check_has_business'])->group(function () {
-    Route::post('{underscoreCase}/store', [{classCase}Controller::class, 'store'])
-        ->middleware([PermissionEnum::{classCase}Create->can()])
-        ->name('{underscoreCase}.store');
+    Route::post('{snake}/store', [{studly}Controller::class, 'store'])
+        ->middleware([PermissionEnum::{studly}Create->can()])
+        ->name('{snake}.store');
 
-    Route::post('{underscoreCase}/update/{{underscoreCase}}', [{classCase}Controller::class, 'update'])
-        ->middleware([PermissionEnum::{classCase}Update->can()])
-        ->name('{underscoreCase}.update');
+    Route::post('{snake}/update/{{snake}}', [{studly}Controller::class, 'update'])
+        ->middleware([PermissionEnum::{studly}Update->can()])
+        ->name('{snake}.update');
 });
 
 Route::middleware(['auth', 'check_has_business'])->group(function () {
-    Route::get('service/{pluralSnake}', [{classCase}Controller::class, '{pluralSnake}'])
-        ->middleware([PermissionEnum::{classCase}List->can()])
+    Route::get('service/{pluralSnake}', [{studly}Controller::class, '{pluralSnake}'])
+        ->middleware([PermissionEnum::{studly}List->can()])
         ->name('service.{pluralSnake}');
 
-    Route::get('service/{underscoreCase}/show/{{underscoreCase}}', [{classCase}Controller::class, 'show'])
-        ->middleware([PermissionEnum::{classCase}Update->can()])
-        ->name('service.{underscoreCase}.show');
+    Route::get('service/{snake}/show/{{snake}}', [{studly}Controller::class, 'show'])
+        ->middleware([PermissionEnum::{studly}Update->can()])
+        ->name('service.{snake}.show');
 
-    Route::delete('service/{underscoreCase}/destroy/{{underscoreCase}}', [{classCase}Controller::class, 'destroy'])
-        ->middleware([PermissionEnum::{classCase}Delete->can()])
-        ->name('service.{underscoreCase}.destroy');
+    Route::delete('service/{snake}/destroy/{{snake}}', [{studly}Controller::class, 'destroy'])
+        ->middleware([PermissionEnum::{studly}Delete->can()])
+        ->name('service.{snake}.destroy');
 });

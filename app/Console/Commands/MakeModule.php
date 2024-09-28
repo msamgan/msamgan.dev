@@ -102,7 +102,7 @@ class MakeModule extends Command
             '--all' => true,
         ]);
 
-        $this->createRoutes($classCase, $underscoreCase, $underscoreCasePlural, $cases);
+        $this->createRoutes(cases: $cases);
 
         $this->createNotifications($classCase);
 
@@ -141,19 +141,15 @@ class MakeModule extends Command
         $this->info('4. Run the Migrations.');
     }
 
-    private function createRoutes(
-        string $classCase,
-        string $underscoreCase,
-        string $underscoreCasePlural,
-        array $cases
-    ): void {
+    private function createRoutes(array $cases): void
+    {
         $routeStubFile = file_get_contents(base_path('stubs/module.route.stub'));
 
-        $routeStubFile = str_replace('{classCase}', $classCase, $routeStubFile);
-        $routeStubFile = str_replace('{underscoreCase}', $underscoreCase, $routeStubFile);
+        $routeStubFile = str_replace('{studly}', $cases['studly'], $routeStubFile);
+        $routeStubFile = str_replace('{snake}', $cases['snake'], $routeStubFile);
         $routeStubFile = str_replace('{pluralSnake}', $cases['plural_snake'], $routeStubFile);
 
-        file_put_contents(base_path("routes/modules/{$underscoreCase}.php"), $routeStubFile);
+        file_put_contents(base_path("routes/modules/{$cases['snake']}.php"), $routeStubFile);
     }
 
     private function createNotifications(string $classCase): void
