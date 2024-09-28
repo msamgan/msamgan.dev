@@ -58,7 +58,7 @@ class AuthenticatedSessionController extends Controller
             ->causedBy($request->user())
             ->log('logged out');
 
-        $request->user()->notify(new LoggedOut());
+        $request->user()->notify(new LoggedOut);
 
         Auth::guard('web')->logout();
 
