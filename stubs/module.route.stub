@@ -5,31 +5,31 @@ use App\Http\Controllers\{studly}Controller;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'check_has_business'])->group(function () {
-    Route::get('{pluralSnake}', [{studly}Controller::class, 'index'])
+    Route::get('{plural_kebab}', [{studly}Controller::class, 'index'])
         ->middleware([PermissionEnum::{studly}List->can()])
         ->name('{snake}.index');
 });
 
 Route::middleware(['auth', 'check_has_business'])->group(function () {
-    Route::post('{snake}/store', [{studly}Controller::class, 'store'])
+    Route::post('{kebab}/store', [{studly}Controller::class, 'store'])
         ->middleware([PermissionEnum::{studly}Create->can()])
         ->name('{snake}.store');
 
-    Route::post('{snake}/update/{{snake}}', [{studly}Controller::class, 'update'])
+    Route::post('{kebab}/update/{{camel}}', [{studly}Controller::class, 'update'])
         ->middleware([PermissionEnum::{studly}Update->can()])
         ->name('{snake}.update');
 });
 
 Route::middleware(['auth', 'check_has_business'])->group(function () {
-    Route::get('service/{pluralSnake}', [{studly}Controller::class, '{pluralSnake}'])
+    Route::get('service/{plural_kebab}', [{studly}Controller::class, '{plural_camel}'])
         ->middleware([PermissionEnum::{studly}List->can()])
-        ->name('service.{pluralSnake}');
+        ->name('service.{plural_snake}');
 
-    Route::get('service/{snake}/show/{{snake}}', [{studly}Controller::class, 'show'])
+    Route::get('service/{snake}/show/{{camel}}', [{studly}Controller::class, 'show'])
         ->middleware([PermissionEnum::{studly}Update->can()])
         ->name('service.{snake}.show');
 
-    Route::delete('service/{snake}/destroy/{{snake}}', [{studly}Controller::class, 'destroy'])
+    Route::delete('service/{snake}/destroy/{{camel}}', [{studly}Controller::class, 'destroy'])
         ->middleware([PermissionEnum::{studly}Delete->can()])
         ->name('service.{snake}.destroy');
 });

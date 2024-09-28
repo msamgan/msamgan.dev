@@ -12,9 +12,11 @@ if (! function_exists('allCases')) {
     {
         return [
             'camel' => Str::camel($string),
+            'plural_camel' => Str::camel(Str::plural($string)),
             'snake' => Str::snake($string),
             'plural_snake' => Str::snake(Str::plural($string)),
             'kebab' => Str::kebab($string),
+            'plural_kebab' => Str::kebab(Str::plural($string)),
             'studly' => Str::studly($string),
             'plural_studly' => Str::studly(Str::plural($string)),
             'title' => Str::title($string),

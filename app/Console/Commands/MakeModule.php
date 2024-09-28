@@ -26,6 +26,8 @@ class MakeModule extends Command
      */
     protected $description = 'Create a new module';
 
+    protected array $cases = [];
+
     /**
      * Execute the console command.
      */
@@ -88,7 +90,7 @@ class MakeModule extends Command
             );
         }
 
-        $cases = allCases($moduleName);
+        $this->cases = allCases($moduleName);
 
         $classCase = Str::of($moduleName)->trim()->title()->replace(' ', '')->toString();
         $classCasePlural = Str::of($moduleName)->trim()->title()->plural()->replace(' ', '')->toString();
@@ -98,11 +100,11 @@ class MakeModule extends Command
         $this->info("Creating module: {$moduleName}");
 
         Artisan::call('make:model', [
-            'name' => $cases['studly'],
+            'name' => $this->cases['studly'],
             '--all' => true,
         ]);
 
-        $this->createRoutes(cases: $cases);
+        $this->createRoutes();
 
         $this->createNotifications($classCase);
 
@@ -141,15 +143,20 @@ class MakeModule extends Command
         $this->info('4. Run the Migrations.');
     }
 
-    private function createRoutes(array $cases): void
+    private function replaceCases($fileName): array|string
     {
-        $routeStubFile = file_get_contents(base_path('stubs/module.route.stub'));
+        foreach ($this->cases as $key => $value) {
+            $fileName = str_replace("{{$key}}", $value, $fileName);
+        }
 
-        $routeStubFile = str_replace('{studly}', $cases['studly'], $routeStubFile);
-        $routeStubFile = str_replace('{snake}', $cases['snake'], $routeStubFile);
-        $routeStubFile = str_replace('{pluralSnake}', $cases['plural_snake'], $routeStubFile);
+        return $fileName;
+    }
 
-        file_put_contents(base_path("routes/modules/{$cases['snake']}.php"), $routeStubFile);
+    private function createRoutes(): void
+    {
+        $routeStubFile = $this->replaceCases(file_get_contents(base_path('stubs/module.route.stub')));
+
+        file_put_contents(base_path("routes/modules/{$this->cases['snake']}.php"), $routeStubFile);
     }
 
     private function createNotifications(string $classCase): void
