@@ -14,7 +14,7 @@ return new class extends Migration
 
         if (! $myUser) {
             $myUser = User::query()->create([
-                'name' => 'Muhammad Samgan',
+                'name' => 'Mohammed Samgan Khan',
                 'email' => 'mail@msamgan.com',
                 'password' => bcrypt('Pass@123'),
                 'email_verified_at' => now(),
