@@ -171,9 +171,9 @@ class MakeModule extends Command
             $notificationStubFile = file_get_contents(base_path('stubs/module.notification.stub'));
             $notificationName = "{$this->cases['studly']}{$notification}";
 
-            Artisan::call('make:notification', [
+            /*Artisan::call('make:notification', [
                 'name' => $notificationName,
-            ]);
+            ]);*/
 
             $notificationStubFile = str_replace('{notificationName}', $notificationName, $notificationStubFile);
             file_put_contents(app_path("Notifications/{$notificationName}.php"), $notificationStubFile);
