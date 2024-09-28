@@ -10,6 +10,6 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 $moduleRoutesDir = 'routes/modules/';
-foreach (File::allFiles(base_path($moduleRoutesDir)) as $file) {
+foreach (\Illuminate\Support\Facades\File::allFiles(base_path($moduleRoutesDir)) as $file) {
     require base_path($moduleRoutesDir) . $file->getFilename();
 }
