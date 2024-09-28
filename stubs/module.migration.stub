@@ -25,22 +25,20 @@ return new class extends Migration
             ))->id;
         }
 
-        $rolePermissions = [
+        $businessRole = Role::find(RoleEnum::Business->id());
+
+        collect([
             'list',
             'create',
             'update',
             'delete',
-        ];
-
-        $businessRole = Role::find(RoleEnum::Business->id());
-
-        foreach ($rolePermissions as $permission) {
+        ])->each(function ($permission) use ($businessRole) {
             (new AssignPermissionToRole)->handle(
                 role: $businessRole,
                 permission: $permission,
                 module: '{snake}',
             );
-        }
+        });
 
         (new CreateMenu)->handle(
             label: '{plural}',
