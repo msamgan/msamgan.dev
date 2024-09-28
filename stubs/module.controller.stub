@@ -53,7 +53,7 @@ class {studly}Controller extends Controller
 
     public function update(Update{studly}Request $request, {studly} ${camel}, Update{studly} $update{studly}, NotifyUser $notifyUser): void
     {
-        $update{studly}->handle(${underscoreCase}, $request->validated());
+        $update{studly}->handle(${camel}, $request->validated());
 
         $notifyUser->handle(new {studly}Updated(request()->user()));
     }
