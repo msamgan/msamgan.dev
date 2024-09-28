@@ -113,7 +113,7 @@ class MakeModule extends Command
 
         $this->createActions();
 
-        $this->replaceController($classCase, $underscoreCase);
+        $this->replaceController();
 
         $this->createView(
             $classCase,
@@ -204,17 +204,11 @@ class MakeModule extends Command
         });
     }
 
-    private function replaceController(string $classCase, string $underscoreCase): void
+    private function replaceController(): void
     {
-        $underscoreCasePlural = Str::of($underscoreCase)->plural()->toString();
-
         $controllerStubFile = file_get_contents(base_path('stubs/module.controller.stub'));
-
-        $controllerStubFile = str_replace('{classCase}', $classCase, $controllerStubFile);
-        $controllerStubFile = str_replace('{underscoreCase}', $underscoreCase, $controllerStubFile);
-        $controllerStubFile = str_replace('{underscoreCasePlural}', $underscoreCasePlural, $controllerStubFile);
-
-        file_put_contents(app_path("Http/Controllers/{$classCase}Controller.php"), $controllerStubFile);
+        $controllerStubFile = $this->replaceCases($controllerStubFile);
+        file_put_contents(app_path("Http/Controllers/{$this->cases['studly']}Controller.php"), $controllerStubFile);
     }
 
     private function createView(
