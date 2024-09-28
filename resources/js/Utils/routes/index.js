@@ -2,7 +2,8 @@ import { role } from '@/Utils/routes/role.js'
 import { user } from '@/Utils/routes/user.js'
 import { organization } from '@/Utils/routes/organization.js'
 import { client } from '@/Utils/routes/client.js'
-import { project } from '@/Utils/routes/project.js';
+import { project } from '@/Utils/routes/project.js'
+import { post } from '@/Utils/routes/post.js'
 
 export const routes = {
     business: {
@@ -16,4 +17,5 @@ export const routes = {
     organization,
     client,
     project,
+    post,
 }

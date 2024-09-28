@@ -3,7 +3,8 @@ import { role } from '@/Utils/permissions/role.js'
 import { user } from '@/Utils/permissions/user.js'
 import { organization } from '@/Utils/permissions/organization.js'
 import { client } from '@/Utils/permissions/client.js'
-import { project } from '@/Utils/permissions/project.js';
+import { project } from '@/Utils/permissions/project.js'
+import { post } from '@/Utils/permissions/post.js'
 
 export const permissions = {
     business,
@@ -12,4 +13,5 @@ export const permissions = {
     organization,
     client,
     project,
+    post,
 }

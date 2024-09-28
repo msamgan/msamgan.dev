@@ -3,29 +3,29 @@ import TextInput from '@/Components/TextInput.jsx'
 import InputLabel from '@/Components/InputLabel.jsx'
 import InputError from '@/Components/InputError.jsx'
 import { Transition } from '@headlessui/react'
-import { dataObject } from '@/Pages/Project/helper.js'
+import { dataObject } from '@/Pages/Post/helper.js'
 import { useEffect, useState } from 'react'
 import { routes } from '@/Utils/routes/index.js'
 
-export default function Form({ getProjects, project = null }) {
-    const [action, setAction] = useState(routes.project.store)
+export default function Form({ getPosts, postData = null }) {
+    const [action, setAction] = useState(routes.post.store)
     const { data, setData, post, errors, processing, recentlySuccessful, reset } = useForm(dataObject(null))
 
     useEffect(() => {
-        setAction(project ? routes.project.update(project.id) : routes.project.store)
-        setData(dataObject(project))
-    }, [project])
+        setAction(postData ? routes.post.update(postData.id) : routes.post.store)
+        setData(dataObject(postData))
+    }, [postData])
 
     const submit = (e) => {
         e.preventDefault()
 
         post(action, {
             onSuccess: (r) => {
-                if (!project) {
+                if (!postData) {
                     reset('name')
                 }
 
-                getProjects()
+                getPosts()
             },
             onError: () => {},
         })
@@ -35,7 +35,7 @@ export default function Form({ getProjects, project = null }) {
         <form onSubmit={submit}>
             <div className="card mb-6 w-2/3">
                 <div className="card-header">
-                    <h5 className="card-title m-0 text-lg">Project Details</h5>
+                    <h5 className="card-title m-0 text-lg">Post Details</h5>
                 </div>
                 <div className="card-body">
                     <div className="row g-5">

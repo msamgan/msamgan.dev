@@ -2,7 +2,8 @@ import { role } from '@/Utils/services/role.js'
 import { user } from '@/Utils/services/user.js'
 import { organization } from '@/Utils/services/organization.js'
 import { client } from '@/Utils/services/client.js'
-import { project } from '@/Utils/services/project.js';
+import { project } from '@/Utils/services/project.js'
+import { post } from '@/Utils/services/post.js'
 
 export const services = {
     menu: route('service.menu'),
@@ -12,4 +13,5 @@ export const services = {
     organization,
     client,
     project,
+    post,
 }
