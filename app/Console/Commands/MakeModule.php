@@ -161,23 +161,16 @@ class MakeModule extends Command
 
     private function createNotifications(): void
     {
-        $notifications = [
+        collect([
             'Created',
             'Updated',
             'Deleted',
-        ];
-
-        foreach ($notifications as $notification) {
+        ])->each(function ($notification) {
             $notificationStubFile = file_get_contents(base_path('stubs/module.notification.stub'));
             $notificationName = "{$this->cases['studly']}{$notification}";
-
-            /*Artisan::call('make:notification', [
-                'name' => $notificationName,
-            ]);*/
-
             $notificationStubFile = str_replace('{notificationName}', $notificationName, $notificationStubFile);
             file_put_contents(app_path("Notifications/{$notificationName}.php"), $notificationStubFile);
-        }
+        });
     }
 
     private function createModuleMigration(
