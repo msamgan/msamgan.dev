@@ -115,12 +115,7 @@ class MakeModule extends Command
 
         $this->replaceController();
 
-        $this->createView(
-            $classCase,
-            $classCasePlural,
-            $underscoreCase,
-            $underscoreCasePlural
-        );
+        $this->createView();
 
         $this->createPermission($underscoreCase, $classCase);
 
@@ -211,43 +206,29 @@ class MakeModule extends Command
         file_put_contents(app_path("Http/Controllers/{$this->cases['studly']}Controller.php"), $controllerStubFile);
     }
 
-    private function createView(
-        string $classCase,
-        string $classCasePlural,
-        string $underscoreCase,
-        string $underscoreCasePlural,
-    ): void {
+    private function createView(): void
+    {
         $viewHelperStubFile = file_get_contents(base_path('stubs/module.view.helper.stub'));
+        $viewHelperStubFile = $this->replaceCases($viewHelperStubFile);
+
         $viewFormStubFile = file_get_contents(base_path('stubs/module.view.form.stub'));
+        $viewFormStubFile = $this->replaceCases($viewFormStubFile);
+
         $viewIndexStubFile = file_get_contents(base_path('stubs/module.view.index.stub'));
-
-        $viewHelperStubFile = str_replace('{classCase}', $classCase, $viewHelperStubFile);
-        $viewHelperStubFile = str_replace('{classCasePlural}', $classCasePlural, $viewHelperStubFile);
-        $viewHelperStubFile = str_replace('{underscoreCase}', $underscoreCase, $viewHelperStubFile);
-        $viewHelperStubFile = str_replace('{underscoreCasePlural}', $underscoreCasePlural, $viewHelperStubFile);
-
-        $viewFormStubFile = str_replace('{classCase}', $classCase, $viewFormStubFile);
-        $viewFormStubFile = str_replace('{classCasePlural}', $classCasePlural, $viewFormStubFile);
-        $viewFormStubFile = str_replace('{underscoreCase}', $underscoreCase, $viewFormStubFile);
-        $viewFormStubFile = str_replace('{underscoreCasePlural}', $underscoreCasePlural, $viewFormStubFile);
-
-        $viewIndexStubFile = str_replace('{classCase}', $classCase, $viewIndexStubFile);
-        $viewIndexStubFile = str_replace('{classCasePlural}', $classCasePlural, $viewIndexStubFile);
-        $viewIndexStubFile = str_replace('{underscoreCase}', $underscoreCase, $viewIndexStubFile);
-        $viewIndexStubFile = str_replace('{underscoreCasePlural}', $underscoreCasePlural, $viewIndexStubFile);
+        $viewIndexStubFile = $this->replaceCases($viewIndexStubFile);
 
         // check if the directory exists
-        if (! is_dir(resource_path("js/Pages/{$classCase}"))) {
-            mkdir(resource_path("js/Pages/{$classCase}"));
+        if (! is_dir(resource_path("js/Pages/{$this->cases['studly']}"))) {
+            mkdir(resource_path("js/Pages/{$this->cases['studly']}"));
         }
 
-        if (! is_dir(resource_path("js/Pages/{$classCase}/Partials"))) {
-            mkdir(resource_path("js/Pages/{$classCase}/Partials"));
+        if (! is_dir(resource_path("js/Pages/{$this->cases['studly']}/Partials"))) {
+            mkdir(resource_path("js/Pages/{$this->cases['studly']}/Partials"));
         }
 
-        file_put_contents(resource_path("js/Pages/{$classCase}/helper.js"), $viewHelperStubFile);
-        file_put_contents(resource_path("js/Pages/{$classCase}/Partials/Form.jsx"), $viewFormStubFile);
-        file_put_contents(resource_path("js/Pages/{$classCase}/Index.jsx"), $viewIndexStubFile);
+        file_put_contents(resource_path("js/Pages/{$this->cases['studly']}/helper.js"), $viewHelperStubFile);
+        file_put_contents(resource_path("js/Pages/{$this->cases['studly']}/Partials/Form.jsx"), $viewFormStubFile);
+        file_put_contents(resource_path("js/Pages/{$this->cases['studly']}/Index.jsx"), $viewIndexStubFile);
     }
 
     private function createPermission(

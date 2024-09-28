@@ -13,41 +13,42 @@ import PageHeader from '@/Components/PageHeader.jsx'
 import OffCanvas from '@/Components/off_canvas/OffCanvas.jsx'
 import Form from '@/Pages/{classCase}/Partials/Form.jsx'
 import DeleteEntityForm from '@/Components/layout/DeleteEntityForm.jsx'
+import { services } from '@/Utils/services/index.js'
 
 export default function Index({ auth }) {
-    let hasListPermission = hasPermission(auth.user, permissions.{underscoreCase}.list)
-    let hasCreatePermission = hasPermission(auth.user, permissions.{underscoreCase}.create)
-    let hasUpdatePermission = hasPermission(auth.user, permissions.{underscoreCase}.update)
-    let hasDeletePermission = hasPermission(auth.user, permissions.{underscoreCase}.delete)
+    let hasListPermission = hasPermission(auth.user, permissions.{snake}.list)
+    let hasCreatePermission = hasPermission(auth.user, permissions.{snake}.create)
+    let hasUpdatePermission = hasPermission(auth.user, permissions.{snake}.update)
+    let hasDeletePermission = hasPermission(auth.user, permissions.{snake}.delete)
 
-    const [{underscoreCasePlural}, set{classCasePlural}] = useState([])
+    const [{plural_camel}, set{plural_studly}] = useState([])
     const [data, setData] = useState([])
-    const [{underscoreCase}, set{classCase}] = useState(null)
+    const [{camel}, set{studly}] = useState(null)
     const [loading, setLoading] = useState(true)
     const [pageData, setPageData] = useState(pageObject(null))
 
-    const get{classCasePlural} = () => {
-        makeGetCall(route('service.{underscoreCasePlural}'), set{classCasePlural}, setLoading)
+    const get{plural_studly} = () => {
+        makeGetCall(route(services.{snake}.list), set{plural_studly}, setLoading)
     }
 
-    const get{classCase} = (id) => {
-        makeGetCall(route('service.{underscoreCase}.show', id), set{classCase}, setLoading)
+    const get{studly} = (id) => {
+        makeGetCall(route(services.{snake}.show(id), set{studly}, setLoading)
     }
 
-    const process{classCase} = ({underscoreCase}) => {
+    const process{studly} = ({camel}) => {
         return {
-            Name: <Name value={{underscoreCase}.name} />,
+            Name: <Name value={{camel}.name} />,
             Actions: (
                 <Actions
                     edit={
                         hasUpdatePermission ? (
                             <OffCanvasButton
                                 onClick={() => {
-                                    get{classCase}({underscoreCase}.id)
-                                    setPageData(pageObject({underscoreCase}))
+                                    get{studly}({camel}.id)
+                                    setPageData(pageObject({camel}))
                                 }}
                                 className={'dropdown-item'}
-                                id="{underscoreCase}FormCanvas"
+                                id="{camel}FormCanvas"
                             >
                                 <i className="ri-pencil-line me-1 text-primary"></i> Edit
                             </OffCanvasButton>
@@ -56,8 +57,8 @@ export default function Index({ auth }) {
                     deleteAction={
                         hasDeletePermission ? (
                             <DeleteEntityForm
-                                action={route('service.{underscoreCase}.destroy', {underscoreCase}.id)}
-                                refresh={get{classCasePlural}}
+                                action={services.{snake}.destroy({camel}.id)}
+                                refresh={get{plural_studly}}
                                 className={'dropdown-item'}
                             />
                         ) : null
@@ -69,40 +70,40 @@ export default function Index({ auth }) {
 
     useEffect(() => {
         if (hasListPermission) {
-            get{classCasePlural}()
+            get{plural_studly}()
         }
     }, [])
 
     useEffect(() => {
-        setData({underscoreCasePlural}.map(({underscoreCase}) => process{classCase}({underscoreCase})))
-    }, [{underscoreCasePlural}])
+        setData({plural_camel}.map(({camel}) => process{studly}({camel})))
+    }, [{plural_camel}])
 
     return (
-        <Master user={auth.user} header={'{classCasePlural}'}>
-            <Head title="{classCasePlural}" />
+        <Master user={auth.user} header={'{title}'}>
+            <Head title="{title}" />
 
             <PageHeader
-                title={'Business {classCase} List'}
-                subtitle={'Find all of your business’s {underscoreCasePlural} and there associated details.'}
+                title={'Business {title} List'}
+                subtitle={'Find all of your business’s {title} and there associated details.'}
                 action={
                     hasCreatePermission && (
                         <OffCanvasButton
                             onClick={() => {
-                                set{classCase}(null)
+                                set{studly}(null)
                                 setPageData(pageObject(null))
                             }}
-                            id="{underscoreCase}FormCanvas"
+                            id="{camel}FormCanvas"
                         >
                             <i className="ri-add-line me-2"></i>
-                            Create {classCase}
+                            Create {title}
                         </OffCanvasButton>
                     )
                 }
             ></PageHeader>
 
             {hasCreatePermission && (
-                <OffCanvas id="{underscoreCase}FormCanvas" title={pageData.title}>
-                    <Form get{classCasePlural}={get{classCasePlural}} {underscoreCase}={{underscoreCase}} />
+                <OffCanvas id="{studly}FormCanvas" title={pageData.title}>
+                    <Form get{plural_studly}={get{plural_studly}} {camel}={{camel}} />
                 </OffCanvas>
             )}
 
