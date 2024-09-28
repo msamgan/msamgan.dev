@@ -1,0 +1,17 @@
+<div className="col-6 col-md-6">
+    <div className="form-floating form-floating-outline">
+        <TextInput
+            type="text"
+            value={data.{columnName}}
+            onChange={(e) => setData('{columnName}', e.target.value)}
+            id="col-{columnName}"
+            placeholder="{columnNameUcFirst}"
+            required={{required}}
+            isFocused={false}
+        />
+        <InputLabel htmlFor="col-{columnName}" required={{required}}>
+            {columnNameUcFirst}
+        </InputLabel>
+        <InputError className="mt-2" message={errors.{columnName}} />
+    </div>
+</div>
