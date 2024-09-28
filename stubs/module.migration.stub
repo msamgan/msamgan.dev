@@ -14,13 +14,26 @@ return new class extends Migration
         $moduleName = '{moduleName}';
         $menuLabel = '{menuLabel}';
         $menuIcon = '{menuIcon}';
+
         $parentId = '{parentId}';
+
+        $newMenuLabel = '{newMenuLabel}';
+        $newMenuIcon = '{newMenuIcon}';
+
+        if (! $parentId) {
+            $parentId = ((new CreateMenu)->handle(
+                label: $newMenuLabel,
+                route: '#',
+                icon: $newMenuIcon,
+                permission: null,
+            ))->id;
+        }
 
         // $classCase = Str::of($moduleName)->trim()->title()->replace(' ', '')->toString();
         $underscoreCase = Str::of($moduleName)->trim()->snake()->replace(' ', '_')->toString();
 
         $rolePermissions = [
-            'list',
+            'list',m
             'create',
             'update',
             'delete',
@@ -41,7 +54,7 @@ return new class extends Migration
             route: $underscoreCase . '.index',
             icon: $menuIcon,
             permission: $underscoreCase . '.list',
-            parent: $parentId === '' ? null : $parentId,
+            parent: $parentId,
         );
     }
 

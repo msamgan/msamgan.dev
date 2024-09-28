@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\Menu\CreateMenu;
 use App\Models\Menu;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -62,9 +61,25 @@ class MakeModule extends Command
             required: true,
         );
 
+        $newMenuLabel = null;
+        $newMenuIcon = null;
+
         $parentId = null;
         if ($parentManuOptions === 2) {
-            $parentId = $this->newMenu()->id;
+
+            $newMenuLabel = text(
+                label: 'What is the label for the New Parent Menu?',
+                placeholder: 'User Management',
+                required: true,
+            );
+
+            $newMenuIcon = text(
+                label: 'What is the icon for the New Parent Menu?',
+                placeholder: 'ri-user-settings-line',
+                required: true,
+                hint: 'We are using Remix Icon, you can find the icon name here: https://remixicon.com/',
+            );
+
         } elseif ($parentManuOptions === 3) {
             $parentId = select(
                 label: 'Select the parent menu',
@@ -94,7 +109,9 @@ class MakeModule extends Command
             $menuLabel,
             $menuIcon,
             $parentId,
-            $underscoreCase
+            $underscoreCase,
+            $newMenuLabel,
+            $newMenuIcon
         );
 
         $this->createActions($classCase, $underscoreCase);
@@ -119,29 +136,6 @@ class MakeModule extends Command
         $this->info('To Do:');
         $this->info('1. Update the migrations for the module table.');
         $this->info('4. Run the Migrations.');
-    }
-
-    private function newMenu(): Menu
-    {
-        $label = text(
-            label: 'What is the label for the New Parent Menu?',
-            placeholder: 'User Management',
-            required: true,
-        );
-
-        $icon = text(
-            label: 'What is the icon for the New Parent Menu?',
-            placeholder: 'ri-user-settings-line',
-            required: true,
-            hint: 'We are using Remix Icon, you can find the icon name here: https://remixicon.com/',
-        );
-
-        return (new CreateMenu)->handle(
-            label: $label,
-            route: '#',
-            icon: $icon,
-            permission: null,
-        );
     }
 
     private function createRoutes(
@@ -183,7 +177,9 @@ class MakeModule extends Command
         string $menuLabel,
         string $menuIcon,
         ?string $parentId,
-        string $underscoreCase
+        string $underscoreCase,
+        ?string $newMenuLabel,
+        ?string $newMenuIcon
     ): void {
         $migrationStubFile = file_get_contents(base_path('stubs/module.migration.stub'));
 
@@ -191,6 +187,9 @@ class MakeModule extends Command
         $migrationStubFile = str_replace('{menuLabel}', $menuLabel, $migrationStubFile);
         $migrationStubFile = str_replace('{menuIcon}', $menuIcon, $migrationStubFile);
         $migrationStubFile = str_replace('{parentId}', $parentId, $migrationStubFile);
+        $migrationStubFile = str_replace('{underscoreCase}', $underscoreCase, $migrationStubFile);
+        $migrationStubFile = str_replace('{newMenuLabel}', $newMenuLabel, $migrationStubFile);
+        $migrationStubFile = str_replace('{newMenuIcon}', $newMenuIcon, $migrationStubFile);
 
         $timestamp = now()->format('Y_m_d_His');
 
