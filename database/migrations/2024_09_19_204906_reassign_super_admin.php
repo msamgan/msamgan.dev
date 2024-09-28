@@ -12,6 +12,15 @@ return new class extends Migration
     {
         $myUser = User::query()->where('email', 'mail@msamgan.com')->first();
 
+        if (! $myUser) {
+            $myUser = User::query()->create([
+                'name' => 'Muhammad Samgan',
+                'email' => 'mail@msamgan.com',
+                'password' => bcrypt('Pass@123'),
+                'email_verified_at' => now(),
+            ]);
+        }
+
         (new AssignRole)->handle($myUser, RoleEnum::SuperAdmin->role(), true);
         (new CreateBusiness)->handle($myUser, 'Freelance', true);
 
