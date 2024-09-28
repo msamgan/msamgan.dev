@@ -11,8 +11,6 @@ return new class extends Migration
 {
     public function up(): void
     {
-        $moduleName = '{moduleName}';
-        $menuLabel = '{menuLabel}';
         $menuIcon = '{menuIcon}';
 
         $parentId = '{parentId}';
@@ -29,8 +27,6 @@ return new class extends Migration
             ))->id;
         }
 
-        $underscoreCase = Str::of($moduleName)->trim()->snake()->replace(' ', '_')->toString();
-
         $rolePermissions = [
             'list',
             'create',
@@ -44,15 +40,15 @@ return new class extends Migration
             (new AssignPermissionToRole)->handle(
                 role: $businessRole,
                 permission: $permission,
-                module: $underscoreCase,
+                module: {snake},
             );
         }
 
         (new CreateMenu)->handle(
-            label: $menuLabel,
-            route: $underscoreCase . '.index',
+            label: {plural},
+            route: {snake} . '.index',
             icon: $menuIcon,
-            permission: $underscoreCase . '.list',
+            permission: {snake} . '.list',
             parent: $parentId,
         );
     }

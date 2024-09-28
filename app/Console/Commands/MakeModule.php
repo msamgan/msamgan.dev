@@ -47,11 +47,11 @@ class MakeModule extends Command
             hint: 'We are using Remix Icon, you can find the icon name here: https://remixicon.com/',
         );
 
-        $menuLabel = text(
+        /*$menuLabel = text(
             label: 'What is the label for the menu?',
             placeholder: 'User Management',
             required: true,
-        );
+        );*/
 
         $parentManuOptions = select(
             label: 'Select the parent menu',
@@ -109,12 +109,10 @@ class MakeModule extends Command
         $this->createNotifications();
 
         sleep(2);
+
         $this->createModuleMigration(
-            $moduleName,
-            $menuLabel,
             $menuIcon,
             $parentId,
-            $underscoreCase,
             $newMenuLabel,
             $newMenuIcon
         );
@@ -174,27 +172,23 @@ class MakeModule extends Command
     }
 
     private function createModuleMigration(
-        string $moduleName,
-        string $menuLabel,
         string $menuIcon,
         ?string $parentId,
-        string $underscoreCase,
         ?string $newMenuLabel,
         ?string $newMenuIcon
     ): void {
         $migrationStubFile = file_get_contents(base_path('stubs/module.migration.stub'));
 
-        $migrationStubFile = str_replace('{moduleName}', $moduleName, $migrationStubFile);
-        $migrationStubFile = str_replace('{menuLabel}', $menuLabel, $migrationStubFile);
-        $migrationStubFile = str_replace('{menuIcon}', $menuIcon, $migrationStubFile);
+        $migrationStubFile = $this->replaceCases($migrationStubFile);
+
         $migrationStubFile = str_replace('{parentId}', $parentId, $migrationStubFile);
-        $migrationStubFile = str_replace('{underscoreCase}', $underscoreCase, $migrationStubFile);
+        $migrationStubFile = str_replace('{menuIcon}', $menuIcon, $migrationStubFile);
         $migrationStubFile = str_replace('{newMenuLabel}', $newMenuLabel, $migrationStubFile);
         $migrationStubFile = str_replace('{newMenuIcon}', $newMenuIcon, $migrationStubFile);
 
         $timestamp = now()->format('Y_m_d_His');
 
-        file_put_contents(database_path("migrations/{$timestamp}_create_module_{$underscoreCase}.php"), $migrationStubFile);
+        file_put_contents(database_path("migrations/{$timestamp}_create_module_{$this->cases['snake']}_table.php"), $migrationStubFile);
     }
 
     private function createActions(string $classCase, string $underscoreCase): void
