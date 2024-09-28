@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         $menuIcon = '{menuIcon}';
-
         $parentId = '{parentId}';
-
         $newMenuLabel = '{newMenuLabel}';
         $newMenuIcon = '{newMenuIcon}';
 
@@ -40,15 +38,15 @@ return new class extends Migration
             (new AssignPermissionToRole)->handle(
                 role: $businessRole,
                 permission: $permission,
-                module: {snake},
+                module: '{snake}',
             );
         }
 
         (new CreateMenu)->handle(
-            label: {plural},
-            route: {snake} . '.index',
+            label: '{plural}',
+            route: '{snake}' . '.index',
             icon: $menuIcon,
-            permission: {snake} . '.list',
+            permission: '{snake}' . '.list',
             parent: $parentId,
         );
     }
