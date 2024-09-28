@@ -1,4 +1,4 @@
-export const {underscoreCase} = {
-    store: route('{underscoreCase}.store'),
-    update: (id) => route('{underscoreCase}.update', id),
+export const {snake} = {
+    store: route('{snake}.store'),
+    update: (id) => route('{snake}.update', id),
 }

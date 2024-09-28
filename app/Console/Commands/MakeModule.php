@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Menu;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Str;
 
 use function Laravel\Prompts\select;
 use function Laravel\Prompts\text;
@@ -86,8 +85,6 @@ class MakeModule extends Command
 
         $this->cases = allCases($moduleName);
 
-        $underscoreCase = Str::of($moduleName)->trim()->snake()->replace(' ', '_')->toString();
-
         $this->info("Creating module: {$moduleName}");
 
         Artisan::call('make:model', [
@@ -118,7 +115,7 @@ class MakeModule extends Command
 
         $this->createService();
 
-        $this->createRoutesJs($underscoreCase);
+        $this->createRoutesJs();
 
         $this->info("Module: {$moduleName} created successfully");
 
@@ -303,17 +300,15 @@ class MakeModule extends Command
         file_put_contents(resource_path('js/Utils/services/index.js'), implode('', $fileLines));
     }
 
-    private function createRoutesJs(
-        string $underscoreCase,
-    ): void {
+    private function createRoutesJs(): void
+    {
         $routesJsStubFile = file_get_contents(base_path('stubs/module.route.js.stub'));
+        $routesJsStubFile = $this->replaceCases($routesJsStubFile);
 
-        $routesJsStubFile = str_replace('{underscoreCase}', $underscoreCase, $routesJsStubFile);
+        file_put_contents(resource_path("js/Utils/routes/{$this->cases['snake']}.js"), $routesJsStubFile);
 
-        file_put_contents(resource_path("js/Utils/routes/{$underscoreCase}.js"), $routesJsStubFile);
-
-        $routeImport = "import { {$underscoreCase} } from '@/Utils/routes/{$underscoreCase}.js';";
-        $addStatement = "    $underscoreCase,";
+        $routeImport = "import { {$this->cases['snake']} } from '@/Utils/routes/{$this->cases['snake']}.js';";
+        $addStatement = "    {$this->cases['snake']},";
 
         $fileLines = file(resource_path('js/Utils/routes/index.js'));
 
