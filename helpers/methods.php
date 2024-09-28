@@ -11,19 +11,19 @@ if (! function_exists('allCases')) {
     function allCases(string $string): array
     {
         return [
-            'camel' => Str::camel($string),
-            'plural_camel' => Str::camel(Str::plural($string)),
-            'snake' => Str::snake($string),
-            'plural_snake' => Str::snake(Str::plural($string)),
-            'kebab' => Str::kebab($string),
-            'plural_kebab' => Str::kebab(Str::plural($string)),
-            'studly' => Str::studly($string),
-            'plural_studly' => Str::studly(Str::plural($string)),
-            'title' => Str::title($string),
-            'plural' => Str::plural($string),
-            'singular' => Str::singular($string),
-            'ucfirst' => ucfirst($string),
-            'lcfirst' => lcfirst($string),
+            'camel' => Str::camel($string), // camelCase
+            'plural_camel' => Str::camel(Str::plural($string)), // camelCases
+            'snake' => Str::snake($string), // snake_case
+            'plural_snake' => Str::snake(Str::plural($string)), // snake_cases
+            'kebab' => Str::kebab($string), // kebab-case
+            'plural_kebab' => Str::kebab(Str::plural($string)), // kebab-cases
+            'studly' => Str::studly($string), // StudlyCase
+            'plural_studly' => Str::studly(Str::plural($string)), // StudlyCases
+            'title' => Str::title($string), // Title Case
+            'plural' => Str::plural($string), // plural
+            'singular' => Str::singular($string), // singular
+            'ucfirst' => ucfirst($string), // Title case
+            'lcfirst' => lcfirst($string), // title Case
         ];
     }
 }

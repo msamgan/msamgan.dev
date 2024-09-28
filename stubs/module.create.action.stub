@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Actions\{classCase};
+namespace App\Actions\{studly};
 
-use App\Models\{classCase};
+use App\Models\{studly};
 
-class {actionName}
+class Create{studly}
 {
-    public function handle(array $data): {classCase}
+    public function handle(array $data): {studly}
     {
-        return {classCase}::create($data);
+        return {studly}::create($data);
     }
 }
 

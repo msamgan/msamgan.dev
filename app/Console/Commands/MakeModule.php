@@ -47,12 +47,6 @@ class MakeModule extends Command
             hint: 'We are using Remix Icon, you can find the icon name here: https://remixicon.com/',
         );
 
-        /*$menuLabel = text(
-            label: 'What is the label for the menu?',
-            placeholder: 'User Management',
-            required: true,
-        );*/
-
         $parentManuOptions = select(
             label: 'Select the parent menu',
             options: [
@@ -117,7 +111,7 @@ class MakeModule extends Command
             $newMenuIcon
         );
 
-        $this->createActions($classCase, $underscoreCase);
+        $this->createActions();
 
         $this->replaceController($classCase, $underscoreCase);
 
@@ -191,27 +185,23 @@ class MakeModule extends Command
         file_put_contents(database_path("migrations/{$timestamp}_create_module_{$this->cases['snake']}_table.php"), $migrationStubFile);
     }
 
-    private function createActions(string $classCase, string $underscoreCase): void
+    private function createActions(): void
     {
-        $createActionStubFile = file_get_contents(base_path('stubs/module.create.action.stub'));
+        collect([
+            'create',
+            'update',
+        ])->each(function ($action) {
+            $actionStubFile = file_get_contents(base_path('stubs/module.' . $action . '.action.stub'));
+            $actionStubFile = $this->replaceCases($actionStubFile);
 
-        $createActionStubFile = str_replace('{classCase}', $classCase, $createActionStubFile);
-        $createActionStubFile = str_replace('{actionName}', "Create$classCase", $createActionStubFile);
-        $createActionStubFile = str_replace('{underscoreCase}', $underscoreCase, $createActionStubFile);
+            if (! is_dir(app_path("Actions/{$this->cases['studly']}"))) {
+                mkdir(app_path("Actions/{$this->cases['studly']}"));
+            }
 
-        $updateActionStubFile = file_get_contents(base_path('stubs/module.update.action.stub'));
+            $fileName = ucfirst($action) . $this->cases['studly'];
 
-        $updateActionStubFile = str_replace('{classCase}', $classCase, $updateActionStubFile);
-        $updateActionStubFile = str_replace('{actionName}', "Update$classCase", $updateActionStubFile);
-        $updateActionStubFile = str_replace('{underscoreCase}', $underscoreCase, $updateActionStubFile);
-
-        // check if the directory exists
-        if (! is_dir(app_path("Actions/{$classCase}"))) {
-            mkdir(app_path("Actions/{$classCase}"));
-        }
-
-        file_put_contents(app_path("Actions/{$classCase}/Create{$classCase}.php"), $createActionStubFile);
-        file_put_contents(app_path("Actions/{$classCase}/Update{$classCase}.php"), $updateActionStubFile);
+            file_put_contents(app_path("Actions/{$this->cases['studly']}/{$fileName}.php"), $actionStubFile);
+        });
     }
 
     private function replaceController(string $classCase, string $underscoreCase): void
