@@ -4,6 +4,7 @@ import { organization } from '@/Utils/services/organization.js'
 import { client } from '@/Utils/services/client.js'
 import { project } from '@/Utils/services/project.js'
 import { post } from '@/Utils/services/post.js'
+import { transaction } from '@/Utils/services/transaction.js';
 
 export const services = {
     menu: route('service.menu'),
@@ -14,4 +15,5 @@ export const services = {
     client,
     project,
     post,
+    transaction,
 }

@@ -5,6 +5,7 @@ import { organization } from '@/Utils/permissions/organization.js'
 import { client } from '@/Utils/permissions/client.js'
 import { project } from '@/Utils/permissions/project.js'
 import { post } from '@/Utils/permissions/post.js'
+import { transaction } from '@/Utils/permissions/transaction.js';
 
 export const permissions = {
     business,
@@ -14,4 +15,5 @@ export const permissions = {
     client,
     project,
     post,
+    transaction,
 }

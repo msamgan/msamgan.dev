@@ -4,6 +4,11 @@ namespace App\Enums;
 
 enum PermissionEnum: string
 {
+    case TransactionList = 'transaction.list';
+    case TransactionCreate = 'transaction.create';
+    case TransactionUpdate = 'transaction.update';
+    case TransactionDelete = 'transaction.delete';
+
     case PostList = 'post.list';
     case PostCreate = 'post.create';
     case PostUpdate = 'post.update';
@@ -76,6 +81,11 @@ enum PermissionEnum: string
             self::PostCreate => 'can:post.create',
             self::PostUpdate => 'can:post.update',
             self::PostDelete => 'can:post.delete',
+
+            self::TransactionList => 'can:transaction.list',
+            self::TransactionCreate => 'can:transaction.create',
+            self::TransactionUpdate => 'can:transaction.update',
+            self::TransactionDelete => 'can:transaction.delete',
         };
     }
 }
