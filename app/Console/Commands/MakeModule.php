@@ -86,10 +86,7 @@ class MakeModule extends Command
 
         $this->cases = allCases($moduleName);
 
-        $classCase = Str::of($moduleName)->trim()->title()->replace(' ', '')->toString();
-        $classCasePlural = Str::of($moduleName)->trim()->title()->plural()->replace(' ', '')->toString();
         $underscoreCase = Str::of($moduleName)->trim()->snake()->replace(' ', '_')->toString();
-        $underscoreCasePlural = Str::of($moduleName)->trim()->snake()->plural()->replace(' ', '_')->toString();
 
         $this->info("Creating module: {$moduleName}");
 
@@ -119,7 +116,7 @@ class MakeModule extends Command
 
         $this->createPermission();
 
-        $this->createService($underscoreCase, $underscoreCasePlural);
+        $this->createService();
 
         $this->createRoutesJs($underscoreCase);
 
@@ -282,19 +279,15 @@ class MakeModule extends Command
         file_put_contents(app_path('Enums/PermissionEnum.php'), implode('', $permissionEnumFile));
     }
 
-    private function createService(
-        string $underscoreCase,
-        string $underscoreCasePlural,
-    ): void {
+    private function createService(): void
+    {
         $serviceStubFile = file_get_contents(base_path('stubs/module.service.stub'));
+        $serviceStubFile = $this->replaceCases($serviceStubFile);
 
-        $serviceStubFile = str_replace('{underscoreCase}', $underscoreCase, $serviceStubFile);
-        $serviceStubFile = str_replace('{underscoreCasePlural}', $underscoreCasePlural, $serviceStubFile);
+        file_put_contents(resource_path("js/Utils/services/{$this->cases['snake']}.js"), $serviceStubFile);
 
-        file_put_contents(resource_path("js/Utils/services/{$underscoreCase}.js"), $serviceStubFile);
-
-        $serviceImport = "import { {$underscoreCase} } from '@/Utils/services/{$underscoreCase}.js';";
-        $addStatement = "    $underscoreCase,";
+        $serviceImport = "import { {$this->cases['snake']} } from '@/Utils/services/{$this->cases['snake']}.js';";
+        $addStatement = "    {$this->cases['snake']},";
 
         $fileLines = file(resource_path('js/Utils/services/index.js'));
 
