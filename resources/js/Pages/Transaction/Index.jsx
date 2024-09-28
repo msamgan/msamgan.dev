@@ -39,7 +39,7 @@ export default function Index({ auth }) {
             Description: <Name value={transaction.description} />,
             Type: transaction.type,
             Amount: transaction.amount,
-            Date: transaction.date
+            Date: transaction.date,
         }
     }
 

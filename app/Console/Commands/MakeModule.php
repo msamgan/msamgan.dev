@@ -88,6 +88,8 @@ class MakeModule extends Command
             );
         }
 
+        $cases = allCases($moduleName);
+
         $classCase = Str::of($moduleName)->trim()->title()->replace(' ', '')->toString();
         $classCasePlural = Str::of($moduleName)->trim()->title()->plural()->replace(' ', '')->toString();
         $underscoreCase = Str::of($moduleName)->trim()->snake()->replace(' ', '_')->toString();
@@ -96,11 +98,12 @@ class MakeModule extends Command
         $this->info("Creating module: {$moduleName}");
 
         Artisan::call('make:model', [
-            'name' => $classCase,
+            'name' => $cases['studly'],
             '--all' => true,
         ]);
 
-        $this->createRoutes($classCase, $underscoreCase, $underscoreCasePlural);
+        $this->createRoutes($classCase, $underscoreCase, $underscoreCasePlural, $cases);
+
         $this->createNotifications($classCase);
 
         sleep(2);
@@ -141,13 +144,14 @@ class MakeModule extends Command
     private function createRoutes(
         string $classCase,
         string $underscoreCase,
-        string $underscoreCasePlural
+        string $underscoreCasePlural,
+        array $cases
     ): void {
         $routeStubFile = file_get_contents(base_path('stubs/module.route.stub'));
 
         $routeStubFile = str_replace('{classCase}', $classCase, $routeStubFile);
         $routeStubFile = str_replace('{underscoreCase}', $underscoreCase, $routeStubFile);
-        $routeStubFile = str_replace('{underscoreCasePlural}', $underscoreCasePlural, $routeStubFile);
+        $routeStubFile = str_replace('{pluralSnake}', $cases['plural_snake'], $routeStubFile);
 
         file_put_contents(base_path("routes/modules/{$underscoreCase}.php"), $routeStubFile);
     }

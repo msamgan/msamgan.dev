@@ -5,7 +5,7 @@ use App\Http\Controllers\{classCase}Controller;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'check_has_business'])->group(function () {
-    Route::get('{underscoreCasePlural}', [{classCase}Controller::class, 'index'])
+    Route::get('{pluralSnake}', [{classCase}Controller::class, 'index'])
         ->middleware([PermissionEnum::{classCase}List->can()])
         ->name('{underscoreCase}.index');
 });
@@ -21,9 +21,9 @@ Route::middleware(['auth', 'check_has_business'])->group(function () {
 });
 
 Route::middleware(['auth', 'check_has_business'])->group(function () {
-    Route::get('service/{underscoreCasePlural}', [{classCase}Controller::class, '{underscoreCasePlural}'])
+    Route::get('service/{pluralSnake}', [{classCase}Controller::class, '{pluralSnake}'])
         ->middleware([PermissionEnum::{classCase}List->can()])
-        ->name('service.{underscoreCasePlural}');
+        ->name('service.{pluralSnake}');
 
     Route::get('service/{underscoreCase}/show/{{underscoreCase}}', [{classCase}Controller::class, 'show'])
         ->middleware([PermissionEnum::{classCase}Update->can()])

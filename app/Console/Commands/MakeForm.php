@@ -38,6 +38,8 @@ class MakeForm extends Command
             hint: 'Use the same name  as the model name'
         );
 
+        $cases = allCases($moduleName);
+
         try {
             $model = "App\Models\\$moduleName";
 
