@@ -8,10 +8,10 @@ import Name from '@/Components/helpers/Name.jsx'
 import ActiveBadge from '@/Components/helpers/ActiveBadge.jsx'
 import OffCanvasButton from '@/Components/off_canvas/OffCanvasButton.jsx'
 import Table from '@/Components/layout/Table.jsx'
-import { columns, pageObject } from '@/Pages/{classCase}/helper.js'
+import { columns, pageObject } from '@/Pages/{studly}/helper.js'
 import PageHeader from '@/Components/PageHeader.jsx'
 import OffCanvas from '@/Components/off_canvas/OffCanvas.jsx'
-import Form from '@/Pages/{classCase}/Partials/Form.jsx'
+import Form from '@/Pages/{studly}/Partials/Form.jsx'
 import DeleteEntityForm from '@/Components/layout/DeleteEntityForm.jsx'
 import { services } from '@/Utils/services/index.js'
 
@@ -28,11 +28,11 @@ export default function Index({ auth }) {
     const [pageData, setPageData] = useState(pageObject(null))
 
     const get{plural_studly} = () => {
-        makeGetCall(route(services.{snake}.list), set{plural_studly}, setLoading)
+        makeGetCall(services.{snake}.list, set{plural_studly}, setLoading)
     }
 
     const get{studly} = (id) => {
-        makeGetCall(route(services.{snake}.show(id), set{studly}, setLoading)
+        makeGetCall(services.{snake}.show(id), set{studly}, setLoading)
     }
 
     const process{studly} = ({camel}) => {
@@ -102,7 +102,7 @@ export default function Index({ auth }) {
             ></PageHeader>
 
             {hasCreatePermission && (
-                <OffCanvas id="{studly}FormCanvas" title={pageData.title}>
+                <OffCanvas id="{camel}FormCanvas" title={pageData.title}>
                     <Form get{plural_studly}={get{plural_studly}} {camel}={{camel}} />
                 </OffCanvas>
             )}
