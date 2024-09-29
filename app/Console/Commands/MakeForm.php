@@ -53,6 +53,10 @@ class MakeForm extends Command
 
             $tableName = (new $model)->getTable();
 
+            if (! DB::table('information_schema.tables')->where('table_name', $tableName)->exists()) {
+                throw new Exception('Table does not exist');
+            }
+
             // get all the columns of the table with datatype
             $filteredColumns = array_filter(
                 DB::select("SHOW COLUMNS FROM $tableName"),
