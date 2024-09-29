@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -46,6 +47,10 @@ class MakeForm extends Command
 
             $fillable = (new $model)->getFillable();
 
+            if (empty($fillable)) {
+                throw new Exception('You need to define fillable property in the model to generate form');
+            }
+
             $tableName = (new $model)->getTable();
 
             // get all the columns of the table with datatype
@@ -66,16 +71,13 @@ class MakeForm extends Command
 
             $formString = '';
             foreach ($formFields as $field) {
-                if ($field['type'] === 'text') {
-                    $textStub = file_get_contents(base_path('stubs/Form/text.stub'));
-                    $formString .= str_replace(['{columnName}', '{required}', '{columnNameUcFirst}'], [
-                        $field['name'],
-                        $field['required'] ? 'true' : 'false',
-                        ucfirst($field['name']),
-                    ], $textStub);
-
-                    continue;
-                }
+                $formString .= $this->replaceCases(
+                    file_get_contents(base_path('stubs/Form/' . $field['type'] . '.stub')),
+                    array_merge(
+                        allCases($field['name']),
+                        ['required' => $field['required'] ? 'true' : 'false']
+                    )
+                );
             }
 
             $fieldStub = file_get_contents(base_path('stubs/Form/fields.stub'));
@@ -115,5 +117,14 @@ class MakeForm extends Command
         }
 
         return 'text';
+    }
+
+    private function replaceCases($fileName, $cases): array|string
+    {
+        foreach ($cases as $key => $value) {
+            $fileName = str_replace("{{$key}}", $value, $fileName);
+        }
+
+        return $fileName;
     }
 }
