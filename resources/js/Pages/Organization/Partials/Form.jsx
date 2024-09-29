@@ -6,6 +6,7 @@ import { Transition } from '@headlessui/react'
 import { dataObject } from '@/Pages/Organization/helper.js'
 import { useEffect, useState } from 'react'
 import { routes } from '@/Utils/routes/index.js'
+import Fields from '@/Pages/Organization/Partials/Fields.jsx'
 
 export default function Form({ getOrganizations, organization = null }) {
     const [action, setAction] = useState(routes.organization.store)
@@ -40,36 +41,8 @@ export default function Form({ getOrganizations, organization = null }) {
                 </div>
                 <div className="card-body">
                     <div className="row g-5">
-                        <div className="col-12 col-md-12">
-                            <div className="form-floating form-floating-outline">
-                                <TextInput
-                                    type="text"
-                                    value={data.name}
-                                    onChange={(e) => setData('name', e.target.value)}
-                                    id="user-name"
-                                    placeholder="Name"
-                                    required={true}
-                                    isFocused={true}
-                                />
-                                <InputLabel htmlFor="user-name" required={true}>
-                                    Name
-                                </InputLabel>
-                                <InputError className="mt-2" message={errors.name} />
-                            </div>
-                        </div>
-                        <div className="col-12 col-md-12">
-                            <div className={'form-floating form-floating-outline'}>
-                                <TextInput
-                                    id="location"
-                                    value={data.location}
-                                    onChange={(e) => setData('location', e.target.value)}
-                                    autoComplete="location"
-                                    placeholder="Location"
-                                />
-                                <InputLabel htmlFor="location" value="Location" />
-                                <InputError className="mt-2" message={errors.location} />
-                            </div>
-                        </div>
+                        {/* Fields go here... */}
+                        <Fields data={data} setData={setData} errors={errors} />
                     </div>
                 </div>
             </div>

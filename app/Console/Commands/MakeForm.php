@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 use function Laravel\Prompts\text;
 
@@ -26,6 +25,8 @@ class MakeForm extends Command
      */
     protected $description = 'Create a new form File';
 
+    private array $cases = [];
+
     /**
      * Execute the console command.
      */
@@ -38,7 +39,7 @@ class MakeForm extends Command
             hint: 'Use the same name  as the model name'
         );
 
-        $cases = allCases($moduleName);
+        $this->cases = allCases($moduleName);
 
         try {
             $model = "App\Models\\$moduleName";
@@ -46,15 +47,14 @@ class MakeForm extends Command
             $fillable = (new $model)->getFillable();
 
             $tableName = (new $model)->getTable();
-            $singular = Str::singular($tableName);
-            $functionCase = Str::camel($singular);
-            $classCase = Str::studly($singular);
 
             // get all the columns of the table with datatype
-            $columns = DB::select("SHOW COLUMNS FROM $tableName");
-            $filteredColumns = array_filter($columns, function ($column) use ($fillable) {
-                return in_array($column->Field, $fillable);
-            });
+            $filteredColumns = array_filter(
+                DB::select("SHOW COLUMNS FROM $tableName"),
+                function ($column) use ($fillable) {
+                    return in_array($column->Field, $fillable);
+                }
+            );
 
             $formFields = collect($filteredColumns)->map(function ($column) {
                 return [
@@ -78,7 +78,10 @@ class MakeForm extends Command
                 }
             }
 
-            // dd($formString);
+            $fieldStub = file_get_contents(base_path('stubs/Form/fields.stub'));
+            $formString = str_replace('{fieldString}', $formString, $fieldStub);
+
+            file_put_contents(resource_path("js/Pages/{$this->cases['studly']}/Partials/Fields.jsx"), $formString);
 
         } catch (Throwable $th) {
             $this->error($th->getMessage());

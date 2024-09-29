@@ -1,0 +1,11 @@
+import TextInput from '@/Components/TextInput.jsx'
+import InputLabel from '@/Components/InputLabel.jsx'
+import InputError from '@/Components/InputError.jsx'
+
+export default function Fields({ data, setData, errors }) {
+    return (
+        <>
+            {fieldString}
+        </>
+    )
+}
