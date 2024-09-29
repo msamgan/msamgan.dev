@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 use function Laravel\Prompts\text;
 
@@ -26,6 +26,8 @@ class MakeForm extends Command
      */
     protected $description = 'Create a new form File';
 
+    private array $cases = [];
+
     /**
      * Execute the console command.
      */
@@ -38,23 +40,30 @@ class MakeForm extends Command
             hint: 'Use the same name  as the model name'
         );
 
-        $cases = allCases($moduleName);
+        $this->cases = allCases($moduleName);
 
         try {
             $model = "App\Models\\$moduleName";
 
             $fillable = (new $model)->getFillable();
 
+            if (empty($fillable)) {
+                throw new Exception('You need to define fillable property in the model to generate form');
+            }
+
             $tableName = (new $model)->getTable();
-            $singular = Str::singular($tableName);
-            $functionCase = Str::camel($singular);
-            $classCase = Str::studly($singular);
+
+            if (! DB::table('information_schema.tables')->where('table_name', $tableName)->exists()) {
+                throw new Exception('Table does not exist');
+            }
 
             // get all the columns of the table with datatype
-            $columns = DB::select("SHOW COLUMNS FROM $tableName");
-            $filteredColumns = array_filter($columns, function ($column) use ($fillable) {
-                return in_array($column->Field, $fillable);
-            });
+            $filteredColumns = array_filter(
+                DB::select("SHOW COLUMNS FROM $tableName"),
+                function ($column) use ($fillable) {
+                    return in_array($column->Field, $fillable);
+                }
+            );
 
             $formFields = collect($filteredColumns)->map(function ($column) {
                 return [
@@ -66,19 +75,19 @@ class MakeForm extends Command
 
             $formString = '';
             foreach ($formFields as $field) {
-                if ($field['type'] === 'text') {
-                    $textStub = file_get_contents(base_path('stubs/Form/text.stub'));
-                    $formString .= str_replace(['{columnName}', '{required}', '{columnNameUcFirst}'], [
-                        $field['name'],
-                        $field['required'] ? 'true' : 'false',
-                        ucfirst($field['name']),
-                    ], $textStub);
-
-                    continue;
-                }
+                $formString .= $this->replaceCases(
+                    file_get_contents(base_path('stubs/Form/' . $field['type'] . '.stub')),
+                    array_merge(
+                        allCases($field['name']),
+                        ['required' => $field['required'] ? 'true' : 'false']
+                    )
+                );
             }
 
-            // dd($formString);
+            $fieldStub = file_get_contents(base_path('stubs/Form/fields.stub'));
+            $formString = str_replace('{fieldString}', $formString, $fieldStub);
+
+            file_put_contents(resource_path("js/Pages/{$this->cases['studly']}/Partials/Fields.jsx"), $formString);
 
         } catch (Throwable $th) {
             $this->error($th->getMessage());
@@ -112,5 +121,14 @@ class MakeForm extends Command
         }
 
         return 'text';
+    }
+
+    private function replaceCases($fileName, $cases): array|string
+    {
+        foreach ($cases as $key => $value) {
+            $fileName = str_replace("{{$key}}", $value, $fileName);
+        }
+
+        return $fileName;
     }
 }

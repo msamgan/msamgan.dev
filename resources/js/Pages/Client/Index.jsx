@@ -25,6 +25,7 @@ export default function Index({ auth }) {
     const [client, setClient] = useState(null)
     const [loading, setLoading] = useState(true)
     const [pageData, setPageData] = useState(pageObject(null))
+
     const [organizations, setOrganizations] = useState([])
 
     const getClients = () => {
