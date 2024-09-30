@@ -96,27 +96,14 @@ class MakeForm extends Command
             $fieldStub = file_get_contents(base_path('stubs/Form/fields.stub'));
             $formString = str_replace('{fieldString}', $formString, $fieldStub);
 
-            file_put_contents(resource_path("js/Pages/{$this->cases['studly']}/Partials/Fields.jsx"), $formString);
+            $filePath = resource_path("js/Pages/{$this->cases['studly']}/Partials/Fields.jsx");
 
-            $this->addDependency(
-                resource_path("js/Pages/{$this->cases['studly']}/Partials/Fields.jsx"),
-                $dependencyArray
-            );
+            file_put_contents($filePath, $formString);
+
+            $this->addDependency($filePath, $dependencyArray);
         } catch (Throwable $th) {
             $this->error($th->getMessage());
         }
-    }
-
-    private function addDependency($filePath, array $dependencies): void
-    {
-        $fileContent = file_get_contents($filePath);
-
-        $baseLine = 'export default function Fields({ data, setData, errors, ';
-        $updatedLine = $baseLine . implode(', ', $dependencies) . ' }) {';
-
-        $fileContent = str_replace('export default function Fields({ data, setData, errors }) {', $updatedLine, $fileContent);
-
-        file_put_contents($filePath, $fileContent);
     }
 
     private function typeCasting($type): string
@@ -155,5 +142,16 @@ class MakeForm extends Command
         }
 
         return $fileName;
+    }
+
+    private function addDependency($filePath, array $dependencies): void
+    {
+        $fileContent = file_get_contents($filePath);
+
+        $updatedLine = 'export default function Fields({ data, setData, errors, ' . implode(', ', $dependencies) . ' }) {';
+
+        $fileContent = str_replace('export default function Fields({ data, setData, errors }) {', $updatedLine, $fileContent);
+
+        file_put_contents($filePath, $fileContent);
     }
 }
