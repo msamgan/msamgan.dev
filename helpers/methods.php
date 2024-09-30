@@ -10,7 +10,7 @@ if (! function_exists('allCases')) {
      */
     function allCases(string $string): array
     {
-        return [
+        $cases = [
             'camel' => Str::camel($string), // camelCase
             'plural_camel' => Str::camel(Str::plural($string)), // camelCases
             'snake' => Str::snake($string), // snake_case
@@ -25,5 +25,20 @@ if (! function_exists('allCases')) {
             'ucfirst' => ucfirst($string), // Title case
             'lcfirst' => lcfirst($string), // title Case
         ];
+
+        if (Str::endsWith($string, '_id')) {
+            $stringWithoutId = Str::before($string, '_id');
+            $cases['camel_without_id'] = Str::camel($stringWithoutId); // camelCase
+            $cases['plural_camel_without_id'] = Str::camel(Str::plural($stringWithoutId)); // camelCases
+            $cases['snake_without_id'] = Str::snake($stringWithoutId); // snake_case
+            $cases['kebab_without_id'] = Str::kebab($stringWithoutId); // kebab-case
+            $cases['studly_without_id'] = Str::studly($stringWithoutId); // StudlyCase
+            $cases['plural_studly_without_id'] = Str::studly(Str::plural($stringWithoutId)); // StudlyCases
+            $cases['title_without_id'] = Str::title($stringWithoutId); // Title Case
+            $cases['ucfirst_without_id'] = ucfirst($stringWithoutId); // Title case
+            $cases['lcfirst_without_id'] = lcfirst($stringWithoutId); // title Case
+        }
+
+        return $cases;
     }
 }

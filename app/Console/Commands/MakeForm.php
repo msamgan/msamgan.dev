@@ -68,20 +68,29 @@ class MakeForm extends Command
             $formFields = collect($filteredColumns)->map(function ($column) {
                 return [
                     'name' => $column->Field,
-                    'type' => $this->typeCasting($column->Type),
+                    'type' => str_contains($column->Field, '_id') ? 'select' : $this->typeCasting($column->Type),
                     'required' => $column->Null === 'NO',
                 ];
             });
 
             $formString = '';
+            $dependencyArray = [];
             foreach ($formFields as $field) {
+                if (! file_exists(base_path('stubs/Form/' . $field['type'] . '.stub'))) {
+                    continue;
+                }
+
+                $cases = allCases($field['name']);
+
                 $formString .= $this->replaceCases(
                     file_get_contents(base_path('stubs/Form/' . $field['type'] . '.stub')),
-                    array_merge(
-                        allCases($field['name']),
-                        ['required' => $field['required'] ? 'true' : 'false']
-                    )
+                    array_merge($cases, ['required' => $field['required'] ? 'true' : 'false'])
                 );
+
+                if ($field['type'] === 'select') {
+                    $dependencyArray[] = $cases['plural_camel_without_id'];
+                    $dependencyArray[] = 'get' . $cases['plural_studly_without_id'];
+                }
             }
 
             $fieldStub = file_get_contents(base_path('stubs/Form/fields.stub'));
@@ -89,9 +98,25 @@ class MakeForm extends Command
 
             file_put_contents(resource_path("js/Pages/{$this->cases['studly']}/Partials/Fields.jsx"), $formString);
 
+            $this->addDependency(
+                resource_path("js/Pages/{$this->cases['studly']}/Partials/Fields.jsx"),
+                $dependencyArray
+            );
         } catch (Throwable $th) {
             $this->error($th->getMessage());
         }
+    }
+
+    private function addDependency($filePath, array $dependencies): void
+    {
+        $fileContent = file_get_contents($filePath);
+
+        $baseLine = 'export default function Fields({ data, setData, errors, ';
+        $updatedLine = $baseLine . implode(', ', $dependencies) . ' }) {';
+
+        $fileContent = str_replace('export default function Fields({ data, setData, errors }) {', $updatedLine, $fileContent);
+
+        file_put_contents($filePath, $fileContent);
     }
 
     private function typeCasting($type): string
