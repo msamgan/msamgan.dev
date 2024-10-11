@@ -1,7 +1,4 @@
 import { useForm } from '@inertiajs/react'
-import TextInput from '@/Components/TextInput.jsx'
-import InputLabel from '@/Components/InputLabel.jsx'
-import InputError from '@/Components/InputError.jsx'
 import { Transition } from '@headlessui/react'
 import { dataObject } from '@/Pages/Organization/helper.js'
 import { useEffect, useState } from 'react'
