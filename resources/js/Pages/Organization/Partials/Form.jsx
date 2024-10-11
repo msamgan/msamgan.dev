@@ -35,10 +35,7 @@ export default function Form({ getOrganizations, organization = null }) {
 
     return (
         <form onSubmit={submit}>
-            <div className="card mb-6 w-2/3">
-                <div className="card-header">
-                    <h5 className="card-title m-0 text-lg">Organization Details</h5>
-                </div>
+            <div className="mb-6 ml-4 w-2/3">
                 <div className="card-body">
                     <div className="row g-5">
                         {/* Fields go here... */}
