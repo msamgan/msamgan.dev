@@ -17,7 +17,7 @@
         <InputLabel htmlFor="col-{kebab_without_id}" required={{required}}>
             {title_without_id}
         </InputLabel>
-        <InputError className="mt-2" message={errors.snake} />
+        <InputError className="mt-2" message={errors.{snake}} />
         <small className="text-muted flex justify-between">
             <span className={'mt-2'}>
                 If the {title_without_id} is not listed, please{' '}

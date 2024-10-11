@@ -9,7 +9,7 @@ const TableContainer = ({ columns, data, tdClassName }) => {
                     Total Records:
                     <span className="badge rounded-pill ms-4 bg-primary">{data.length}</span>
                 </h5>
-                <table className="table-sm table table-striped mt-8">
+                <table className="table-sm table-striped mt-8 table">
                     <thead className={'table-dark'}>
                         <tr>
                             {columns.map((column, index) => (

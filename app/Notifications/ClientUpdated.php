@@ -53,8 +53,8 @@ class ClientUpdated extends Notification // implements ShouldQueue
         $timestamp = now()->format('F j, Y, g:i a');
 
         return [
-            'title' => '',
-            'message' => '',
+            'title' => 'Client Updated',
+            'message' => 'Client updated by ' . $this->user->name . ' at ' . $timestamp,
         ];
     }
 }

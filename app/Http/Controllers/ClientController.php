@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use App\Actions\Client\CreateClient;
 use App\Actions\Client\UpdateClient;
 use App\Actions\Notification\NotifyUser;
-// use App\Http\Requests\DeleteClientRequest;
 use App\Http\Requests\DeleteClientRequest;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
 use App\Notifications\ClientCreated;
-// use App\Notifications\ClientDeleted;
 use App\Notifications\ClientDeleted;
 use App\Notifications\ClientUpdated;
 use Exception;
@@ -56,16 +54,34 @@ class ClientController extends Controller
 
     public function update(UpdateClientRequest $request, Client $client, UpdateClient $updateClient, NotifyUser $notifyUser): void
     {
-        $updateClient->handle($client, $request->validated());
+        DB::beginTransaction();
 
-        $notifyUser->handle(new ClientUpdated(auth()->user()));
+        try {
+            $updateClient->handle($client, $request->validated());
+
+            $notifyUser->handle(new ClientUpdated(auth()->user()));
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
     }
 
     public function destroy(DeleteClientRequest $request, Client $client, NotifyUser $notifyUser): void
     {
-        $notifyUser->handle(new ClientDeleted(auth()->user(), $client));
+        DB::beginTransaction();
+        try {
+            $client->emails()->delete();
+            $client->phones()->delete();
 
-        $client->delete();
+            $notifyUser->handle(new ClientDeleted(auth()->user(), $client));
+
+            $client->delete();
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
     }
 
     public function clients(): Collection

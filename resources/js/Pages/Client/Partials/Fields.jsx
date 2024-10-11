@@ -41,7 +41,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                     <InputLabel htmlFor="col-organization" required={false}>
                         Organization
                     </InputLabel>
-                    <InputError className="mt-2" message={errors.snake} />
+                    <InputError className="mt-2" message={errors.organization_id} />
                     <small className="text-muted flex justify-between">
                         <span className={'mt-2'}>
                             If the Organization is not listed, please{' '}
@@ -60,8 +60,8 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                 <div className="form-floating form-floating-outline">
                     <TextInput
                         type="text"
-                        value={data.email}
-                        onChange={(e) => setData('email', e.target.value)}
+                        value={data.emails}
+                        onChange={(e) => setData('emails', e.target.value)}
                         id="col-emails"
                         placeholder="Emails"
                         required={false}
@@ -70,7 +70,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                     <InputLabel htmlFor="col-emails" required={false}>
                         Emails
                     </InputLabel>
-                    <InputError className="mt-2" message={errors.email} />
+                    <InputError className="mt-2" message={errors.emails} />
                     <small className="text-muted">Separate multiple emails with a comma.</small>
                 </div>
             </div>
@@ -78,8 +78,8 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                 <div className="form-floating form-floating-outline">
                     <TextInput
                         type="text"
-                        value={data.phone}
-                        onChange={(e) => setData('phone', e.target.value)}
+                        value={data.phones}
+                        onChange={(e) => setData('phones', e.target.value)}
                         id="col-phones"
                         placeholder="Phones"
                         required={false}
@@ -88,7 +88,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                     <InputLabel htmlFor="col-phones" required={false}>
                         Phones
                     </InputLabel>
-                    <InputError className="mt-2" message={errors.phone} />
+                    <InputError className="mt-2" message={errors.phones} />
                     <small className="text-muted">Separate multiple emails with a comma.</small>
                 </div>
             </div>

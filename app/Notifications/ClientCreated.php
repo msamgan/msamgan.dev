@@ -53,8 +53,8 @@ class ClientCreated extends Notification // implements ShouldQueue
         $timestamp = now()->format('F j, Y, g:i a');
 
         return [
-            'title' => '',
-            'message' => '',
+            'title' => 'Client Created',
+            'message' => 'Client created by ' . $this->user->name . ' at ' . $timestamp,
         ];
     }
 }

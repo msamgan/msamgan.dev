@@ -20,7 +20,7 @@ export default function Form({ getClients, organizations, getOrganizations, clie
         post(action, {
             onSuccess: (r) => {
                 if (!client) {
-                    reset('name')
+                    reset()
                 }
 
                 getClients()

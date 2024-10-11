@@ -3,35 +3,27 @@
 namespace App\Actions\Client;
 
 use App\Models\Client;
-use Illuminate\Support\Facades\DB;
-use Throwable;
 
 class CreateClient
 {
     public function handle(array $data): Client
     {
-        try {
-            DB::beginTransaction();
+        $client = Client::create([
+            'name' => ucfirst($data['name']),
+            'organization_id' => $data['organization_id'] ?? null,
+        ]);
 
-            $client = Client::create([
-                'name' => ucfirst($data['name']),
-                'organization_id' => $data['organization_id'] ?? null,
-            ]);
-
-            if ($data['emails']) {
-                $emails = explode(',', $data['emails']);
-                $this->storeEmails($client, $emails);
-            }
-
-            if ($data['phones']) {
-                $phones = explode(',', $data['phones']);
-                $this->storePhones($client, $phones);
-            }
-
-            DB::commit();
-        } catch (Throwable $th) {
-            DB::rollBack();
+        if ($data['emails']) {
+            $emails = explode(',', $data['emails']);
+            $this->storeEmails($client, $emails);
         }
+
+        if ($data['phones']) {
+            $phones = explode(',', $data['phones']);
+            $this->storePhones($client, $phones);
+        }
+
+        return $client;
     }
 
     public function storeEmails(Client $client, array $emails): void
