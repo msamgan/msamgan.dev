@@ -5,7 +5,7 @@ import InputError from '@/Components/InputError.jsx'
 export default function Fields({ data, setData, errors, organizations, getOrganizations }) {
     return (
         <>
-            <div className="col-6 col-md-6">
+            <div className="col-12 col-md-12">
                 <div className="form-floating form-floating-outline">
                     <TextInput
                         type="text"
@@ -54,6 +54,42 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                             Add Organization
                         </a>
                     </small>
+                </div>
+            </div>
+            <div className="col-12 col-md-12">
+                <div className="form-floating form-floating-outline">
+                    <TextInput
+                        type="text"
+                        value={data.email}
+                        onChange={(e) => setData('email', e.target.value)}
+                        id="col-emails"
+                        placeholder="Emails"
+                        required={false}
+                        isFocused={false}
+                    />
+                    <InputLabel htmlFor="col-emails" required={false}>
+                        Emails
+                    </InputLabel>
+                    <InputError className="mt-2" message={errors.email} />
+                    <small className="text-muted">Separate multiple emails with a comma.</small>
+                </div>
+            </div>
+            <div className="col-12 col-md-12">
+                <div className="form-floating form-floating-outline">
+                    <TextInput
+                        type="text"
+                        value={data.phone}
+                        onChange={(e) => setData('phone', e.target.value)}
+                        id="col-phones"
+                        placeholder="Phones"
+                        required={false}
+                        isFocused={false}
+                    />
+                    <InputLabel htmlFor="col-phones" required={false}>
+                        Phones
+                    </InputLabel>
+                    <InputError className="mt-2" message={errors.phone} />
+                    <small className="text-muted">Separate multiple emails with a comma.</small>
                 </div>
             </div>
         </>
