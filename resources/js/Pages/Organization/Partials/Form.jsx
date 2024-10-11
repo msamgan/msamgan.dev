@@ -23,8 +23,7 @@ export default function Form({ getOrganizations, organization = null }) {
         post(action, {
             onSuccess: (r) => {
                 if (!organization) {
-                    reset('name')
-                    reset('location')
+                    reset()
                 }
 
                 getOrganizations()
@@ -38,7 +37,6 @@ export default function Form({ getOrganizations, organization = null }) {
             <div className="mb-6 ml-4 w-2/3">
                 <div className="card-body">
                     <div className="row g-5">
-                        {/* Fields go here... */}
                         <Fields data={data} setData={setData} errors={errors} />
                     </div>
                 </div>
