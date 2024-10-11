@@ -1,4 +1,4 @@
-export const columns = ['Name', 'Actions']
+export const columns = ['Name', 'Client', 'Status', 'Dates', 'Costing', 'Type', 'Actions']
 
 export const dataObject = (project) => {
     return {

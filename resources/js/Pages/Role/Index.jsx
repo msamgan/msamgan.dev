@@ -9,7 +9,7 @@ import { columns, pageObject } from '@/Pages/Role/helper.js'
 import Form from '@/Pages/Role/Partials/Form.jsx'
 import { useEffect, useState } from 'react'
 import Name from '@/Components/helpers/Name.jsx'
-import ActiveBadge from '@/Components/helpers/ActiveBadge.jsx'
+import Badge from '@/Components/helpers/Badge.jsx'
 import Actions from '@/Components/helpers/Actions.jsx'
 import DeleteEntityForm from '@/Components/layout/DeleteEntityForm.jsx'
 import { services } from '@/Utils/services/index.js'
@@ -44,7 +44,7 @@ export default function Index({ auth }) {
         return {
             Name: <Name value={role.display_name} />,
             UserCount: role.users_count,
-            Status: <ActiveBadge value={'Active'} />,
+            Status: <Badge value={'Active'} />,
             Actions: (
                 <Actions
                     edit={

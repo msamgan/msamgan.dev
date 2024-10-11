@@ -1,11 +1,11 @@
 import Master from '@/Layouts/Master.jsx'
 import { Head } from '@inertiajs/react'
-import { hasPermission, makeGetCall } from '@/Utils/methods.js'
+import { formatDate, hasPermission, makeGetCall, ucfisrt } from '@/Utils/methods.js'
 import { permissions } from '@/Utils/permissions/index.js'
 import { useEffect, useState } from 'react'
 import Actions from '@/Components/helpers/Actions.jsx'
 import Name from '@/Components/helpers/Name.jsx'
-import ActiveBadge from '@/Components/helpers/ActiveBadge.jsx'
+import Badge from '@/Components/helpers/Badge.jsx'
 import OffCanvasButton from '@/Components/off_canvas/OffCanvasButton.jsx'
 import Table from '@/Components/layout/Table.jsx'
 import { columns, pageObject } from '@/Pages/Project/helper.js'
@@ -37,6 +37,11 @@ export default function Index({ auth }) {
     const processProject = (project) => {
         return {
             Name: <Name value={project.name} />,
+            Client: project?.client?.name,
+            status: <Badge value={project.status} type={project.status} />,
+            Dates: formatDate(project.start_date) + ' - ' + formatDate(project.end_date),
+            Costing: project.costing + ' ' + 'USD',
+            Type: ucfisrt(project.type),
             Actions: (
                 <Actions
                     edit={

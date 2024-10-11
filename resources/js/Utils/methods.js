@@ -43,3 +43,15 @@ export const makeGetCall = (url, setState, setLoading) => {
             setLoading(false)
         })
 }
+
+export const ucfisrt = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+export const formatDate = (date) => {
+    if (!date) {
+        return ''
+    }
+
+    return new Date(date).toDateString()
+}

@@ -47,6 +47,7 @@ class ProjectController extends Controller
     public function show(Project $project): Project
     {
         // Access::businessCheck(businessId: $user->business_id);
+        $project->load('client', 'transactions');
 
         return $project;
     }
@@ -67,6 +68,8 @@ class ProjectController extends Controller
 
     public function projects(): Collection
     {
-        return Project::query()->get();
+        return Project::query()
+            ->with('client', 'transactions')
+            ->get();
     }
 }

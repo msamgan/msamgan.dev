@@ -5,7 +5,7 @@ import { permissions } from '@/Utils/permissions/index.js'
 import { useEffect, useState } from 'react'
 import Actions from '@/Components/helpers/Actions.jsx'
 import Name from '@/Components/helpers/Name.jsx'
-import ActiveBadge from '@/Components/helpers/ActiveBadge.jsx'
+import Badge from '@/Components/helpers/Badge.jsx'
 import OffCanvasButton from '@/Components/off_canvas/OffCanvasButton.jsx'
 import Table from '@/Components/layout/Table.jsx'
 import { columns, pageObject } from '@/Pages/User/helper.js'
@@ -44,7 +44,7 @@ export default function Index({ auth }) {
         return {
             Name: <Name value={user.name} />,
             Roles: user.roles.map((role) => role.display_name).join(', '),
-            Status: <ActiveBadge value={'Active'} />,
+            Status: <Badge value={'Active'} />,
             Actions: (
                 <Actions
                     edit={
