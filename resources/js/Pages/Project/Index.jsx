@@ -1,6 +1,6 @@
 import Master from '@/Layouts/Master.jsx'
 import { Head } from '@inertiajs/react'
-import { formatCurrency, formatDate, hasPermission, makeGetCall, ucfisrt } from '@/Utils/methods.js'
+import { formatCurrency, formatDate, hasPermission, makeGetCall } from '@/Utils/methods.js'
 import { permissions } from '@/Utils/permissions/index.js'
 import { useEffect, useState } from 'react'
 import Actions from '@/Components/helpers/Actions.jsx'
@@ -17,6 +17,7 @@ import { services } from '@/Utils/services/index.js'
 
 export default function Index({ auth }) {
     let hasListPermission = hasPermission(auth.user, permissions.project.list)
+    let hasClientListPermission = hasPermission(auth.user, permissions.client.list)
     let hasCreatePermission = hasPermission(auth.user, permissions.project.create)
     let hasUpdatePermission = hasPermission(auth.user, permissions.project.update)
     let hasDeletePermission = hasPermission(auth.user, permissions.project.delete)
@@ -81,6 +82,9 @@ export default function Index({ auth }) {
     useEffect(() => {
         if (hasListPermission) {
             getProjects()
+        }
+
+        if (hasClientListPermission) {
             getClients()
         }
     }, [])
@@ -94,7 +98,7 @@ export default function Index({ auth }) {
             <Head title="Projects" />
 
             <PageHeader
-                title={'Business Project List'}
+                title={'Project List'}
                 subtitle={'Find all of your business’s projects and there associated details.'}
                 action={
                     hasCreatePermission && (

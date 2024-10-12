@@ -65,7 +65,6 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
                         id="col-description"
                         placeholder="Description"
                         required={false}
-                        isFocused={false}
                         className={'form-control'}
                     />
                     <InputLabel htmlFor="col-description" required={false}>

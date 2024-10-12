@@ -16,11 +16,10 @@ export default function Form({ getProjects, project = null, clients, getClients 
 
     const submit = (e) => {
         e.preventDefault()
-
         post(action, {
             onSuccess: (r) => {
                 if (!project) {
-                    reset('name')
+                    reset()
                 }
 
                 getProjects()

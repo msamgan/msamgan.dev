@@ -2,24 +2,28 @@
 
 namespace App\Notifications;
 
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProjectCreated extends Notification implements ShouldQueue
+class ProjectCreated extends Notification // implements ShouldQueue
 {
     // use Queueable;
 
     private User $user;
 
+    private Project $project;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user)
+    public function __construct(User $user, Project $project)
     {
         $this->user = $user;
+        $this->project = $project;
     }
 
     /**
@@ -53,8 +57,8 @@ class ProjectCreated extends Notification implements ShouldQueue
         $timestamp = now()->format('F j, Y, g:i a');
 
         return [
-            'title' => '',
-            'message' => '',
+            'title' => 'Project Created',
+            'message' => "Project {$this->project->name} was created by {$this->user->name} on {$timestamp}",
         ];
     }
 }
