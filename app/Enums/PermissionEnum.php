@@ -4,6 +4,11 @@ namespace App\Enums;
 
 enum PermissionEnum: string
 {
+    case MediaList = 'media.list';
+    case MediaCreate = 'media.create';
+    case MediaUpdate = 'media.update';
+    case MediaDelete = 'media.delete';
+
     case TransactionList = 'transaction.list';
     case TransactionCreate = 'transaction.create';
     case TransactionUpdate = 'transaction.update';
@@ -86,6 +91,11 @@ enum PermissionEnum: string
             self::TransactionCreate => 'can:transaction.create',
             self::TransactionUpdate => 'can:transaction.update',
             self::TransactionDelete => 'can:transaction.delete',
+
+            self::MediaList => 'can:media.list',
+            self::MediaCreate => 'can:media.create',
+            self::MediaUpdate => 'can:media.update',
+            self::MediaDelete => 'can:media.delete',
         };
     }
 }
