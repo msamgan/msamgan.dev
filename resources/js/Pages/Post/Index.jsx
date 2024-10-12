@@ -72,9 +72,7 @@ export default function Index({ auth }) {
             <div className="flex flex-col space-y-1">
                 <Badge value={ucfisrt(status)} type={status === 'published' ? 'active' : 'cancelled'} />
                 {status === 'published' ? (
-                    <>
-                        <span className="mt-2 text-xs text-gray-900">{formatDate(published_at)}</span>
-                    </>
+                    <span className="mt-2 text-xs text-gray-900">{formatDate(published_at)}</span>
                 ) : null}
             </div>
         )
@@ -148,7 +146,7 @@ export default function Index({ auth }) {
             ></PageHeader>
 
             {hasCreatePermission && (
-                <OffCanvas id="postFormCanvas" title={pageData.title}>
+                <OffCanvas id="postFormCanvas" title={pageData.title} w={'w-100'}>
                     <Form getPosts={getPosts} postData={post} />
                 </OffCanvas>
             )}
