@@ -9,7 +9,7 @@ export default function FormLayout({ children, submit, processing, recentlySucce
                 </div>
             </div>
 
-            <div className="d-flex justify-content-end w-2/3 gap-4">
+            <div className="d-flex justify-content-end ml-5 w-2/3 gap-4">
                 <button disabled={processing} className="btn btn-primary">
                     Save Changes
                 </button>
