@@ -35,7 +35,7 @@ class ClientController extends Controller
         try {
             $client = $createClient->handle($request->validated());
 
-            $notifyUser->handle(new ClientCreated(auth()->user()));
+            $notifyUser->handle(new ClientCreated(auth()->user(), $client));
 
             DB::commit();
         } catch (Exception $e) {
@@ -46,7 +46,6 @@ class ClientController extends Controller
 
     public function show(Client $client): Client
     {
-        // Access::businessCheck(businessId: $user->business_id);
         $client->load('organization', 'emails', 'phones');
 
         return $client;
@@ -59,7 +58,7 @@ class ClientController extends Controller
         try {
             $updateClient->handle($client, $request->validated());
 
-            $notifyUser->handle(new ClientUpdated(auth()->user()));
+            $notifyUser->handle(new ClientUpdated(auth()->user(), $updateClient));
 
             DB::commit();
         } catch (Exception $e) {

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Access;
 use App\Actions\Notification\NotifyUser;
 use App\Actions\Organization\CreateOrganization;
 use App\Actions\Organization\UpdateOrganization;
@@ -47,8 +46,6 @@ class OrganizationController extends Controller
 
     public function show(Organization $organization): Organization
     {
-        Access::businessCheck(businessId: auth()->user()->business_id);
-
         return $organization;
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\PermissionEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,6 +13,10 @@ class DeleteClientRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if (! auth()->user()->can(PermissionEnum::ClientDelete->value)) {
+            return false;
+        }
+
         return true;
     }
 

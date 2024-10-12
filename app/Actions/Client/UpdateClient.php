@@ -4,7 +4,7 @@ namespace App\Actions\Client;
 
 use App\Models\Client;
 
-class UpdateClient
+class UpdateClient extends \App\Models\Client
 {
     public function handle(Client $client, array $data): Client
     {

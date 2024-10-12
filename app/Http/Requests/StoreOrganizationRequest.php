@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Actions\Access;
 use App\Enums\PermissionEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -15,10 +14,6 @@ class StoreOrganizationRequest extends FormRequest
     public function authorize(): bool
     {
         if (! auth()->user()->can(PermissionEnum::OrganizationCreate->value)) {
-            return false;
-        }
-
-        if (! Access::businessCheck(businessId: auth()->user()->business_id, abort: false)) {
             return false;
         }
 
