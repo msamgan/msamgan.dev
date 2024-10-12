@@ -9,5 +9,5 @@ export default forwardRef(function TextInput({ type = 'text', className = '', is
         }
     }, [])
 
-    return <input {...props} type={type} className={'form-control ' + className} ref={input} />
+    return <input {...props} type={type} className={'form-control rounded-md' + className} ref={input} />
 })

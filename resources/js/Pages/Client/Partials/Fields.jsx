@@ -29,7 +29,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         onChange={(e) => setData('organization_id', e.target.value)}
                         id="col-organization"
                         required={false}
-                        className="form-select"
+                        className="form-select rounded-md pb-2"
                     >
                         <option value="">Select Organization</option>
                         {organizations.map((organization) => (

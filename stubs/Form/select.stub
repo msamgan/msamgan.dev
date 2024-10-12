@@ -5,7 +5,7 @@
             onChange={(e) => setData('{snake}', e.target.value)}
             id="col-{kebab_without_id}"
             required={{required}}
-            className="form-select"
+            className="form-select rounded-md pb-2"
         >
             <option value="">Select {title_without_id}</option>
             {{plural_camel_without_id}.map(({camel_without_id}) => (

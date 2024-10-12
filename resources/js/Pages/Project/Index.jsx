@@ -13,6 +13,7 @@ import PageHeader from '@/Components/PageHeader.jsx'
 import OffCanvas from '@/Components/off_canvas/OffCanvas.jsx'
 import Form from '@/Pages/Project/Partials/Form.jsx'
 import DeleteEntityForm from '@/Components/layout/DeleteEntityForm.jsx'
+import { services } from '@/Utils/services/index.js'
 
 export default function Index({ auth }) {
     let hasListPermission = hasPermission(auth.user, permissions.project.list)
@@ -25,13 +26,18 @@ export default function Index({ auth }) {
     const [project, setProject] = useState(null)
     const [loading, setLoading] = useState(true)
     const [pageData, setPageData] = useState(pageObject(null))
+    const [clients, setClients] = useState([])
 
     const getProjects = () => {
-        makeGetCall(route('service.projects'), setProjects, setLoading)
+        makeGetCall(services.project.list, setProjects, setLoading)
     }
 
     const getProject = (id) => {
-        makeGetCall(route('service.project.show', id), setProject, setLoading)
+        makeGetCall(services.project.show(id), setProject, setLoading)
+    }
+
+    const getClients = () => {
+        makeGetCall(services.client.list, setClients, setLoading)
     }
 
     const processProject = (project) => {
@@ -75,6 +81,7 @@ export default function Index({ auth }) {
     useEffect(() => {
         if (hasListPermission) {
             getProjects()
+            getClients()
         }
     }, [])
 
@@ -107,7 +114,7 @@ export default function Index({ auth }) {
 
             {hasCreatePermission && (
                 <OffCanvas id="projectFormCanvas" title={pageData.title}>
-                    <Form getProjects={getProjects} project={project} />
+                    <Form getProjects={getProjects} project={project} clients={clients} getClients={getClients} />
                 </OffCanvas>
             )}
 
