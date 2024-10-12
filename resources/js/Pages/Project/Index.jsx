@@ -1,6 +1,6 @@
 import Master from '@/Layouts/Master.jsx'
 import { Head } from '@inertiajs/react'
-import { formatDate, hasPermission, makeGetCall, ucfisrt } from '@/Utils/methods.js'
+import { formatCurrency, formatDate, hasPermission, makeGetCall, ucfisrt } from '@/Utils/methods.js'
 import { permissions } from '@/Utils/permissions/index.js'
 import { useEffect, useState } from 'react'
 import Actions from '@/Components/helpers/Actions.jsx'
@@ -46,8 +46,8 @@ export default function Index({ auth }) {
             Client: project?.client?.name,
             status: <Badge value={project.status} type={project.status} />,
             Dates: formatDate(project.start_date) + ' - ' + formatDate(project.end_date),
-            Costing: project.costing + ' ' + 'USD',
-            Type: ucfisrt(project.type),
+            Costing: formatCurrency(project.costing),
+            Type: <Badge value={project.type} type={project.type === 'singular' ? 'lead' : 'active'} />,
             Actions: (
                 <Actions
                     edit={

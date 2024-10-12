@@ -1,6 +1,6 @@
 import Master from '@/Layouts/Master.jsx'
 import { Head } from '@inertiajs/react'
-import { hasPermission, makeGetCall } from '@/Utils/methods.js'
+import { formatCurrency, formatDate, hasPermission, makeGetCall, ucfisrt } from '@/Utils/methods.js'
 import { permissions } from '@/Utils/permissions/index.js'
 import { useEffect, useState } from 'react'
 import Actions from '@/Components/helpers/Actions.jsx'
@@ -13,6 +13,7 @@ import OffCanvas from '@/Components/off_canvas/OffCanvas.jsx'
 import Form from '@/Pages/Transaction/Partials/Form.jsx'
 import DeleteEntityForm from '@/Components/layout/DeleteEntityForm.jsx'
 import { services } from '@/Utils/services/index.js'
+import Badge from '@/Components/helpers/Badge.jsx'
 
 export default function Index({ auth }) {
     let hasListPermission = hasPermission(auth.user, permissions.transaction.list)
@@ -37,9 +38,14 @@ export default function Index({ auth }) {
     const processTransaction = (transaction) => {
         return {
             Description: <Name value={transaction.description} />,
-            Type: transaction.type,
-            Amount: transaction.amount,
-            Date: transaction.date,
+            Type: (
+                <Badge
+                    value={ucfisrt(transaction.type)}
+                    type={transaction.type === 'outgoing' ? 'cancelled' : 'completed'}
+                />
+            ),
+            Amount: formatCurrency(transaction.amount),
+            Date: formatDate(transaction.date),
         }
     }
 

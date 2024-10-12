@@ -83,7 +83,7 @@ export default function Index({ auth }) {
             <Head title="Organizations" />
 
             <PageHeader
-                title={'Business Organization List'}
+                title={'Organization List'}
                 subtitle={'Find all of your business’s organizations and there associated details.'}
                 action={
                     hasCreatePermission && (
