@@ -4,8 +4,8 @@ export const dataObject = (client) => {
     return {
         name: client ? client.name : '',
         organization_id: client ? client?.organization.id : '',
-        email: client ? client.email.map((email) => email.email).join(', ') : '',
-        phone: client ? client.phone.map((phone) => phone.phone).join(', ') : '',
+        emails: client ? client?.emails?.map((email) => email.email).join(', ') : '',
+        phones: client ? client?.phones?.map((phone) => phone.phone).join(', ') : '',
     }
 }
 

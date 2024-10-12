@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Actions\Notification\NotifyUser;
 use App\Actions\Project\CreateProject;
 use App\Actions\Project\UpdateProject;
-// use App\Http\Requests\DeleteProjectRequest;
+use App\Http\Requests\DeleteProjectRequest;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Notifications\ProjectCreated;
-// use App\Notifications\ProjectDeleted;
+use App\Notifications\ProjectDeleted;
 use App\Notifications\ProjectUpdated;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -35,7 +35,7 @@ class ProjectController extends Controller
         try {
             $project = $createProject->handle($request->validated());
 
-            $notifyUser->handle(new ProjectCreated(auth()->user()));
+            $notifyUser->handle(new ProjectCreated(auth()->user(), $project));
 
             DB::commit();
         } catch (Exception $e) {
@@ -46,7 +46,7 @@ class ProjectController extends Controller
 
     public function show(Project $project): Project
     {
-        // Access::businessCheck(businessId: $user->business_id);
+        $project->load('client', 'transactions');
 
         return $project;
     }
@@ -55,18 +55,20 @@ class ProjectController extends Controller
     {
         $updateProject->handle($project, $request->validated());
 
-        $notifyUser->handle(new ProjectUpdated(auth()->user()));
+        $notifyUser->handle(new ProjectUpdated(auth()->user(), $updateProject));
     }
 
-    /*public function destroy(DeleteProjectRequest $request, Project $project, NotifyUser $notifyUser): void
+    public function destroy(DeleteProjectRequest $request, Project $project, NotifyUser $notifyUser): void
     {
-        $notifyUser->handle(new ProjectDeleted(auth()->user()));
+        $notifyUser->handle(new ProjectDeleted(auth()->user(), $project));
 
         $project->delete();
-    }*/
+    }
 
     public function projects(): Collection
     {
-        return Project::query()->get();
+        return Project::query()
+            ->with('client', 'transactions')
+            ->get();
     }
 }

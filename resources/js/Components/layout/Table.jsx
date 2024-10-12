@@ -3,13 +3,13 @@ import DisplayMessage from '@/Components/DisplayMessage.jsx'
 
 const TableContainer = ({ columns, data, tdClassName }) => {
     return (
-        <div className="card mt">
+        <div className="mt">
             <div className="table-responsive text-nowrap">
                 <h5 className="card-header text-end text-lg font-light">
                     Total Records:
                     <span className="badge rounded-pill ms-4 bg-primary">{data.length}</span>
                 </h5>
-                <table className="table-sm table">
+                <table className="table-sm table-hover mt-8 table">
                     <thead className={'table-dark'}>
                         <tr>
                             {columns.map((column, index) => (

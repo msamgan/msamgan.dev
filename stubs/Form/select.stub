@@ -1,13 +1,14 @@
 <div className="col-12 col-md-12">
     <div className="form-floating form-floating-outline">
-        <textarea
+        <select
             value={data.{snake}}
             onChange={(e) => setData('{snake}', e.target.value)}
             id="col-{kebab}"
-            placeholder="{title}"
             required={{required}}
-            className={'form-control'}
-        />
+            className="form-select rounded-md pb-2"
+        >
+            <option value="">Select {title}</option>
+        </select>
         <InputLabel htmlFor="col-{kebab}" required={{required}}>
             {title}
         </InputLabel>

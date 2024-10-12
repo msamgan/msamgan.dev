@@ -1,13 +1,11 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', fn () => redirect('login'))->name('welcome');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 $moduleRoutesDir = 'routes/modules/';
 foreach (\Illuminate\Support\Facades\File::allFiles(base_path($moduleRoutesDir)) as $file) {

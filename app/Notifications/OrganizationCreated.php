@@ -2,24 +2,28 @@
 
 namespace App\Notifications;
 
+use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class OrganizationCreated extends Notification implements ShouldQueue
+class OrganizationCreated extends Notification // implements ShouldQueue
 {
     // use Queueable;
 
     private User $user;
 
+    private Organization $organization;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user)
+    public function __construct(User $user, Organization $organization)
     {
         $this->user = $user;
+        $this->organization = $organization;
     }
 
     /**
@@ -53,8 +57,8 @@ class OrganizationCreated extends Notification implements ShouldQueue
         $timestamp = now()->format('F j, Y, g:i a');
 
         return [
-            'title' => '',
-            'message' => '',
+            'title' => 'Organization Created',
+            'message' => "Organization {$this->organization->name} was created by {$this->user->name} on {$timestamp}",
         ];
     }
 }
