@@ -25,6 +25,10 @@ Route::middleware(['auth', 'check_has_business'])->group(function () {
         ->middleware([PermissionEnum::PostList->can()])
         ->name('service.posts');
 
+    Route::get('service/post/last', [PostController::class, 'last'])
+        ->middleware([PermissionEnum::PostCreate->can()])
+        ->name('service.post.last');
+
     Route::get('service/post/show/{post}', [PostController::class, 'show'])
         ->middleware([PermissionEnum::PostUpdate->can()])
         ->name('service.post.show');

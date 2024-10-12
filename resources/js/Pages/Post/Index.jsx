@@ -146,7 +146,7 @@ export default function Index({ auth }) {
             ></PageHeader>
 
             {hasCreatePermission && (
-                <OffCanvas id="postFormCanvas" title={pageData.title} w={'w-100'}>
+                <OffCanvas id="postFormCanvas" title={pageData.title} w={'w-100'} childrenClass={'mx-auto w-2/3'}>
                     <Form getPosts={getPosts} postData={post} />
                 </OffCanvas>
             )}

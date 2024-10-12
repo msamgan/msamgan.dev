@@ -42,3 +42,10 @@ if (! function_exists('allCases')) {
         return $cases;
     }
 }
+
+if (! function_exists('removeNbsp')) {
+    function removeNbsp($string): array|string
+    {
+        return str_replace('&nbsp;', ' ', $string);
+    }
+}

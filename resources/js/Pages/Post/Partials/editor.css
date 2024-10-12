@@ -1,0 +1,26 @@
+.ce-toolbar {
+    width: 66%;
+    top: 6px !important;
+}
+
+.ce-block__content {
+    max-width: 90%;
+}
+
+h1 {
+    @apply text-4xl font-bold;
+}
+
+h2 {
+    @apply text-2xl font-bold;
+}
+
+h3 {
+    @apply text-lg font-bold;
+}
+
+.inline-image__orientation-button {
+    margin-right: 15px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}

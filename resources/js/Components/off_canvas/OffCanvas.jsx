@@ -1,4 +1,4 @@
-export default function OffCanvas({ id, title, w = 'w-75', children }) {
+export default function OffCanvas({ id, title, w = 'w-75', children, childrenClass = '' }) {
     return (
         <div className={w + ' offcanvas offcanvas-end'} tabIndex="-1" id={id} aria-labelledby={id + 'Label'}>
             <div className="offcanvas-header">
@@ -12,7 +12,7 @@ export default function OffCanvas({ id, title, w = 'w-75', children }) {
                     aria-label="Close"
                 ></button>
             </div>
-            <div className="offcanvas-body mx-0 flex-grow-0">{children}</div>
+            <div className={'offcanvas-body flex-grow-0 ' + childrenClass}>{children}</div>
         </div>
     )
 }
