@@ -67,6 +67,9 @@ class PostController extends Controller
 
     public function posts(): Collection
     {
-        return Post::query()->get();
+        return Post::query()
+            ->with('tags')
+            ->orderBy('published_at', 'desc')
+            ->get();
     }
 }

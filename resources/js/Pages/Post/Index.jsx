@@ -1,6 +1,6 @@
 import Master from '@/Layouts/Master.jsx'
 import { Head } from '@inertiajs/react'
-import { hasPermission, makeGetCall } from '@/Utils/methods.js'
+import { formatDate, hasPermission, makeGetCall, ucfisrt } from '@/Utils/methods.js'
 import { permissions } from '@/Utils/permissions/index.js'
 import { useEffect, useState } from 'react'
 import Actions from '@/Components/helpers/Actions.jsx'
@@ -13,6 +13,7 @@ import OffCanvas from '@/Components/off_canvas/OffCanvas.jsx'
 import Form from '@/Pages/Post/Partials/Form.jsx'
 import DeleteEntityForm from '@/Components/layout/DeleteEntityForm.jsx'
 import { services } from '@/Utils/services/index.js'
+import Badge from '@/Components/helpers/Badge.jsx'
 
 export default function Index({ auth }) {
     let hasListPermission = hasPermission(auth.user, permissions.post.list)
@@ -34,9 +35,55 @@ export default function Index({ auth }) {
         makeGetCall(services.post.show(id), setPost, setLoading)
     }
 
+    const CreateTitleAttribute = ({ title, tags, featured_image }) => {
+        return (
+            <div className="flex gap-6 space-x-3">
+                <div className="mt-2">
+                    <img
+                        alt={'image'}
+                        src={
+                            featured_image
+                                ? featured_image
+                                : 'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg'
+                        }
+                        className="h-16 w-16 rounded-full"
+                    />
+                </div>
+                <div>
+                    <Name value={title} />
+                    {tags.length > 0 ? (
+                        <div className="mt-4 text-xs">
+                            {tags.map((tag) => {
+                                return (
+                                    <span key={tag.id} className="rounded-full bg-gray-200 px-2 py-1 text-gray-900">
+                                        {tag.name}
+                                    </span>
+                                )
+                            })}
+                        </div>
+                    ) : null}
+                </div>
+            </div>
+        )
+    }
+
+    const CreateStatusAttribute = ({ status, published_at }) => {
+        return (
+            <div className="flex flex-col space-y-1">
+                <Badge value={ucfisrt(status)} type={status === 'published' ? 'active' : 'cancelled'} />
+                {status === 'published' ? (
+                    <>
+                        <span className="mt-2 text-xs text-gray-900">{formatDate(published_at)}</span>
+                    </>
+                ) : null}
+            </div>
+        )
+    }
+
     const processPost = (post) => {
         return {
-            Title: <Name value={post.title} />,
+            Title: <CreateTitleAttribute title={post.title} tags={post.tags} featured_image={post.featured_image} />,
+            Status: <CreateStatusAttribute status={post.status} published_at={post.published_at} />,
             Actions: (
                 <Actions
                     edit={
@@ -115,6 +162,10 @@ export default function Index({ auth }) {
                     tdClassName={[
                         {
                             column: 'Title',
+                            className: 'text-wrap',
+                        },
+                        {
+                            column: 'Excerpt',
                             className: 'text-wrap',
                         },
                     ]}

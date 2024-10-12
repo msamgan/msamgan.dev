@@ -1,4 +1,4 @@
-export const columns = ['Title', 'Actions']
+export const columns = ['Title', 'Status', 'Actions']
 
 export const dataObject = (post) => {
     return {
