@@ -47,6 +47,9 @@ class PostController extends Controller
 
     public function show(Post $post): Post
     {
+        $post->content = json_decode($post->content_raw);
+        $post->load('tags');
+
         return $post;
     }
 
