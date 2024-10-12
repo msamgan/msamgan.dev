@@ -6,7 +6,7 @@
             id="col-{kebab}"
             placeholder="{title}"
             required={{required}}
-            isFocused={false}
+            className={'form-control'}
         />
         <InputLabel htmlFor="col-{kebab}" required={{required}}>
             {title}

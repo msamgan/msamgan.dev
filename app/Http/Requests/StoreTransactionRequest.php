@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\PermissionEnum;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTransactionRequest extends FormRequest
@@ -11,18 +13,26 @@ class StoreTransactionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        if (! auth()->user()->can(PermissionEnum::TransactionCreate->value)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'type' => ['required', 'string', 'in:incoming,outgoing'],
+            'amount' => ['required', 'numeric'],
+            'description' => ['required', 'string'],
+            'date' => ['required', 'date'],
+            'project_id' => ['nullable', 'exists:projects,id'],
         ];
     }
 }

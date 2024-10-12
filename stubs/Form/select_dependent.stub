@@ -1,0 +1,38 @@
+<div className="col-12 col-md-12">
+    <div className="form-floating form-floating-outline">
+        <select
+            value={data.{snake}}
+            onChange={(e) => setData('{snake}', e.target.value)}
+            id="col-{kebab_without_id}"
+            required={{required}}
+            className="form-select rounded-md pb-2"
+        >
+            <option value="">Select {title_without_id}</option>
+            {{plural_camel_without_id}.map(({camel_without_id}) => (
+                <option key={{camel_without_id}.id} value={{camel_without_id}.id}>
+                    {{camel_without_id}.name}
+                </option>
+            ))}
+        </select>
+        <InputLabel htmlFor="col-{kebab_without_id}" required={{required}}>
+            {title_without_id}
+        </InputLabel>
+        <InputError className="mt-2" message={errors.{snake}} />
+        <small className="text-muted flex justify-between">
+            <span className={'mt-2'}>
+                If the {title_without_id} is not listed, please{' '}
+                <a href="#" className={'text-blue-700'} onClick={get{plural_studly_without_id}}>
+                    click here
+                </a>{' '}
+                to refresh the list.
+            </span>
+            <a
+                target={'_blank'}
+                href={route('{snake_without_id}.index')}
+                className={'ml-5 mt-2 text-blue-700'}
+            >
+                Add {title_without_id}
+            </a>
+        </small>
+    </div>
+</div>

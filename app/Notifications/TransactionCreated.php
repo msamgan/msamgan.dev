@@ -2,24 +2,26 @@
 
 namespace App\Notifications;
 
+use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TransactionCreated extends Notification implements ShouldQueue
+class TransactionCreated extends Notification // implements ShouldQueue
 {
     // use Queueable;
 
     private User $user;
 
+    private Transaction $transaction;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user)
+    public function __construct(User $user, Transaction $transaction)
     {
         $this->user = $user;
+        $this->transaction = $transaction;
     }
 
     /**
@@ -53,8 +55,10 @@ class TransactionCreated extends Notification implements ShouldQueue
         $timestamp = now()->format('F j, Y, g:i a');
 
         return [
-            'title' => '',
-            'message' => '',
+            'title' => 'Transaction Created',
+            'message' => $this->transaction->type === 'incoming'
+                ? "An Incoming Transaction with amount {$this->transaction->amount} was created by {$this->user->name} on {$timestamp}"
+                : "An Outgoing Transaction with amount {$this->transaction->amount} was created by {$this->user->name} on {$timestamp}",
         ];
     }
 }

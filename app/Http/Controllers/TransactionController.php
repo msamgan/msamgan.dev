@@ -4,14 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Actions\Notification\NotifyUser;
 use App\Actions\Transaction\CreateTransaction;
-use App\Actions\Transaction\UpdateTransaction;
-// use App\Http\Requests\DeleteTransactionRequest;
 use App\Http\Requests\StoreTransactionRequest;
-use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Transaction;
 use App\Notifications\TransactionCreated;
-// use App\Notifications\TransactionDeleted;
-use App\Notifications\TransactionUpdated;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +30,7 @@ class TransactionController extends Controller
         try {
             $transaction = $createTransaction->handle($request->validated());
 
-            $notifyUser->handle(new TransactionCreated(auth()->user()));
+            $notifyUser->handle(new TransactionCreated(auth()->user(), $transaction));
 
             DB::commit();
         } catch (Exception $e) {
@@ -44,31 +39,20 @@ class TransactionController extends Controller
         }
     }
 
-    public function show(Transaction $transaction): Transaction
-    {
-        // Access::businessCheck(businessId: $user->business_id);
-
-        return $transaction;
-    }
-
-    public function update(UpdateTransactionRequest $request, Transaction $transaction, UpdateTransaction $updateTransaction, NotifyUser $notifyUser): void
-    {
-        $updateTransaction->handle($transaction, $request->validated());
-
-        $notifyUser->handle(new TransactionUpdated(auth()->user()));
-    }
-
-    /*public function destroy(DeleteTransactionRequest $request, Transaction $transaction, NotifyUser $notifyUser): void
-    {
-        $notifyUser->handle(new TransactionDeleted(auth()->user()));
-
-        $transaction->delete();
-    }*/
-
     public function transactions(): Collection
     {
         return Transaction::query()
+            ->with('project')
             ->orderBy('created_at', 'desc')
             ->get();
+    }
+
+    public function descriptions(): \Illuminate\Support\Collection
+    {
+        return Transaction::query()
+            ->select('description')
+            ->distinct()
+            ->get()
+            ->pluck('description');
     }
 }

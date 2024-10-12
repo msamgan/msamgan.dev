@@ -68,7 +68,7 @@ class MakeForm extends Command
             $formFields = collect($filteredColumns)->map(function ($column) {
                 return [
                     'name' => $column->Field,
-                    'type' => str_contains($column->Field, '_id') ? 'select' : $this->typeCasting($column->Type),
+                    'type' => str_contains($column->Field, '_id') ? 'select_dependent' : $this->typeCasting($column->Type),
                     'required' => $column->Null === 'NO',
                 ];
             });
@@ -87,7 +87,7 @@ class MakeForm extends Command
                     array_merge($cases, ['required' => $field['required'] ? 'true' : 'false'])
                 );
 
-                if ($field['type'] === 'select') {
+                if ($field['type'] === 'select_dependent') {
                     $dependencyArray[] = $cases['plural_camel_without_id'];
                     $dependencyArray[] = 'get' . $cases['plural_studly_without_id'];
                 }

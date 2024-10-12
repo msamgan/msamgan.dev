@@ -1,14 +1,14 @@
-<div className="col-12 col-md-12">
+<div className="col-6 col-md-6">
     <div className="form-floating form-floating-outline">
-        <select
+        <TextInput
+            type="date"
             value={data.{snake}}
             onChange={(e) => setData('{snake}', e.target.value)}
             id="col-{kebab}"
+            placeholder="{title}"
             required={{required}}
-            className="form-select rounded-md pb-2"
-        >
-            <option value="">Select {title}</option>
-        </select>
+            isFocused={false}
+        />
         <InputLabel htmlFor="col-{kebab}" required={{required}}>
             {title}
         </InputLabel>

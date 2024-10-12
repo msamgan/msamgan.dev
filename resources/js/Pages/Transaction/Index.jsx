@@ -3,7 +3,6 @@ import { Head } from '@inertiajs/react'
 import { formatCurrency, formatDate, hasPermission, makeGetCall, ucfisrt } from '@/Utils/methods.js'
 import { permissions } from '@/Utils/permissions/index.js'
 import { useEffect, useState } from 'react'
-import Actions from '@/Components/helpers/Actions.jsx'
 import Name from '@/Components/helpers/Name.jsx'
 import OffCanvasButton from '@/Components/off_canvas/OffCanvasButton.jsx'
 import Table from '@/Components/layout/Table.jsx'
@@ -11,33 +10,38 @@ import { columns, pageObject } from '@/Pages/Transaction/helper.js'
 import PageHeader from '@/Components/PageHeader.jsx'
 import OffCanvas from '@/Components/off_canvas/OffCanvas.jsx'
 import Form from '@/Pages/Transaction/Partials/Form.jsx'
-import DeleteEntityForm from '@/Components/layout/DeleteEntityForm.jsx'
 import { services } from '@/Utils/services/index.js'
 import Badge from '@/Components/helpers/Badge.jsx'
 
 export default function Index({ auth }) {
     let hasListPermission = hasPermission(auth.user, permissions.transaction.list)
+    let hasProjectListPermission = hasPermission(auth.user, permissions.project.list)
     let hasCreatePermission = hasPermission(auth.user, permissions.transaction.create)
-    let hasUpdatePermission = hasPermission(auth.user, permissions.transaction.update)
-    let hasDeletePermission = hasPermission(auth.user, permissions.transaction.delete)
 
     const [transactions, setTransactions] = useState([])
     const [data, setData] = useState([])
     const [transaction, setTransaction] = useState(null)
     const [loading, setLoading] = useState(true)
     const [pageData, setPageData] = useState(pageObject(null))
+    const [projects, setProjects] = useState([])
+    const [descriptions, setDescriptions] = useState([])
 
     const getTransactions = () => {
         makeGetCall(services.transaction.list, setTransactions, setLoading)
     }
 
-    const getTransaction = (id) => {
-        makeGetCall(services.transaction.show(id), setTransaction, setLoading)
+    const getProjects = () => {
+        makeGetCall(services.project.list, setProjects, setLoading)
+    }
+
+    const getDescriptions = () => {
+        makeGetCall(services.transaction.descriptions, setDescriptions, setLoading)
     }
 
     const processTransaction = (transaction) => {
         return {
             Description: <Name value={transaction.description} />,
+            Project: transaction.project ? transaction.project.name : '',
             Type: (
                 <Badge
                     value={ucfisrt(transaction.type)}
@@ -52,6 +56,11 @@ export default function Index({ auth }) {
     useEffect(() => {
         if (hasListPermission) {
             getTransactions()
+            getDescriptions()
+        }
+
+        if (hasProjectListPermission) {
+            getProjects()
         }
     }, [])
 
@@ -84,7 +93,13 @@ export default function Index({ auth }) {
 
             {hasCreatePermission && (
                 <OffCanvas id="transactionFormCanvas" title={pageData.title}>
-                    <Form getTransactions={getTransactions} transaction={transaction} />
+                    <Form
+                        getTransactions={getTransactions}
+                        transaction={transaction}
+                        projects={projects}
+                        getProjects={getProjects}
+                        descriptions={descriptions}
+                    />
                 </OffCanvas>
             )}
 
