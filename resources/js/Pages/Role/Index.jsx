@@ -95,7 +95,7 @@ export default function Index({ auth }) {
             <Head title="Roles" />
 
             <PageHeader
-                title={'Business Roles List'}
+                title={'Roles List'}
                 subtitle={'Find all of your business’s roles and there associated permissions.'}
                 action={
                     hasCreatePermission && (

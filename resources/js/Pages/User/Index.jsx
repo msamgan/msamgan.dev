@@ -92,7 +92,7 @@ export default function Index({ auth }) {
             <Head title="Users" />
 
             <PageHeader
-                title={'Business User List'}
+                title={'User List'}
                 subtitle={'Find all of your business’s users and there associated details.'}
                 action={
                     hasCreatePermission && (

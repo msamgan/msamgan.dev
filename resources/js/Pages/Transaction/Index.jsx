@@ -73,7 +73,7 @@ export default function Index({ auth }) {
             <Head title="Transactions" />
 
             <PageHeader
-                title={'Business Transaction List'}
+                title={'Transaction List'}
                 subtitle={'Find all of your business’s transactions and there associated details.'}
                 action={
                     hasCreatePermission && (
