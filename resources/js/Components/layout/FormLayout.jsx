@@ -10,7 +10,7 @@ export default function FormLayout({ children, submit, processing, recentlySucce
             </div>
 
             <div className={'d-flex justify-content-end ml-5 gap-4 ' + w}>
-                <button disabled={processing} className="btn btn-primary">
+                <button disabled={processing} id={'savePostBtn'} className="btn btn-primary">
                     Save Changes
                 </button>
                 <Transition

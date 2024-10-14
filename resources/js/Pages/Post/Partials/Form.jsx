@@ -20,11 +20,12 @@ import Table from '@editorjs/table'
 
 import './editor.css'
 import { services } from '@/Utils/services/index.js'
+import { objectIsEmpty } from '@/Utils/methods.js'
 
 export default function Form({ getPosts, postData = null }) {
     const [action, setAction] = useState(routes.post.store)
     const { data, setData, post, errors, processing, recentlySuccessful, reset } = useForm(dataObject(null))
-    const [content, setContent] = useState(postData ? postData.content : {})
+    const [content, setContent] = useState({})
     const [isSaving, setIsSaving] = useState(false)
 
     const editor = useRef(null)
@@ -38,7 +39,12 @@ export default function Form({ getPosts, postData = null }) {
 
     const submit = (e) => {
         e.preventDefault()
-        setData('content', content)
+        if (objectIsEmpty(content) && postData) {
+            setData('content', postData.content)
+        } else {
+            setData('content', content)
+        }
+
         setIsSaving(true)
     }
 
@@ -55,9 +61,11 @@ export default function Form({ getPosts, postData = null }) {
                 }
 
                 getPosts()
-                setIsSaving(false)
             },
             onError: () => {},
+            onFinish: () => {
+                setIsSaving(false)
+            },
         })
     }, [isSaving])
 

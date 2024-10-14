@@ -15,6 +15,7 @@ class CreatePost
         $data['content_raw'] = json_encode($data['content']);
         $data['content'] = removeNbsp($parsedHtmlContent);
         $data['slug'] = Str::slug($data['title']);
+        $data['meta_description'] = $data['excerpt'];
 
         return Post::create($data);
     }

@@ -15,6 +15,7 @@ class UpdatePost
         $data['content_raw'] = json_encode($data['content']);
         $data['content'] = removeNbsp($parsedHtmlContent);
         $data['slug'] = Str::slug($data['slug']);
+        $data['meta_description'] = $data['excerpt'];
 
         $post->update($data);
 
