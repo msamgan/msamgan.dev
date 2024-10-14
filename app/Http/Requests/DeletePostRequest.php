@@ -6,14 +6,14 @@ use App\Enums\PermissionEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePostRequest extends FormRequest
+class DeletePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        if (! auth()->user()->can(PermissionEnum::PostCreate->value)) {
+        if (! auth()->user()->can(PermissionEnum::PostDelete->value)) {
             return false;
         }
 
@@ -28,12 +28,7 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'content' => ['required', 'array'],
-            'status' => ['required', 'string', 'in:draft,published'],
-            'featured_image' => ['nullable', 'string', 'url', 'max:255'],
-            'excerpt' => ['required', 'string'],
-            'tags' => ['nullable', 'array'],
+            //
         ];
     }
 }

@@ -62,3 +62,7 @@ export const formatCurrency = (amount) => {
         currency: 'USD',
     }).format(amount)
 }
+
+export const objectIsEmpty = (obj) => {
+    return Object.keys(obj).length === 0
+}

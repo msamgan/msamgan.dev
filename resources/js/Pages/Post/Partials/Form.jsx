@@ -1,76 +1,158 @@
 import { useForm } from '@inertiajs/react'
-import TextInput from '@/Components/TextInput.jsx'
-import InputLabel from '@/Components/InputLabel.jsx'
-import InputError from '@/Components/InputError.jsx'
-import { Transition } from '@headlessui/react'
 import { dataObject } from '@/Pages/Post/helper.js'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { routes } from '@/Utils/routes/index.js'
+import FormLayout from '@/Components/layout/FormLayout.jsx'
+import Fields from '@/Pages/Post/Partials/Fields.jsx'
+
+import EditorJS from '@editorjs/editorjs'
+import Header from '@editorjs/header'
+import Paragraph from '@editorjs/paragraph'
+import CodeTool from '@editorjs/code'
+import List from '@editorjs/list'
+import InlineCode from '@editorjs/inline-code'
+import Quote from '@editorjs/quote'
+import Delimiter from '@editorjs/delimiter'
+import InlineImage from 'editorjs-inline-image'
+import YoutubeEmbed from 'editorjs-youtube-embed'
+import RawTool from '@editorjs/raw'
+import Table from '@editorjs/table'
+
+import './editor.css'
+import { services } from '@/Utils/services/index.js'
+import { makeGetCall, objectIsEmpty } from '@/Utils/methods.js'
 
 export default function Form({ getPosts, postData = null }) {
     const [action, setAction] = useState(routes.post.store)
     const { data, setData, post, errors, processing, recentlySuccessful, reset } = useForm(dataObject(null))
+    const [content, setContent] = useState({})
+    const [isSaving, setIsSaving] = useState(false)
+    const [tagList, setTagList] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    const editor = useRef(null)
+
+    const getTagList = () => {
+        makeGetCall(services.post.tag.list, setTagList, setLoading)
+    }
+
+    const submit = (e) => {
+        e.preventDefault()
+        if (objectIsEmpty(content) && postData) {
+            setData('content', postData.content)
+        } else {
+            setData('content', content)
+        }
+
+        setIsSaving(true)
+    }
+
+    const initEditor = (data) => {
+        return new EditorJS({
+            holder: 'editor',
+            placeholder: 'Let`s write an awesome story!',
+            tools: {
+                paragraph: {
+                    class: Paragraph,
+                    inlineToolbar: true,
+                },
+                header: Header,
+                code: CodeTool,
+                list: {
+                    class: List,
+                    inlineToolbar: true,
+                    config: {
+                        defaultStyle: 'unordered',
+                    },
+                },
+                inlineCode: {
+                    class: InlineCode,
+                    shortcut: 'CMD+SHIFT+M',
+                },
+                quote: Quote,
+                image: {
+                    class: InlineImage,
+                    inlineToolbar: true,
+                    config: {
+                        embed: {
+                            display: true,
+                        },
+                        unsplash: {
+                            appName: 'CodeBySamgan',
+                            apiUrl: 'https://msamgan.dev',
+                            maxResults: 30,
+                        },
+                    },
+                },
+                youtubeEmbed: YoutubeEmbed,
+                raw: RawTool,
+                table: Table,
+                delimiter: Delimiter,
+            },
+            onReady: async (api) => {
+                // console.log("Editor.js is ready to work!")
+            },
+            onChange: async (api, event) => {
+                // console.log(await api.saver.save())
+                setContent(await api.saver.save())
+            },
+            data: data,
+        })
+    }
 
     useEffect(() => {
         setAction(postData ? routes.post.update(postData.id) : routes.post.store)
         setData(dataObject(postData))
+        if (editor.current) editor.current.destroy()
+        editor.current = initEditor(postData ? postData.content : {})
     }, [postData])
 
-    const submit = (e) => {
-        e.preventDefault()
+    useEffect(() => {
+        if (!isSaving) return
 
         post(action, {
             onSuccess: (r) => {
                 if (!postData) {
-                    reset('name')
+                    axios.get(services.post.last).then((response) => {
+                        setData(dataObject(response.data))
+                        setAction(routes.post.update(response.data.id))
+                    })
                 }
 
                 getPosts()
             },
             onError: () => {},
+            onFinish: () => {
+                setIsSaving(false)
+            },
         })
-    }
+    }, [isSaving])
+
+    useEffect(() => {
+        getTagList()
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's')) {
+                e.preventDefault()
+                document.getElementById('savePostBtn').click()
+            }
+        })
+    }, [])
 
     return (
-        <form onSubmit={submit}>
-            <div className="mb-6 ml-4 w-2/3">
-                <div className="card-body">
-                    <div className="row g-5">
-                        <div className="col-12 col-md-12">
-                            <div className="form-floating form-floating-outline">
-                                <TextInput
-                                    type="text"
-                                    value={data.name}
-                                    onChange={(e) => setData('name', e.target.value)}
-                                    id="user-name"
-                                    placeholder="Name"
-                                    required={true}
-                                    isFocused={true}
-                                />
-                                <InputLabel htmlFor="user-name" required={true}>
-                                    Name
-                                </InputLabel>
-                                <InputError className="mt-2" message={errors.name} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <>
+            {data.featured_image && (
+                <span>
+                    <img
+                        src={data.featured_image}
+                        alt={data.title}
+                        className="mb-12 ml-5 h-64 max-w-full rounded-lg object-cover"
+                    />
+                </span>
+            )}
 
-            <div className="d-flex justify-content-end w-2/3 gap-4">
-                <button disabled={processing} className="btn btn-primary">
-                    Save Changes
-                </button>
-                <Transition
-                    show={recentlySuccessful}
-                    enter="transition ease-in-out"
-                    enterFrom="opacity-0"
-                    leave="transition ease-in-out"
-                    leaveTo="opacity-0"
-                >
-                    <p className="mt-3 text-sm text-gray-600">Saved.</p>
-                </Transition>
-            </div>
-        </form>
+            <FormLayout submit={submit} processing={processing} recentlySuccessful={recentlySuccessful} w={'w-11/12'}>
+                <Fields data={data} setData={setData} errors={errors} tagList={tagList} />
+            </FormLayout>
+        </>
     )
 }
