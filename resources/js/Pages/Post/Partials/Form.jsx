@@ -20,22 +20,21 @@ import Table from '@editorjs/table'
 
 import './editor.css'
 import { services } from '@/Utils/services/index.js'
-import { objectIsEmpty } from '@/Utils/methods.js'
+import { makeGetCall, objectIsEmpty } from '@/Utils/methods.js'
 
 export default function Form({ getPosts, postData = null }) {
     const [action, setAction] = useState(routes.post.store)
     const { data, setData, post, errors, processing, recentlySuccessful, reset } = useForm(dataObject(null))
     const [content, setContent] = useState({})
     const [isSaving, setIsSaving] = useState(false)
+    const [tagList, setTagList] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const editor = useRef(null)
 
-    useEffect(() => {
-        setAction(postData ? routes.post.update(postData.id) : routes.post.store)
-        setData(dataObject(postData))
-        if (editor.current) editor.current.destroy()
-        editor.current = initEditor(postData ? postData.content : {})
-    }, [postData])
+    const getTagList = () => {
+        makeGetCall(services.post.tag.list, setTagList, setLoading)
+    }
 
     const submit = (e) => {
         e.preventDefault()
@@ -47,27 +46,6 @@ export default function Form({ getPosts, postData = null }) {
 
         setIsSaving(true)
     }
-
-    useEffect(() => {
-        if (!isSaving) return
-
-        post(action, {
-            onSuccess: (r) => {
-                if (!postData) {
-                    axios.get(services.post.last).then((response) => {
-                        setData(dataObject(response.data))
-                        setAction(routes.post.update(response.data.id))
-                    })
-                }
-
-                getPosts()
-            },
-            onError: () => {},
-            onFinish: () => {
-                setIsSaving(false)
-            },
-        })
-    }, [isSaving])
 
     const initEditor = (data) => {
         return new EditorJS({
@@ -123,7 +101,35 @@ export default function Form({ getPosts, postData = null }) {
     }
 
     useEffect(() => {
-        // getTagList()
+        setAction(postData ? routes.post.update(postData.id) : routes.post.store)
+        setData(dataObject(postData))
+        if (editor.current) editor.current.destroy()
+        editor.current = initEditor(postData ? postData.content : {})
+    }, [postData])
+
+    useEffect(() => {
+        if (!isSaving) return
+
+        post(action, {
+            onSuccess: (r) => {
+                if (!postData) {
+                    axios.get(services.post.last).then((response) => {
+                        setData(dataObject(response.data))
+                        setAction(routes.post.update(response.data.id))
+                    })
+                }
+
+                getPosts()
+            },
+            onError: () => {},
+            onFinish: () => {
+                setIsSaving(false)
+            },
+        })
+    }, [isSaving])
+
+    useEffect(() => {
+        getTagList()
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's')) {
                 e.preventDefault()
@@ -145,7 +151,7 @@ export default function Form({ getPosts, postData = null }) {
             )}
 
             <FormLayout submit={submit} processing={processing} recentlySuccessful={recentlySuccessful} w={'w-11/12'}>
-                <Fields data={data} setData={setData} errors={errors} />
+                <Fields data={data} setData={setData} errors={errors} tagList={tagList} />
             </FormLayout>
         </>
     )

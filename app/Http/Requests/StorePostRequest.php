@@ -33,6 +33,7 @@ class StorePostRequest extends FormRequest
             'status' => ['required', 'string', 'in:draft,published'],
             'featured_image' => ['nullable', 'string', 'url', 'max:255'],
             'excerpt' => ['required', 'string'],
+            'tags' => ['nullable', 'array'],
         ];
     }
 }

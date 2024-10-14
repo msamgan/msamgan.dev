@@ -4,6 +4,7 @@ namespace App\Actions\Post;
 
 use App\Http\EditorJs;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Support\Str;
 
 class CreatePost
@@ -17,6 +18,16 @@ class CreatePost
         $data['slug'] = Str::slug($data['title']);
         $data['meta_description'] = $data['excerpt'];
 
-        return Post::create($data);
+        if ($data['status'] === 'published') {
+            $data['published_at'] = now();
+        }
+
+        $post = Post::create($data);
+
+        if (! empty($data['tags'])) {
+            $post->tags()->sync(Tag::tagNameToIdArray($data['tags']));
+        }
+
+        return $post;
     }
 }

@@ -34,6 +34,7 @@ class UpdatePostRequest extends FormRequest
             'featured_image' => ['nullable', 'string', 'url', 'max:255'],
             'excerpt' => ['required', 'string'],
             'slug' => ['required', 'string', 'max:255'],
+            'tags' => ['nullable', 'array'],
         ];
     }
 }

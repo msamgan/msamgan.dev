@@ -36,4 +36,8 @@ Route::middleware(['auth', 'check_has_business'])->group(function () {
     Route::delete('service/post/destroy/{post}', [PostController::class, 'destroy'])
         ->middleware([PermissionEnum::PostDelete->can()])
         ->name('service.post.destroy');
+
+    Route::get('service/post/tag/list', [PostController::class, 'tagList'])
+        ->middleware([PermissionEnum::PostCreate->can(), PermissionEnum::PostUpdate->can()])
+        ->name('service.post.tag.list');
 });

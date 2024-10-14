@@ -8,6 +8,7 @@ export const dataObject = (post) => {
         featured_image: post ? post.featured_image : '',
         slug: post ? post.slug : '',
         excerpt: post ? post.excerpt : '',
+        tags: post?.tags ? post.tags.map((tag) => tag.name) : [],
     }
 }
 

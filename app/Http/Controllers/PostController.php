@@ -9,6 +9,7 @@ use App\Http\Requests\DeletePostRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Notifications\PostCreated;
 use App\Notifications\PostDeleted;
 use App\Notifications\PostUpdated;
@@ -85,5 +86,10 @@ class PostController extends Controller
         $post->content = json_decode($post->content_raw);
 
         return response()->json($post);
+    }
+
+    public function tagList(): Collection|array
+    {
+        return Tag::query()->withCount('posts')->get();
     }
 }
