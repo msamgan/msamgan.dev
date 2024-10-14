@@ -63,3 +63,5 @@ export const projectStatuses = [
         value: 'Cancelled',
     },
 ]
+
+export const fallbackImage = 'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg'
