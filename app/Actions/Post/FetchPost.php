@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 
 class FetchPost
 {
-    public function handle(string $slug): \Illuminate\Support\Collection
+    public function handle(string $slug): ?Post
     {
         $post = Cache::remember('post_' . $slug, CACHE_TTL, function () use ($slug) {
             return Post::query()
@@ -18,7 +18,7 @@ class FetchPost
         });
 
         if (! $post) {
-            return collect([]);
+            return null;
         }
 
         $tagsArray = $this->tagArray(post: $post, slug: $slug);

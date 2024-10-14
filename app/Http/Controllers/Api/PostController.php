@@ -32,7 +32,7 @@ class PostController extends Controller
     {
         $postData = $post->handle(slug: request('slug'));
 
-        if ($postData->isEmpty()) {
+        if (! $postData) {
             return response()->json(['status' => false, 'message' => 'Post not found'], 404);
         }
 
