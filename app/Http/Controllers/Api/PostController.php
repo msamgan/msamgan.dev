@@ -30,11 +30,23 @@ class PostController extends Controller
 
     public function postShow(FetchPost $post): JsonResponse
     {
-        return $post->handle(slug: request('slug'));
+        $postData = $post->handle(slug: request('slug'));
+
+        if ($postData->isEmpty()) {
+            return response()->json(['status' => false, 'message' => 'Post not found'], 404);
+        }
+
+        return response()->json($postData);
     }
 
     public function postTag(FetchPostsByTag $posts): JsonResponse
     {
-        return $posts->handle(query: request('query'));
+        $postsData = $posts->handle(query: request('tag'));
+
+        if ($postsData->isEmpty()) {
+            return response()->json(['status' => false, 'message' => 'Posts not found'], 404);
+        }
+
+        return response()->json($postsData);
     }
 }

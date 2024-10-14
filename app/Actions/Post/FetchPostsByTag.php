@@ -3,12 +3,12 @@
 namespace App\Actions\Post;
 
 use App\Models\Tag;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class FetchPostsByTag
 {
-    public function handle(?string $query = null): JsonResponse
+    public function handle(?string $query = null): Collection
     {
         $posts = Tag::query()
             ->where('slug', $query)
@@ -16,10 +16,7 @@ class FetchPostsByTag
             ->first();
 
         if (! $posts) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Tag not found',
-            ], 404);
+            return collect([]);
         }
 
         if ($query) {
@@ -46,6 +43,6 @@ class FetchPostsByTag
             $post->tags = $tagsArray;
         });
 
-        return response()->json($posts->posts);
+        return $posts->posts;
     }
 }
