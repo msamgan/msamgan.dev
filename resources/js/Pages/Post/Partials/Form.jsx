@@ -32,6 +32,8 @@ export default function Form({ getPosts, postData = null }) {
     useEffect(() => {
         setAction(postData ? routes.post.update(postData.id) : routes.post.store)
         setData(dataObject(postData))
+        if (editor.current) editor.current.destroy()
+        editor.current = initEditor(postData ? postData.content : {})
     }, [postData])
 
     const submit = (e) => {
@@ -59,7 +61,7 @@ export default function Form({ getPosts, postData = null }) {
         })
     }, [isSaving])
 
-    const initEditor = () => {
+    const initEditor = (data) => {
         return new EditorJS({
             holder: 'editor',
             placeholder: 'Let`s write an awesome story!',
@@ -108,15 +110,12 @@ export default function Form({ getPosts, postData = null }) {
                 // console.log(await api.saver.save())
                 setContent(await api.saver.save())
             },
-            data: data.content,
+            data: data,
         })
     }
 
     useEffect(() => {
         // getTagList()
-
-        editor.current = initEditor()
-
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's')) {
                 e.preventDefault()
