@@ -38,12 +38,7 @@ export default function Form({ getPosts, postData = null }) {
 
     const submit = (e) => {
         e.preventDefault()
-        if (objectIsEmpty(content) && postData) {
-            setData('content', postData.content)
-        } else {
-            setData('content', content)
-        }
-
+        setData('content', objectIsEmpty(content) && postData ? postData.content : content)
         setIsSaving(true)
     }
 

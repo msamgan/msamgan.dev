@@ -4,10 +4,11 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "prettier" : "prettier --write resources/",
+        "prettier": "prettier --write resources/",
         "duster": "./vendor/bin/duster fix",
         "format": "concurrently -c \"#93c5fd,#c4b5fd\" npm:prettier npm:duster",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "serve": "./vendor/bin/sail up -d && npm run dev"
     },
     "devDependencies": {
         "@headlessui/react": "^2.0.0",
