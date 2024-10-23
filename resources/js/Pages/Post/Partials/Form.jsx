@@ -5,22 +5,9 @@ import { routes } from '@/Utils/routes/index.js'
 import FormLayout from '@/Components/layout/FormLayout.jsx'
 import Fields from '@/Pages/Post/Partials/Fields.jsx'
 
-import EditorJS from '@editorjs/editorjs'
-import Header from '@editorjs/header'
-import Paragraph from '@editorjs/paragraph'
-import CodeTool from '@editorjs/code'
-import List from '@editorjs/list'
-import InlineCode from '@editorjs/inline-code'
-import Quote from '@editorjs/quote'
-import Delimiter from '@editorjs/delimiter'
-import InlineImage from 'editorjs-inline-image'
-import YoutubeEmbed from 'editorjs-youtube-embed'
-import RawTool from '@editorjs/raw'
-import Table from '@editorjs/table'
-
-import './editor.css'
 import { services } from '@/Utils/services/index.js'
 import { makeGetCall, objectIsEmpty } from '@/Utils/methods.js'
+import { initEditor } from '@/Pages/Post/Partials/editor.js'
 
 export default function Form({ getPosts, postData = null }) {
     const [action, setAction] = useState(routes.post.store)
@@ -42,64 +29,11 @@ export default function Form({ getPosts, postData = null }) {
         setIsSaving(true)
     }
 
-    const initEditor = (data) => {
-        return new EditorJS({
-            holder: 'editor',
-            placeholder: 'Let`s write an awesome story!',
-            tools: {
-                paragraph: {
-                    class: Paragraph,
-                    inlineToolbar: true,
-                },
-                header: Header,
-                code: CodeTool,
-                list: {
-                    class: List,
-                    inlineToolbar: true,
-                    config: {
-                        defaultStyle: 'unordered',
-                    },
-                },
-                inlineCode: {
-                    class: InlineCode,
-                    shortcut: 'CMD+SHIFT+M',
-                },
-                quote: Quote,
-                image: {
-                    class: InlineImage,
-                    inlineToolbar: true,
-                    config: {
-                        embed: {
-                            display: true,
-                        },
-                        unsplash: {
-                            appName: 'CodeBySamgan',
-                            apiUrl: 'https://msamgan.dev',
-                            maxResults: 30,
-                        },
-                    },
-                },
-                youtubeEmbed: YoutubeEmbed,
-                raw: RawTool,
-                table: Table,
-                delimiter: Delimiter,
-            },
-            onReady: async (api) => {
-                // console.log("Editor.js is ready to work!")
-            },
-            onChange: async (api, event) => {
-                // console.log(await api.saver.save())
-                setContent(await api.saver.save())
-            },
-            data: data,
-        })
-    }
-
     useEffect(() => {
         setAction(postData ? routes.post.update(postData.id) : routes.post.store)
         setData(dataObject(postData))
         if (editor.current) editor.current.destroy()
-        editor.current = initEditor(postData ? postData.content : {})
+        editor.current = initEditor(postData ? postData.content : {}, setContent)
     }, [postData])
 
     useEffect(() => {
