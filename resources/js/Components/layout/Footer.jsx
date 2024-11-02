@@ -13,15 +13,17 @@ export default function Footer() {
                             msamgan
                         </a>
                     </div>
-                    <div className="d-none d-lg-inline-block">
-                        <a
-                            href="https://demos.pixinvent.com/materialize-html-admin-template/documentation/"
-                            target="_blank"
-                            className="footer-link me-4"
-                        >
-                            Documentation
-                        </a>
-                    </div>
+                    {import.meta.env.VITE_APP_ENV === 'local' && (
+                        <div className="d-none d-lg-inline-block">
+                            <a
+                                href="https://demos.pixinvent.com/materialize-html-admin-template/documentation/"
+                                target="_blank"
+                                className="footer-link me-4"
+                            >
+                                Documentation
+                            </a>
+                        </div>
+                    )}
                 </div>
             </div>
         </footer>
