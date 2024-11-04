@@ -13,6 +13,7 @@ import Form from '@/Pages/Transaction/Partials/Form.jsx'
 import { services } from '@/Utils/services/index.js'
 import Badge from '@/Components/helpers/Badge.jsx'
 import Filters from '@/Pages/Transaction/Partials/Filters.jsx'
+import ToggleFilterButton from '@/Components/ToggleFilterButton.jsx'
 
 export default function Index({ auth }) {
     let hasListPermission = hasPermission(auth.user, permissions.transaction.list)
@@ -27,6 +28,7 @@ export default function Index({ auth }) {
     const [projects, setProjects] = useState([])
     const [descriptions, setDescriptions] = useState([])
     const [params, setParams] = useState({})
+    const [showFilters, setShowFilters] = useState(false)
 
     const getTransactions = (filters = {}) => {
         makeGetCall(services.transaction.list(filters), setTransactions, setLoading)
@@ -60,6 +62,11 @@ export default function Index({ auth }) {
         const params = new URLSearchParams(window.location.search)
         setParams(params)
 
+        // if any params are present, set the show filters to true
+        if (params.get('q') || params.get('type') || params.get('start-date') || params.get('end-date')) {
+            setShowFilters(true)
+        }
+
         if (hasListPermission) {
             getTransactions({
                 q: params.get('q'),
@@ -88,16 +95,19 @@ export default function Index({ auth }) {
                 subtitle={'Find all of your business’s transactions and there associated details.'}
                 action={
                     hasCreatePermission && (
-                        <OffCanvasButton
-                            onClick={() => {
-                                setTransaction(null)
-                                setPageData(pageObject(null))
-                            }}
-                            id="transactionFormCanvas"
-                        >
-                            <i className="ri-add-line me-2"></i>
-                            Create Transaction
-                        </OffCanvasButton>
+                        <div className={'flex gap-2'}>
+                            <OffCanvasButton
+                                onClick={() => {
+                                    setTransaction(null)
+                                    setPageData(pageObject(null))
+                                }}
+                                id="transactionFormCanvas"
+                            >
+                                <i className="ri-add-line me-2"></i>
+                                Create Transaction
+                            </OffCanvasButton>
+                            <ToggleFilterButton showFilters={showFilters} setShowFilters={setShowFilters} />
+                        </div>
                     )
                 }
             ></PageHeader>
@@ -120,7 +130,7 @@ export default function Index({ auth }) {
                     data={data}
                     loading={loading}
                     permission={hasListPermission}
-                    filters={<Filters params={params} />}
+                    filters={showFilters ? <Filters params={params} /> : null}
                 />
             </div>
         </Master>
