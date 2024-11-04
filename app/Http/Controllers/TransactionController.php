@@ -7,6 +7,7 @@ use App\Actions\Transaction\CreateTransaction;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Models\Transaction;
 use App\Notifications\TransactionCreated;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -41,8 +42,32 @@ class TransactionController extends Controller
 
     public function transactions(): Collection
     {
-        return Transaction::query()
-            ->with('project')
+        $query = Transaction::query();
+
+        if (request('q')) {
+            $query->where('description', 'like', '%' . request('q') . '%');
+        }
+
+        if (request('type')) {
+            $query->where('type', request('type'));
+        }
+
+        $startDate = request('start-date') ? Carbon::parse(request('start-date')) : null;
+        $endDate = request('end-date') ? Carbon::parse(request('end-date')) : null;
+
+        if ($startDate && ! $endDate) {
+            $endDate = Carbon::now();
+        }
+
+        if (! $startDate && $endDate) {
+            $startDate = Carbon::now();
+        }
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('date', [$startDate, $endDate]);
+        }
+
+        return $query->with('project')
             ->orderBy('created_at', 'desc')
             ->get();
     }

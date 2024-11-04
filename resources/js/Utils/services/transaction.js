@@ -1,4 +1,6 @@
 export const transaction = {
-    list: route('service.transactions'),
+    list: (filters) => {
+        return route('service.transactions', { ...filters })
+    },
     descriptions: route('service.transaction.descriptions'),
 }

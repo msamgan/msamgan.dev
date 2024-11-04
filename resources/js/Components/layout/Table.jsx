@@ -39,14 +39,20 @@ const TableContainer = ({ columns, data, tdClassName }) => {
     )
 }
 
-export default function Table({ columns, data, tdClassName = [], loading, permission }) {
+export default function Table({ columns, data, tdClassName = [], loading, permission, filters = null }) {
     return permission ? (
         loading ? (
             <Loading />
         ) : data.length > 0 ? (
-            <TableContainer columns={columns} data={data} tdClassName={tdClassName} />
+            <>
+                <div className={'mb-8'}>{filters}</div>
+                <TableContainer columns={columns} data={data} tdClassName={tdClassName} filters={filters} />
+            </>
         ) : (
-            <DisplayMessage text={'No data available.'} />
+            <>
+                <div className={'mb-8'}>{filters}</div>
+                <DisplayMessage text={'No data available.'} />
+            </>
         )
     ) : (
         <DisplayMessage text={'You do not have permission to view this content...'} />
