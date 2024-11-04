@@ -12,6 +12,8 @@ import OffCanvas from '@/Components/off_canvas/OffCanvas.jsx'
 import Form from '@/Pages/Transaction/Partials/Form.jsx'
 import { services } from '@/Utils/services/index.js'
 import Badge from '@/Components/helpers/Badge.jsx'
+import Filters from '@/Pages/Transaction/Partials/Filters.jsx'
+import ToggleFilterButton from '@/Components/ToggleFilterButton.jsx'
 
 export default function Index({ auth }) {
     let hasListPermission = hasPermission(auth.user, permissions.transaction.list)
@@ -25,9 +27,11 @@ export default function Index({ auth }) {
     const [pageData, setPageData] = useState(pageObject(null))
     const [projects, setProjects] = useState([])
     const [descriptions, setDescriptions] = useState([])
+    const [params, setParams] = useState({})
+    const [showFilters, setShowFilters] = useState(false)
 
-    const getTransactions = () => {
-        makeGetCall(services.transaction.list, setTransactions, setLoading)
+    const getTransactions = (filters = {}) => {
+        makeGetCall(services.transaction.list(filters), setTransactions, setLoading)
     }
 
     const getProjects = () => {
@@ -54,8 +58,22 @@ export default function Index({ auth }) {
     }
 
     useEffect(() => {
+        // get the search query from the URL
+        const params = new URLSearchParams(window.location.search)
+        setParams(params)
+
+        // if any params are present, set the show filters to true
+        if (params.get('q') || params.get('type') || params.get('start-date') || params.get('end-date')) {
+            setShowFilters(true)
+        }
+
         if (hasListPermission) {
-            getTransactions()
+            getTransactions({
+                q: params.get('q'),
+                type: params.get('type'),
+                'start-date': params.get('start-date'),
+                'end-date': params.get('end-date'),
+            })
             getDescriptions()
         }
 
@@ -77,16 +95,19 @@ export default function Index({ auth }) {
                 subtitle={'Find all of your business’s transactions and there associated details.'}
                 action={
                     hasCreatePermission && (
-                        <OffCanvasButton
-                            onClick={() => {
-                                setTransaction(null)
-                                setPageData(pageObject(null))
-                            }}
-                            id="transactionFormCanvas"
-                        >
-                            <i className="ri-add-line me-2"></i>
-                            Create Transaction
-                        </OffCanvasButton>
+                        <div className={'flex gap-2'}>
+                            <OffCanvasButton
+                                onClick={() => {
+                                    setTransaction(null)
+                                    setPageData(pageObject(null))
+                                }}
+                                id="transactionFormCanvas"
+                            >
+                                <i className="ri-add-line me-2"></i>
+                                Create Transaction
+                            </OffCanvasButton>
+                            <ToggleFilterButton showFilters={showFilters} setShowFilters={setShowFilters} />
+                        </div>
                     )
                 }
             ></PageHeader>
@@ -104,7 +125,13 @@ export default function Index({ auth }) {
             )}
 
             <div className="col-12">
-                <Table columns={columns} data={data} loading={loading} permission={hasListPermission} />
+                <Table
+                    columns={columns}
+                    data={data}
+                    loading={loading}
+                    permission={hasListPermission}
+                    filters={showFilters ? <Filters params={params} /> : null}
+                />
             </div>
         </Master>
     )
