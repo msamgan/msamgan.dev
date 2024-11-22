@@ -41,7 +41,7 @@ class PostController extends Controller
 
     public function postTag(FetchPostsByTag $posts): JsonResponse
     {
-        $postsData = $posts->handle(query: request('tag'));
+        $postsData = $posts->handle(tag: request('tag'), query: request('q'));
 
         if ($postsData->isEmpty()) {
             return response()->json(['status' => false, 'message' => 'Posts not found'], 404);

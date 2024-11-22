@@ -8,12 +8,9 @@ use Illuminate\Support\Str;
 
 class FetchPostsByTag
 {
-    public function handle(?string $query = null): Collection
+    public function handle(string $tag, ?string $query = null): Collection
     {
-        $posts = Tag::query()
-            ->where('slug', $query)
-            ->with('posts', 'posts.tags')
-            ->first();
+        $posts = Tag::query()->where('slug', $tag)->with('posts', 'posts.tags')->first();
 
         if (! $posts) {
             return collect([]);
