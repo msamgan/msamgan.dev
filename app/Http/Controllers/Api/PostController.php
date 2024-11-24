@@ -15,7 +15,11 @@ class PostController extends Controller
 {
     public function tagList(): Collection
     {
-        return Tag::query()->withCount('posts')->get();
+        $tags = Tag::query()->withCount('posts')->get();
+
+        return $tags->filter(function ($tag) {
+            return $tag->posts_count > 0;
+        });
     }
 
     public function postList(FetchNonPaginatedPosts $posts): JsonResponse
