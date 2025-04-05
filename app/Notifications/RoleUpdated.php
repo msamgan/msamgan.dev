@@ -13,18 +13,10 @@ class RoleUpdated extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private User $user;
-
-    private \Spatie\Permission\Contracts\Role|Role $role;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, \Spatie\Permission\Contracts\Role|Role $role)
-    {
-        $this->user = $user;
-        $this->role = $role;
-    }
+    public function __construct(private User $user, private \Spatie\Permission\Contracts\Role|Role $role) {}
 
     /**
      * Get the notification's delivery channels.

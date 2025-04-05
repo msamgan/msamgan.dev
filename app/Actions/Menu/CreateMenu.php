@@ -15,7 +15,7 @@ class CreateMenu
         ?bool $isActive = true,
         ?string $parent = null
     ): Menu {
-        return Menu::create([
+        return Menu::query()->create([
             'parent_id' => $parent,
             'label' => $label,
             'route' => $route,

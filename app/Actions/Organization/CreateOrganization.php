@@ -8,6 +8,6 @@ class CreateOrganization
 {
     public function handle(array $data): Organization
     {
-        return Organization::create($data);
+        return Organization::query()->create($data);
     }
 }

@@ -13,11 +13,7 @@ class StoreTransactionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (! auth()->user()->can(PermissionEnum::TransactionCreate->value)) {
-            return false;
-        }
-
-        return true;
+        return (bool) auth()->user()->can(PermissionEnum::TransactionCreate->value);
     }
 
     /**

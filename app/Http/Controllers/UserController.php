@@ -41,7 +41,7 @@ class UserController extends Controller
                 'business_id' => auth()->user()->business_id,
             ]);
 
-            $role = Role::find($request->get('role'));
+            $role = Role::query()->find($request->get('role'));
 
             $assignRole->handle(user: $user, role: $role, makeRoleActive: true);
 

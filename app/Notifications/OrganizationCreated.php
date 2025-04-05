@@ -4,27 +4,16 @@ namespace App\Notifications;
 
 use App\Models\Organization;
 use App\Models\User;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class OrganizationCreated extends Notification // implements ShouldQueue
 {
-    // use Queueable;
-
-    private User $user;
-
-    private Organization $organization;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, Organization $organization)
-    {
-        $this->user = $user;
-        $this->organization = $organization;
-    }
+    public function __construct(private readonly User $user, private readonly Organization $organization) {}
 
     /**
      * Get the notification's delivery channels.

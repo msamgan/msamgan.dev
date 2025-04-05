@@ -55,15 +55,15 @@ class TransactionController extends Controller
         $startDate = request('start-date') ? Carbon::parse(request('start-date')) : null;
         $endDate = request('end-date') ? Carbon::parse(request('end-date')) : null;
 
-        if ($startDate && ! $endDate) {
+        if ($startDate instanceof Carbon && ! $endDate) {
             $endDate = Carbon::now();
         }
 
-        if (! $startDate && $endDate) {
+        if (! $startDate && $endDate instanceof Carbon) {
             $startDate = Carbon::now();
         }
 
-        if ($startDate && $endDate) {
+        if ($startDate instanceof Carbon && $endDate instanceof Carbon) {
             $query->whereBetween('date', [$startDate, $endDate]);
         }
 

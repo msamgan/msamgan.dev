@@ -17,11 +17,7 @@ class StoreUserRequest extends FormRequest
             return false;
         }
 
-        if (! $this->user()->hasBusiness()) {
-            return false;
-        }
-
-        return true;
+        return (bool) $this->user()->hasBusiness();
     }
 
     /**

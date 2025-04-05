@@ -14,7 +14,7 @@ class FetchPaginatedPosts
         return Cache::remember($cacheKey, CACHE_TTL, function () use ($query, $page) {
             $posts = (new FetchPosts($query))->builder()->paginate(PAGE_SIZE, ['*'], 'page', $page);
 
-            collect($posts->items())->map(function ($post) {
+            collect($posts->items())->map(function ($post): void {
                 $tagsArray = [];
                 foreach ($post->tags as $key => $tag) {
                     $tagsArray[$key]['name'] = $tag->name;

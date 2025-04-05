@@ -13,8 +13,8 @@ class PermissionController extends Controller
     public function permissions(): Collection|HigherOrderCollectionProxy
     {
         $filteredPermissions = [];
-        Permission::query()->get()->each(function ($permission) use (&$filteredPermissions) {
-            [$module, $action] = explode('.', $permission->name);
+        Permission::query()->get()->each(function ($permission) use (&$filteredPermissions): void {
+            [$module, $action] = explode('.', (string) $permission->name);
 
             if (in_array($module, $this->excludedModules)) {
                 return;

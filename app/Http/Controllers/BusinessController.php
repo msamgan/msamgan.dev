@@ -14,7 +14,7 @@ class BusinessController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): void
     {
         //
     }
@@ -22,7 +22,7 @@ class BusinessController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -30,7 +30,7 @@ class BusinessController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBusinessRequest $request)
+    public function store(StoreBusinessRequest $request): void
     {
         //
     }
@@ -38,7 +38,7 @@ class BusinessController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Business $business)
+    public function show(Business $business): void
     {
         //
     }
@@ -46,7 +46,7 @@ class BusinessController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Business $business)
+    public function edit(Business $business): void
     {
         //
     }
@@ -62,7 +62,7 @@ class BusinessController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Business $business)
+    public function destroy(Business $business): void
     {
         //
     }

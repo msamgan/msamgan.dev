@@ -8,17 +8,10 @@ use Illuminate\Notifications\Notification;
 
 class MediaCreated extends Notification // implements ShouldQueue
 {
-    // use Queueable;
-
-    private User $user;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
+    public function __construct(private readonly User $user) {}
 
     /**
      * Get the notification's delivery channels.

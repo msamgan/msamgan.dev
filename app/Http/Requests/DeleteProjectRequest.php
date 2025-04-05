@@ -13,11 +13,7 @@ class DeleteProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (! auth()->user()->can(PermissionEnum::ProjectDelete->value)) {
-            return false;
-        }
-
-        return true;
+        return (bool) auth()->user()->can(PermissionEnum::ProjectDelete->value);
     }
 
     /**

@@ -10,8 +10,8 @@ class CreateTransaction
     public function handle(array $data): Transaction
     {
         $data['date'] = Carbon::parse($data['date']);
-        $data['description'] = ucfirst($data['description']);
+        $data['description'] = ucfirst((string) $data['description']);
 
-        return Transaction::create($data);
+        return Transaction::query()->create($data);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Actions\Organization;
 
 use App\Models\Organization;
 
-class UpdateOrganization extends \App\Models\Organization
+class UpdateOrganization extends Organization
 {
     public function handle(Organization $organization, array $data): Organization
     {

@@ -4,13 +4,13 @@ use App\Enums\PermissionEnum;
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'check_has_business'])->group(function () {
+Route::middleware(['auth', 'check_has_business'])->group(function (): void {
     Route::get('clients', [ClientController::class, 'index'])
         ->middleware([PermissionEnum::ClientList->can()])
         ->name('client.index');
 });
 
-Route::middleware(['auth', 'check_has_business'])->group(function () {
+Route::middleware(['auth', 'check_has_business'])->group(function (): void {
     Route::post('client/store', [ClientController::class, 'store'])
         ->middleware([PermissionEnum::ClientCreate->can()])
         ->name('client.store');
@@ -20,7 +20,7 @@ Route::middleware(['auth', 'check_has_business'])->group(function () {
         ->name('client.update');
 });
 
-Route::middleware(['auth', 'check_has_business'])->group(function () {
+Route::middleware(['auth', 'check_has_business'])->group(function (): void {
     Route::get('service/clients', [ClientController::class, 'clients'])
         ->middleware([PermissionEnum::ClientList->can()])
         ->name('service.clients');

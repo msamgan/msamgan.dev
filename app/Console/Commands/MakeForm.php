@@ -47,31 +47,23 @@ class MakeForm extends Command
 
             $fillable = (new $model)->getFillable();
 
-            if (empty($fillable)) {
-                throw new Exception('You need to define fillable property in the model to generate form');
-            }
+            throw_if(empty($fillable), new Exception('You need to define fillable property in the model to generate form'));
 
             $tableName = (new $model)->getTable();
 
-            if (! DB::table('information_schema.tables')->where('table_name', $tableName)->exists()) {
-                throw new Exception('Table does not exist');
-            }
+            throw_unless(DB::table('information_schema.tables')->where('table_name', $tableName)->exists(), new Exception('Table does not exist'));
 
             // get all the columns of the table with datatype
             $filteredColumns = array_filter(
                 DB::select("SHOW COLUMNS FROM $tableName"),
-                function ($column) use ($fillable) {
-                    return in_array($column->Field, $fillable);
-                }
+                fn ($column): bool => in_array($column->Field, $fillable)
             );
 
-            $formFields = collect($filteredColumns)->map(function ($column) {
-                return [
-                    'name' => $column->Field,
-                    'type' => str_contains($column->Field, '_id') ? 'select_dependent' : $this->typeCasting($column->Type),
-                    'required' => $column->Null === 'NO',
-                ];
-            });
+            $formFields = collect($filteredColumns)->map(fn ($column): array => [
+                'name' => $column->Field,
+                'type' => str_contains((string) $column->Field, '_id') ? 'select_dependent' : $this->typeCasting($column->Type),
+                'required' => $column->Null === 'NO',
+            ]);
 
             $formString = '';
             $dependencyArray = [];
@@ -108,34 +100,34 @@ class MakeForm extends Command
 
     private function typeCasting($type): string
     {
-        if (str_contains($type, 'int')) {
+        if (str_contains((string) $type, 'int')) {
             return 'number';
         }
 
-        if (str_contains($type, 'varchar')) {
+        if (str_contains((string) $type, 'varchar')) {
             return 'text';
         }
 
-        if (str_contains($type, 'text')) {
+        if (str_contains((string) $type, 'text')) {
             return 'textarea';
         }
 
-        if (str_contains($type, 'date')) {
+        if (str_contains((string) $type, 'date')) {
             return 'date';
         }
 
-        if (str_contains($type, 'time')) {
+        if (str_contains((string) $type, 'time')) {
             return 'time';
         }
 
-        if (str_contains($type, 'enum')) {
+        if (str_contains((string) $type, 'enum')) {
             return 'select';
         }
 
         return 'text';
     }
 
-    private function replaceCases($fileName, $cases): array|string
+    private function replaceCases(string|bool $fileName, $cases): array|string
     {
         foreach ($cases as $key => $value) {
             $fileName = str_replace("{{$key}}", $value, $fileName);

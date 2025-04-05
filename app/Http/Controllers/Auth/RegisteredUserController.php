@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
         DB::beginTransaction();
 
         try {
-            $user = User::create([
+            $user = User::query()->create([
                 'name' => $request->get('name'),
                 'email' => $request->get('email'),
                 'password' => Hash::make($request->get('password')),
@@ -72,8 +72,8 @@ class RegisteredUserController extends Controller
         return Inertia::render('Auth/Register');
     }
 
-    private function getPasswordDefaults(): ?Rules\Password
+    private function getPasswordDefaults(): ?Password
     {
-        return Rules\Password::defaults();
+        return Password::defaults();
     }
 }

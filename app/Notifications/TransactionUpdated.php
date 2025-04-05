@@ -2,25 +2,16 @@
 
 namespace App\Notifications;
 
-use App\Models\User;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class TransactionUpdated extends Notification implements ShouldQueue
 {
-    // use Queueable;
-
-    private User $user;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
+    public function __construct() {}
 
     /**
      * Get the notification's delivery channels.
@@ -50,7 +41,7 @@ class TransactionUpdated extends Notification implements ShouldQueue
      */
     public function toArray(object $notifiable): array
     {
-        $timestamp = now()->format('F j, Y, g:i a');
+        now()->format('F j, Y, g:i a');
 
         return [
             'title' => '',

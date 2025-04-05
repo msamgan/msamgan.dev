@@ -8,6 +8,6 @@ class CreateProject
 {
     public function handle(array $data): Project
     {
-        return Project::create($data);
+        return Project::query()->create($data);
     }
 }

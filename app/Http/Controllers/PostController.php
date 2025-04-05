@@ -83,7 +83,7 @@ class PostController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
 
-        $post->content = json_decode($post->content_raw);
+        $post->content = json_decode((string) $post->content_raw);
 
         return response()->json($post);
     }

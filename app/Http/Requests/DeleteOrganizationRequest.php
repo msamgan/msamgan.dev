@@ -13,11 +13,7 @@ class DeleteOrganizationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (! auth()->user()->can(PermissionEnum::OrganizationDelete->value)) {
-            return false;
-        }
-
-        return true;
+        return (bool) auth()->user()->can(PermissionEnum::OrganizationDelete->value);
     }
 
     /**

@@ -61,7 +61,7 @@ class ClientController extends Controller
             $notifyUser->handle(new ClientUpdated(auth()->user(), $updateClient));
 
             DB::commit();
-        } catch (Exception $e) {
+        } catch (Exception) {
             DB::rollBack();
         }
     }
@@ -78,7 +78,7 @@ class ClientController extends Controller
             $client->delete();
 
             DB::commit();
-        } catch (Exception $e) {
+        } catch (Exception) {
             DB::rollBack();
         }
     }

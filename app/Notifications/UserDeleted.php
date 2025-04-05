@@ -8,20 +8,10 @@ use Illuminate\Notifications\Notification;
 
 class UserDeleted extends Notification
 {
-    // use Queueable;
-
-    private User $user;
-
-    private User $newUser;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, User $newUser)
-    {
-        $this->user = $user;
-        $this->newUser = $newUser;
-    }
+    public function __construct(private readonly User $user, private readonly User $newUser) {}
 
     /**
      * Get the notification's delivery channels.

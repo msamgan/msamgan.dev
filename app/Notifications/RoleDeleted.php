@@ -9,20 +9,10 @@ use Spatie\Permission\Models\Role;
 
 class RoleDeleted extends Notification
 {
-    // use Queueable;
-
-    private User $user;
-
-    private \Spatie\Permission\Contracts\Role|Role $role;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, \Spatie\Permission\Contracts\Role|Role $role)
-    {
-        $this->user = $user;
-        $this->role = $role;
-    }
+    public function __construct(private readonly User $user, private readonly \Spatie\Permission\Contracts\Role|Role $role) {}
 
     /**
      * Get the notification's delivery channels.
