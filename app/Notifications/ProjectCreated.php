@@ -4,27 +4,16 @@ namespace App\Notifications;
 
 use App\Models\Project;
 use App\Models\User;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class ProjectCreated extends Notification // implements ShouldQueue
 {
-    // use Queueable;
-
-    private User $user;
-
-    private Project $project;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, Project $project)
-    {
-        $this->user = $user;
-        $this->project = $project;
-    }
+    public function __construct(private readonly User $user, private readonly Project $project) {}
 
     /**
      * Get the notification's delivery channels.

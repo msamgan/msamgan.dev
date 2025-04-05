@@ -9,20 +9,10 @@ use Illuminate\Notifications\Notification;
 
 class TransactionCreated extends Notification // implements ShouldQueue
 {
-    // use Queueable;
-
-    private User $user;
-
-    private Transaction $transaction;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, Transaction $transaction)
-    {
-        $this->user = $user;
-        $this->transaction = $transaction;
-    }
+    public function __construct(private readonly User $user, private readonly Transaction $transaction) {}
 
     /**
      * Get the notification's delivery channels.

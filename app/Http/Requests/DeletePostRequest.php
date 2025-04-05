@@ -13,11 +13,7 @@ class DeletePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (! auth()->user()->can(PermissionEnum::PostDelete->value)) {
-            return false;
-        }
-
-        return true;
+        return (bool) auth()->user()->can(PermissionEnum::PostDelete->value);
     }
 
     /**

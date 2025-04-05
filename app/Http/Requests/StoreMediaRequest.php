@@ -13,11 +13,7 @@ class StoreMediaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (! auth()->user()->can(PermissionEnum::MediaCreate->value)) {
-            return false;
-        }
-
-        return true;
+        return (bool) auth()->user()->can(PermissionEnum::MediaCreate->value);
     }
 
     /**

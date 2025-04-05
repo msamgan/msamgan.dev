@@ -14,7 +14,7 @@ class FetchNonPaginatedPosts
         return Cache::remember($cacheKey, CACHE_TTL, function () use ($query) {
             $posts = (new FetchPosts($query))->builder()->get();
 
-            $posts->map(function ($post) {
+            $posts->map(function ($post): void {
                 $tagsArray = [];
                 foreach ($post->tags as $key => $tag) {
                     $tagsArray[$key]['name'] = $tag->name;

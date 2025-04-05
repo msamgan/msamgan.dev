@@ -131,7 +131,7 @@ class MakeModule extends Command
         file_put_contents(base_path("routes/modules/{$this->cases['snake']}.php"), $routeStubFile);
     }
 
-    private function replaceCases($fileName): array|string
+    private function replaceCases(string|bool $fileName): array|string
     {
         foreach ($this->cases as $key => $value) {
             $fileName = str_replace("{{$key}}", $value, $fileName);
@@ -146,7 +146,7 @@ class MakeModule extends Command
             'Created',
             'Updated',
             'Deleted',
-        ])->each(function ($notification) {
+        ])->each(function ($notification): void {
             $notificationStubFile = file_get_contents(base_path('stubs/module.notification.stub'));
             $notificationName = "{$this->cases['studly']}{$notification}";
             $notificationStubFile = str_replace('{notificationName}', $notificationName, $notificationStubFile);
@@ -179,7 +179,7 @@ class MakeModule extends Command
         collect([
             'create',
             'update',
-        ])->each(function ($action) {
+        ])->each(function (string $action): void {
             $actionStubFile = file_get_contents(base_path('stubs/module.' . $action . '.action.stub'));
             $actionStubFile = $this->replaceCases($actionStubFile);
 

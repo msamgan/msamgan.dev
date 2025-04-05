@@ -13,21 +13,10 @@ class UserCreated extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private User $user;
-
-    private User $newUser;
-
-    private \Spatie\Permission\Contracts\Role|Role $role;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, User $newUser, \Spatie\Permission\Contracts\Role|Role $role)
-    {
-        $this->user = $user;
-        $this->newUser = $newUser;
-        $this->role = $role;
-    }
+    public function __construct(private User $user, private User $newUser, private \Spatie\Permission\Contracts\Role|Role $role) {}
 
     /**
      * Get the notification's delivery channels.

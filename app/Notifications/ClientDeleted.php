@@ -9,20 +9,10 @@ use Illuminate\Notifications\Notification;
 
 class ClientDeleted extends Notification // implements ShouldQueue
 {
-    // use Queueable;
-
-    private User $user;
-
-    private Client $client;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, Client $client)
-    {
-        $this->user = $user;
-        $this->client = $client;
-    }
+    public function __construct(private readonly User $user, private readonly Client $client) {}
 
     /**
      * Get the notification's delivery channels.

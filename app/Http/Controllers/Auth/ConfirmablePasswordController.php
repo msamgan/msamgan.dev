@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,16 +26,14 @@ class ConfirmablePasswordController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if (! Auth::guard('web')->validate([
+        throw_unless(Auth::guard('web')->validate([
             'email' => $request->user()->email,
             'password' => $request->password,
-        ])) {
-            throw ValidationException::withMessages([
-                'password' => __('auth.password'),
-            ]);
-        }
+        ]), ValidationException::withMessages([
+            'password' => __('auth.password'),
+        ]));
 
-        $request->session()->put('auth.password_confirmed_at', time());
+        $request->session()->put('auth.password_confirmed_at', Carbon::now()->getTimestamp());
 
         return redirect()->intended(route('dashboard', absolute: false));
     }

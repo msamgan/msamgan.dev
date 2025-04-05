@@ -17,14 +17,12 @@ class FetchPostsByTag
         }
 
         if ($query) {
-            $posts->posts = $posts->posts->filter(function ($post) use ($query) {
-                return Str::contains($post->title, $query) || Str::contains($post->excerpt, $query);
-            });
+            $posts->posts = $posts->posts->filter(fn ($post): bool => Str::contains($post->title, $query) || Str::contains($post->excerpt, $query));
 
             $posts->posts = $posts->posts->values();
         }
 
-        $posts->posts->map(function ($post) {
+        $posts->posts->map(function ($post): void {
             unset($post->content_raw);
             unset($post->content);
             $tagsArray = [];

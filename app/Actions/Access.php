@@ -7,9 +7,7 @@ class Access
     public static function businessCheck(?int $businessId, $abort = true): bool
     {
         if (auth()->user()->business_id !== $businessId) {
-            if ($abort) {
-                abort(403, 'You do not have access');
-            }
+            abort_if($abort, 403, 'You do not have access');
 
             return false;
         }

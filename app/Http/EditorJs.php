@@ -9,7 +9,7 @@ class EditorJs
      * - youtubeEmbed (https://github.com/yuanwei92/editorjs-youtube-embed)
      * - inline image (https://www.npmjs.com/package/editorjs-inline-image)
      * */
-    public function parse($content): string
+    public function parse(array $content): string
     {
         $parsedContent = '';
         foreach ($content['blocks'] as $block) {
@@ -33,7 +33,7 @@ class EditorJs
 
     private function parseListItems(array $items): string
     {
-        return implode('', array_map(fn ($item) => "<li>{$item}</li>", $items));
+        return implode('', array_map(fn ($item): string => "<li>{$item}</li>", $items));
     }
 
     private function parseQuote(array $data): string
@@ -48,7 +48,7 @@ class EditorJs
 
     private function parseYouTubeEmbed(array $block): string
     {
-        $videosId = explode('=', $block['data']['url'])[1];
+        $videosId = explode('=', (string) $block['data']['url'])[1];
         $embedUrl = 'https://www.youtube.com/embed/' . $videosId;
 
         return "<iframe width=\"800\" height=\"500\" src=\"{$embedUrl}\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>";
@@ -65,7 +65,8 @@ class EditorJs
         $parsedContent .= '</tr>';
         $parsedContent .= '</thead>';
         $parsedContent .= '<tbody>';
-        for ($i = 1; $i < count($data); $i++) {
+        $counter = count($data);
+        for ($i = 1; $i < $counter; $i++) {
             $parsedContent .= '<tr>';
             foreach ($data[$i] as $cell) {
                 $parsedContent .= "<td>{$cell}</td>";
@@ -73,8 +74,7 @@ class EditorJs
             $parsedContent .= '</tr>';
         }
         $parsedContent .= '</tbody>';
-        $parsedContent .= '</table>';
 
-        return $parsedContent;
+        return $parsedContent . '</table>';
     }
 }

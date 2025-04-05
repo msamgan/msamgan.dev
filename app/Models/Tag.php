@@ -25,9 +25,9 @@ class Tag extends Model
     {
         $tagIds = [];
         foreach ($tags as $tag) {
-            $tagIds[] = Tag::firstOrCreate([
-                'name' => strtolower($tag),
-                'slug' => Str::slug(strtolower($tag)),
+            $tagIds[] = \App\Models\Tag::query()->firstOrCreate([
+                'name' => strtolower((string) $tag),
+                'slug' => Str::slug(strtolower((string) $tag)),
             ])->id;
         }
 

@@ -13,11 +13,7 @@ class StorePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (! auth()->user()->can(PermissionEnum::PostCreate->value)) {
-            return false;
-        }
-
-        return true;
+        return (bool) auth()->user()->can(PermissionEnum::PostCreate->value);
     }
 
     /**

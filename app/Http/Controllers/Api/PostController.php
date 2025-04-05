@@ -7,6 +7,7 @@ use App\Actions\Post\FetchPaginatedPosts;
 use App\Actions\Post\FetchPost;
 use App\Actions\Post\FetchPostsByTag;
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -17,9 +18,7 @@ class PostController extends Controller
     {
         $tags = Tag::query()->withCount('posts')->get();
 
-        return $tags->filter(function ($tag) {
-            return $tag->posts_count > 0;
-        });
+        return $tags->filter(fn ($tag): bool => $tag->posts_count > 0);
     }
 
     public function postList(FetchNonPaginatedPosts $posts): JsonResponse
@@ -36,7 +35,7 @@ class PostController extends Controller
     {
         $postData = $post->handle(slug: request('slug'));
 
-        if (! $postData) {
+        if (! $postData instanceof Post) {
             return response()->json(['status' => false, 'message' => 'Post not found'], 404);
         }
 

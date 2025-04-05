@@ -10,12 +10,10 @@ class FetchPost
 {
     public function handle(string $slug): ?Post
     {
-        $post = Cache::remember('post_' . $slug, CACHE_TTL, function () use ($slug) {
-            return Post::query()
-                ->where('slug', $slug)
-                ->with('tags')
-                ->first();
-        });
+        $post = Cache::remember('post_' . $slug, CACHE_TTL, fn () => Post::query()
+            ->where('slug', $slug)
+            ->with('tags')
+            ->first());
 
         if (! $post) {
             return null;
@@ -26,9 +24,7 @@ class FetchPost
         $post->related_posts = Cache::remember(
             'post_' . $slug . '_related_posts',
             CACHE_TTL,
-            function () use ($post) {
-                return $this->getRelatedPosts(postTags: $post->tags, currentPostSlug: $post->slug);
-            }
+            fn (): Collection => $this->getRelatedPosts(postTags: $post->tags, currentPostSlug: $post->slug)
         );
 
         unset($post->tags);
@@ -43,7 +39,7 @@ class FetchPost
     {
         return Cache::remember('post_' . $slug . '_tags',
             CACHE_TTL,
-            function () use ($post) {
+            function () use ($post): array {
                 $tagsArray = [];
                 foreach ($post->tags as $key => $tag) {
                     $tagsArray[$key]['name'] = $tag->name;
@@ -59,7 +55,7 @@ class FetchPost
     {
         return Post::query()
             ->select('title', 'slug', 'excerpt', 'featured_image', 'published_at')
-            ->whereHas('tags', function ($query) use ($postTags) {
+            ->whereHas('tags', function ($query) use ($postTags): void {
                 $query->whereIn('name', $postTags->pluck('name'));
             })
             ->where('status', 'published')

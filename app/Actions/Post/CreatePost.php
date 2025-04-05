@@ -22,7 +22,7 @@ class CreatePost
             $data['published_at'] = now();
         }
 
-        $post = Post::create($data);
+        $post = Post::query()->create($data);
 
         if (! empty($data['tags'])) {
             $post->tags()->sync(Tag::tagNameToIdArray($data['tags']));

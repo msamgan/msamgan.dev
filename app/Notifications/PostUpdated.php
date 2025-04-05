@@ -10,20 +10,10 @@ use Illuminate\Notifications\Notification;
 
 class PostUpdated extends Notification // implements ShouldQueue
 {
-    // use Queueable;
-
-    private User $user;
-
-    private Post $post;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, Post $post)
-    {
-        $this->user = $user;
-        $this->post = $post;
-    }
+    public function __construct(private readonly User $user, private readonly Post $post) {}
 
     /**
      * Get the notification's delivery channels.

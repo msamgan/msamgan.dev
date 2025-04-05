@@ -6,9 +6,13 @@
         "build": "vite build",
         "prettier": "prettier --write resources/",
         "duster": "./vendor/bin/duster fix",
-        "format": "concurrently -c \"#93c5fd,#c4b5fd\" npm:prettier npm:duster",
         "prepare": "husky install",
-        "serve": "./vendor/bin/sail up -d && npm run dev"
+        "lint": "./vendor/bin/rector process && npx prettier --write resources/ && ./vendor/bin/duster fix",
+        "ractor": "./vendor/bin/rector process",
+        "phpstan": "./vendor/bin/phpstan analyse --memory-limit=2G --no-progress --error-format=raw",
+        "test:quick": "php artisan test --bail --dirty",
+        "test": "php artisan test --compact",
+        "pint": "./vendor/bin/pint"
     },
     "devDependencies": {
         "@headlessui/react": "^2.0.0",

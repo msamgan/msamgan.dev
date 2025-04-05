@@ -18,7 +18,7 @@ readonly class FetchPosts
             ->where('status', 'published')
             ->with('tags')
             ->orderBy('published_at', 'desc')
-            ->when($this->query, function ($query) {
+            ->when($this->query, function ($query): void {
                 $query->where('title', 'like', '%' . request('query') . '%');
                 $query->orWhere('excerpt', 'like', '%' . request('query') . '%');
             });

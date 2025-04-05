@@ -50,7 +50,7 @@ class MediaController extends Controller
     {
         $files = collect(Storage::disk('public')->files('images'));
 
-        return $files->map(function ($file) {
+        return $files->map(function ($file): array {
             $fileUrl = url('storage/images/' . basename($file));
 
             return [
