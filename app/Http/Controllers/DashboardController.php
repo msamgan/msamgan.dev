@@ -13,33 +13,23 @@ class DashboardController extends Controller
 {
     public function index(): Response
     {
-        $projects = Project::query()
-            ->orderBy('created_at', 'desc')
-            ->get()
-            ->groupBy('status');
+        return Inertia::render('Dashboard');
+    }
 
-        $client = Client::query()
-            ->orderBy('created_at', 'desc')
-            ->count();
+    public function dashboardData(): array
+    {
+        $projects = Project::query()->orderBy('created_at', 'desc')->get()->groupBy('status');
+        $client = Client::query()->orderBy('created_at', 'desc')->count();
+        $organization = Organization::query()->orderBy('created_at', 'desc')->count();
+        $publishedPosts = Post::query()->where('status', 'published')->count();
+        $draftPosts = Post::query()->where('status', 'draft')->count();
 
-        $organization = Organization::query()
-            ->orderBy('created_at', 'desc')
-            ->count();
-
-        $publishedPosts = Post::query()
-            ->where('status', 'published')
-            ->count();
-
-        $draftPosts = Post::query()
-            ->where('status', 'draft')
-            ->count();
-
-        return Inertia::render('Dashboard', [
+        return [
             'projects' => $projects,
             'client' => $client,
             'organization' => $organization,
             'publishedPosts' => $publishedPosts,
             'draftPosts' => $draftPosts,
-        ]);
+        ];
     }
 }

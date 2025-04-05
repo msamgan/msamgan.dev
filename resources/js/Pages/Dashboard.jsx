@@ -1,6 +1,8 @@
 import { Head } from '@inertiajs/react'
 import Master from '@/Layouts/Master.jsx'
 import StatsCard from '@/Components/StatsCard.jsx'
+import {dashboardData} from "@/actions/App/Http/Controllers/DashboardController.ts"
+import { useEffect, useState } from 'react'
 
 const ProjectSection = ({ projects }) => {
     return (
@@ -23,8 +25,9 @@ const ProjectSection = ({ projects }) => {
                         </svg>
                     }
                     title="Leads"
-                    value={projects.lead ? projects.lead.length : 0}
+                    value={projects.lead ? projects.lead : 0}
                 />
+
                 <StatsCard
                     icon={
                         <svg
@@ -158,7 +161,17 @@ const PostSection = ({ publishedPosts, draftPosts }) => {
     )
 }
 
-export default function Dashboard({ auth, projects, client, organization, publishedPosts, draftPosts }) {
+export default function Dashboard({ auth }) {
+    const [stats, setStats] = useState()
+
+    useEffect(() => {
+        axios.get(dashboardData().url).then(response => {
+            if (response.status) {
+                return setStats(response.data)
+            }
+        });
+    }, [])
+
     return (
         <Master user={auth.user} header={'Dashboard'}>
             <Head title="Dashboard" />
@@ -168,9 +181,15 @@ export default function Dashboard({ auth, projects, client, organization, publis
             </div>
             <hr className={'my-3 text-gray-300'} />
 
-            <ProjectSection projects={projects} />
-            <ClientAndOrganizationSection client={client} organization={organization} />
-            <PostSection publishedPosts={publishedPosts} draftPosts={draftPosts} />
+            {
+                stats && <div>
+                    <ProjectSection projects={stats?.projects} />
+                    <ClientAndOrganizationSection client={stats?.client} organization={stats?.organization} />
+                    <PostSection publishedPosts={stats?.publishedPosts} draftPosts={stats?.draftPosts} />
+                </div>
+            }
+
+
         </Master>
     )
 }
