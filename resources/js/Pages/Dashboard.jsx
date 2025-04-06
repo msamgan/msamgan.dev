@@ -1,6 +1,8 @@
 import { Head } from '@inertiajs/react'
 import Master from '@/Layouts/Master.jsx'
 import StatsCard from '@/Components/StatsCard.jsx'
+import { useEffect, useState } from 'react'
+import { dashboardData } from '@actions/DashboardController'
 
 const ProjectSection = ({ projects }) => {
     return (
@@ -158,7 +160,15 @@ const PostSection = ({ publishedPosts, draftPosts }) => {
     )
 }
 
-export default function Dashboard({ auth, projects, client, organization, publishedPosts, draftPosts }) {
+export default function Dashboard({ auth, projects }) {
+    const [stats, setStats] = useState({})
+
+    useEffect(() => {
+        dashboardData({}).then(async (r) => {
+            setStats(await r.json())
+        })
+    }, [])
+
     return (
         <Master user={auth.user} header={'Dashboard'}>
             <Head title="Dashboard" />
@@ -168,9 +178,14 @@ export default function Dashboard({ auth, projects, client, organization, publis
             </div>
             <hr className={'my-3 text-gray-300'} />
 
-            <ProjectSection projects={projects} />
-            <ClientAndOrganizationSection client={client} organization={organization} />
-            <PostSection publishedPosts={publishedPosts} draftPosts={draftPosts} />
+            {
+                stats && <div>
+                    <ProjectSection projects={projects} />
+                    <ClientAndOrganizationSection client={stats?.client} organization={stats?.organization} />
+                    <PostSection publishedPosts={stats?.publishedPosts} draftPosts={stats?.draftPosts} />
+                </div>
+            }
+
         </Master>
     )
 }
