@@ -164,7 +164,7 @@ export default function Dashboard({ auth, projects }) {
     const [stats, setStats] = useState({})
 
     useEffect(() => {
-        dashboardData({}).then(async (r) => {
+        dashboardData.call({}).then(async (r) => {
             setStats(await r.json())
         })
     }, [])

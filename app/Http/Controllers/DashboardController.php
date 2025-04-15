@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Project;
 use Inertia\Inertia;
 use Inertia\Response;
+use Msamgan\Lact\Attributes\Action;
 
 class DashboardController extends Controller
 {
@@ -18,6 +19,7 @@ class DashboardController extends Controller
         ]);
     }
 
+    #[Action(method: 'get', middleware: ['web', 'auth'])]
     public function dashboardData(): array
     {
         $client = Client::query()->orderBy('created_at', 'desc')->count();
