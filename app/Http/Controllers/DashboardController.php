@@ -19,7 +19,7 @@ class DashboardController extends Controller
         ]);
     }
 
-    #[Action(method: 'get', middleware: ['web', 'auth'])]
+    #[Action(method: 'get', middleware: ['auth'])]
     public function dashboardData(): array
     {
         $client = Client::query()->orderBy('created_at', 'desc')->count();

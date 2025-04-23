@@ -163,10 +163,12 @@ const PostSection = ({ publishedPosts, draftPosts }) => {
 export default function Dashboard({ auth, projects }) {
     const [stats, setStats] = useState({})
 
+    const getDashboardData = async () => {
+        setStats(await dashboardData.data({}))
+    }
+
     useEffect(() => {
-        dashboardData.call({}).then(async (r) => {
-            setStats(await r.json())
-        })
+        getDashboardData().then()
     }, [])
 
     return (
@@ -178,14 +180,13 @@ export default function Dashboard({ auth, projects }) {
             </div>
             <hr className={'my-3 text-gray-300'} />
 
-            {
-                stats && <div>
+            {stats && (
+                <div>
                     <ProjectSection projects={projects} />
                     <ClientAndOrganizationSection client={stats?.client} organization={stats?.organization} />
                     <PostSection publishedPosts={stats?.publishedPosts} draftPosts={stats?.draftPosts} />
                 </div>
-            }
-
+            )}
         </Master>
     )
 }
