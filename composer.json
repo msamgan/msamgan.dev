@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.9",
         "msamgan/lact": "^0.3.0",
         "predis/predis": "^2.0",
+        "spatie/fork": "^1.2",
         "spatie/laravel-activitylog": "^4.8",
         "spatie/laravel-permission": "^6.9",
         "tightenco/ziggy": "^2.0"
