@@ -6,16 +6,7 @@ const CACHE_DURATION = 60;
 const PAGE_SIZE = 12;
 const PAGE_SIZE_LARGE = 40;
 const CACHE_TTL = 60 * 60 * 24; // 24 hours
-
-if (! function_exists('autoloadRoutes')) {
-    function autoloadRoutes(): void
-    {
-        $moduleRoutesDir = 'routes/modules/';
-        foreach (File::allFiles(base_path($moduleRoutesDir)) as $file) {
-            require base_path($moduleRoutesDir) . $file->getFilename();
-        }
-    }
-}
+const ROUTE_MODULE_DIR = 'routes' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR;
 
 if (! function_exists('allCases')) {
     /**

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Throwable;
 
 class MediaController extends Controller
 {
@@ -21,6 +22,7 @@ class MediaController extends Controller
 
     /**
      * @throws Exception
+     * @throws Throwable
      */
     public function store(StoreMediaRequest $request, NotifyUser $notifyUser): void
     {

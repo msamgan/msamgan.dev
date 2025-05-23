@@ -32,7 +32,7 @@ export default function Media({ getMedia }) {
                     url: routes.media.store,
                     process: {
                         headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf"]').getAttribute('content'),
                         },
                         onload: (response) => {
                             getMedia()

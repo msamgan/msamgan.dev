@@ -16,7 +16,8 @@ add('writable_dirs', []);
 
 host('146.190.32.125')
     ->set('remote_user', 'msamgan_dev')
-    ->set('deploy_path', '~/htdocs/msamgan.dev');
+    ->set('deploy_path', '~/htdocs/msamgan.dev')
+    ->set('writable_mode', 'chmod');
 
 desc('Build the assets');
 task('build', function () {
