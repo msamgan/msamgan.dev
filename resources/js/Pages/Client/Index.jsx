@@ -25,6 +25,7 @@ export default function Index({ auth }) {
     const [client, setClient] = useState(null)
     const [loading, setLoading] = useState(true)
     const [pageData, setPageData] = useState(pageObject(null))
+    const [isOffCanvasOpen, setIsOffCanvasOpen] = useState(false)
 
     const [organizations, setOrganizations] = useState([])
 
@@ -55,11 +56,16 @@ export default function Index({ auth }) {
                                 onClick={() => {
                                     getClient(client.id)
                                     setPageData(pageObject(client))
+                                    setIsOffCanvasOpen(true)
                                 }}
-                                className={'dropdown-item'}
+                                className={'flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'}
                                 id="clientFormCanvas"
                             >
-                                <i className="ri-pencil-line me-1 text-primary"></i> Edit
+                                <svg className="h-4 w-4 mr-2 text-indigo-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                </svg>
+                                Edit
                             </OffCanvasButton>
                         ) : null
                     }
@@ -68,7 +74,7 @@ export default function Index({ auth }) {
                             <DeleteEntityForm
                                 action={services.client.destroy(client.id)}
                                 refresh={getClients}
-                                className={'dropdown-item'}
+                                className={'flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'}
                             />
                         ) : null
                     }
@@ -101,10 +107,14 @@ export default function Index({ auth }) {
                             onClick={() => {
                                 setClient(null)
                                 setPageData(pageObject(null))
+                                setIsOffCanvasOpen(true)
                             }}
                             id="clientFormCanvas"
                         >
-                            <i className="ri-add-line me-2"></i>
+                            <svg className="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
                             Create Client
                         </OffCanvasButton>
                     )
@@ -112,17 +122,25 @@ export default function Index({ auth }) {
             ></PageHeader>
 
             {hasCreatePermission && (
-                <OffCanvas id="clientFormCanvas" title={pageData.title}>
+                <OffCanvas
+                    id="clientFormCanvas"
+                    title={pageData.title}
+                    w={'w-full md:w-2/3 lg:w-1/2'}
+                    childrenClass={'mx-auto w-full md:w-2/3'}
+                    isOpen={isOffCanvasOpen}
+                    onClose={() => setIsOffCanvasOpen(false)}
+                >
                     <Form
                         getClients={getClients}
                         client={client}
                         organizations={organizations}
                         getOrganizations={getOrganizations}
+                        onSuccess={() => setIsOffCanvasOpen(false)}
                     />
                 </OffCanvas>
             )}
 
-            <div className="col-12">
+            <div className="w-full">
                 <Table columns={columns} data={data} loading={loading} permission={hasListPermission} />
             </div>
         </Master>

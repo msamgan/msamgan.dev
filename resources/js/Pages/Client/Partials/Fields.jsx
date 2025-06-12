@@ -5,8 +5,8 @@ import InputError from '@/Components/InputError.jsx'
 export default function Fields({ data, setData, errors, organizations, getOrganizations }) {
     return (
         <>
-            <div className="col-12 col-md-12">
-                <div className="form-floating form-floating-outline">
+            <div className="w-full mb-4">
+                <div className="relative">
                     <TextInput
                         type="text"
                         value={data.name}
@@ -22,14 +22,14 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                     <InputError className="mt-2" message={errors.name} />
                 </div>
             </div>
-            <div className="col-12 col-md-12">
-                <div className="form-floating form-floating-outline">
+            <div className="w-full mb-4">
+                <div className="relative">
                     <select
                         value={data.organization_id}
                         onChange={(e) => setData('organization_id', e.target.value)}
                         id="col-organization"
                         required={false}
-                        className="form-select rounded-md pb-2"
+                        className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     >
                         <option value="">Select Organization</option>
                         {organizations.map((organization) => (
@@ -42,22 +42,22 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         Organization
                     </InputLabel>
                     <InputError className="mt-2" message={errors.organization_id} />
-                    <small className="text-muted flex justify-between">
+                    <small className="text-gray-500 flex justify-between">
                         <span className={'mt-2'}>
                             If the Organization is not listed, please{' '}
-                            <a href="#" className={'text-blue-700'} onClick={getOrganizations}>
+                            <a href="#" className={'text-indigo-600 hover:text-indigo-800'} onClick={getOrganizations}>
                                 click here
                             </a>{' '}
                             to refresh the list.
                         </span>
-                        <a target={'_blank'} href={route('organization.index')} className={'ml-5 mt-2 text-blue-700'}>
+                        <a target={'_blank'} href={route('organization.index')} className={'ml-5 mt-2 text-indigo-600 hover:text-indigo-800'}>
                             Add Organization
                         </a>
                     </small>
                 </div>
             </div>
-            <div className="col-12 col-md-12">
-                <div className="form-floating form-floating-outline">
+            <div className="w-full mb-4">
+                <div className="relative">
                     <TextInput
                         type="text"
                         value={data.emails}
@@ -71,11 +71,11 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         Emails
                     </InputLabel>
                     <InputError className="mt-2" message={errors.emails} />
-                    <small className="text-muted">Separate multiple emails with a comma.</small>
+                    <small className="text-gray-500">Separate multiple emails with a comma.</small>
                 </div>
             </div>
-            <div className="col-12 col-md-12">
-                <div className="form-floating form-floating-outline">
+            <div className="w-full mb-4">
+                <div className="relative">
                     <TextInput
                         type="text"
                         value={data.phones}
@@ -89,7 +89,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         Phones
                     </InputLabel>
                     <InputError className="mt-2" message={errors.phones} />
-                    <small className="text-muted">Separate multiple emails with a comma.</small>
+                    <small className="text-gray-500">Separate multiple phone numbers with a comma.</small>
                 </div>
             </div>
         </>
