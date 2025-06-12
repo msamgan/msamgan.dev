@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export default function OffCanvas({ id, title, w = 'w-full md:w-2/3 lg:w-1/2', children, childrenClass = '', isOpen, onClose }) {
+export default function OffCanvas({ id, title, w = 'w-full sm:w-[90%] md:w-[75%] lg:w-[50%] xl:w-[40%] 2xl:w-[600px]', children, childrenClass = '', isOpen, onClose }) {
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
@@ -38,7 +38,7 @@ export default function OffCanvas({ id, title, w = 'w-full md:w-2/3 lg:w-1/2', c
             ></div>
 
             {/* Panel */}
-            <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
+            <div className="fixed inset-y-0 right-0 flex max-w-full pl-0 sm:pl-4 md:pl-10">
                 <div
                     className={`${w} transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
                     id={id}

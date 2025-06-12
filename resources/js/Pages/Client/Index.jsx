@@ -125,7 +125,6 @@ export default function Index({ auth }) {
                 <OffCanvas
                     id="clientFormCanvas"
                     title={pageData.title}
-                    w={'w-full md:w-2/3 lg:w-1/2'}
                     childrenClass={'mx-auto w-full md:w-2/3'}
                     isOpen={isOffCanvasOpen}
                     onClose={() => setIsOffCanvasOpen(false)}
