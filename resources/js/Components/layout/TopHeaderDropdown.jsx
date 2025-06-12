@@ -40,7 +40,7 @@ export default function TopHeaderDropdown({ user }) {
             >
                 <div className="relative">
                     <img
-                        src="/assets/img/avatars/1.png"
+                        src="/img/avatars/1.png"
                         alt={`${user.name}'s profile`}
                         className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
                     />
@@ -56,7 +56,7 @@ export default function TopHeaderDropdown({ user }) {
                                 <div className="mr-3 flex-shrink-0">
                                     <div className="relative">
                                         <img
-                                            src="/assets/img/avatars/1.png"
+                                            src="/img/avatars/1.png"
                                             alt={`${user.name}'s profile`}
                                             className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
                                         />
