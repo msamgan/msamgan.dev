@@ -12,51 +12,51 @@ export default function HeaderNotification({ user }) {
     }, [])
 
     return (
-        <li className="nav-item dropdown-notifications navbar-dropdown dropdown me-xl-1 me-4">
+        <li className="relative mx-4 xl:mx-1 group">
             <a
-                className="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow"
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200"
                 href="#"
                 data-bs-toggle="dropdown"
                 data-bs-auto-close="outside"
                 aria-expanded="false"
             >
-                <i className="ri-notification-2-line ri-22px"></i>
+                <i className="ri-notification-2-line text-2xl"></i>
                 <span
                     className={
                         user.notifications.filter((notification) => !notification.read_at).length
-                            ? 'badge-dot position-absolute start-50 translate-middle-y badge bg-danger top-0 mt-2 border'
-                            : 'position-absolute start-50 translate-middle-y badge bg-danger top-0 mt-2 border'
+                            ? 'absolute w-2 h-2 bg-red-600 rounded-full top-2 border border-white'
+                            : 'hidden'
                     }
                 ></span>
             </a>
-            <ul className="dropdown-menu dropdown-menu-end py-0">
-                <li className="dropdown-menu-header border-bottom py-50">
-                    <div className="dropdown-header d-flex align-items-center py-2">
-                        <h6 className="mb-0 me-auto">Notification</h6>
-                        <div className="d-flex align-items-center">
-                            <span className="badge rounded-pill bg-label-primary fs-xsmall me-2">
+            <ul className="hidden group-hover:block absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-0 z-20">
+                <li className="border-b py-2">
+                    <div className="flex items-center justify-between py-2 px-4">
+                        <h6 className="text-sm font-medium m-0">Notification</h6>
+                        <div className="flex items-center">
+                            <span className="bg-primary bg-opacity-10 text-primary text-xs rounded-full px-2 py-1 mr-2">
                                 {unreadNotifications} New
                             </span>
                         </div>
                     </div>
                 </li>
-                <li className="dropdown-notifications-list scrollable-container">
-                    <ul className="list-group list-group-flush">
+                <li className="max-h-64 overflow-y-auto">
+                    <ul className="divide-y divide-gray-100">
                         {topFourNotifications.map((notification, index) => (
                             <li
                                 key={index}
-                                className="list-group-item list-group-item-action dropdown-notifications-item"
+                                className="hover:bg-gray-50 cursor-pointer"
                             >
-                                <div className="d-flex">
-                                    <div className="flex-grow-1">
-                                        <h6 className="small mb-1">{notification.data.title}</h6>
-                                        <small className="d-block text-body mb-1">{notification.data.message}</small>
-                                        <small className="text-muted">{formatDuration(notification.created_at)}</small>
+                                <div className="flex p-3">
+                                    <div className="flex-grow">
+                                        <h6 className="text-sm font-medium mb-1">{notification.data.title}</h6>
+                                        <p className="text-xs text-gray-700 mb-1">{notification.data.message}</p>
+                                        <p className="text-xs text-gray-500">{formatDuration(notification.created_at)}</p>
                                     </div>
-                                    <div className="dropdown-notifications-actions flex-shrink-0">
+                                    <div className="flex-shrink-0">
                                         {!notification.read_at && (
-                                            <a href="#" className="dropdown-notifications-read">
-                                                <span className="badge badge-dot"></span>
+                                            <a href="#" className="block">
+                                                <span className="w-2 h-2 bg-primary rounded-full"></span>
                                             </a>
                                         )}
                                     </div>
@@ -66,10 +66,10 @@ export default function HeaderNotification({ user }) {
                     </ul>
                 </li>
 
-                <li className="border-top">
-                    <div className="d-grid p-4">
-                        <a className="btn btn-primary btn-sm d-flex" href={routes.notifications.index}>
-                            <small className="align-middle">View all notifications</small>
+                <li className="border-t">
+                    <div className="p-4">
+                        <a className="block w-full bg-primary hover:bg-primary-dark text-white text-center rounded py-2 text-sm" href={routes.notifications.index}>
+                            <span className="align-middle">View all notifications</span>
                         </a>
                     </div>
                 </li>

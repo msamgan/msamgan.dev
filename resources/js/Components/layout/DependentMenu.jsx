@@ -9,16 +9,16 @@ export default function DependentMenu({ menuItems, itemKey, index }) {
             }}
             className={
                 menuItems[itemKey].map((item, index) => route().current(item.route)).includes(true)
-                    ? 'menu-item active'
-                    : 'menu-item'
+                    ? 'py-2 px-4 border-b-2 border-primary relative group'
+                    : 'py-2 px-4 hover:text-primary relative group'
             }
         >
-            <a href="#" className="menu-link menu-toggle">
+            <a href="#" className="flex items-center space-x-2 cursor-pointer">
                 <i
                     onClick={(e) => {
                         e.target.parentElement.parentElement.classList.toggle('open')
                     }}
-                    className={menuItems[itemKey][0].parent.icon + ' menu-icon tf-icons'}
+                    className={menuItems[itemKey][0].parent.icon + ' text-lg'}
                 ></i>
                 <div
                     data-i18n={itemKey}
@@ -29,11 +29,11 @@ export default function DependentMenu({ menuItems, itemKey, index }) {
                     {itemKey}
                 </div>
             </a>
-            <ul className="menu-sub">
+            <ul className="hidden group-[.open]:block absolute left-0 mt-2 bg-white shadow-lg rounded-md py-2 z-10 min-w-[200px]">
                 {menuItems[itemKey].map((item, index) => (
-                    <li key={index} className={route().current(item.route) ? 'menu-item active' : 'menu-item'}>
-                        <Link href={route(item.route)} className="menu-link">
-                            <i className={item.icon + ' menu-icon tf-icons'}></i>
+                    <li key={index} className={route().current(item.route) ? 'bg-gray-100' : 'hover:bg-gray-50'}>
+                        <Link href={route(item.route)} className="flex items-center space-x-2 px-4 py-2">
+                            <i className={item.icon + ' text-lg'}></i>
                             <div data-i18n={item.label}>{item.label}</div>
                         </Link>
                     </li>

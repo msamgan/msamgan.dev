@@ -4,21 +4,21 @@ import Footer from '@/Components/layout/Footer.jsx'
 
 export default function Master({ children, header, user }) {
     return (
-        <div className="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
-            <div className="layout-container">
+        <div className="min-h-screen flex flex-col">
+            <div className="w-full">
                 <TopHeader user={user} />
 
-                <div className="layout-page">
-                    <div className="content-wrapper">
+                <div className="w-full">
+                    <div className="flex flex-col">
                         <TopMenu />
 
-                        <div className="container-xxl flex-grow-1 container-p-y">
+                        <div className="container mx-auto px-4 py-6 flex-grow">
                             {/*<h4 className="pt-4 text-2xl font-semibold">{header}</h4>*/}
                             {children}
                         </div>
 
                         <Footer />
-                        <div className="content-backdrop fade"></div>
+                        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
                     </div>
                 </div>
             </div>

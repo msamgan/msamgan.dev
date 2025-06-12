@@ -3,8 +3,8 @@ import HeaderNotification from '@/Components/layout/HeaderNotification.jsx'
 
 export default function TopHeaderRight({ user }) {
     return (
-        <div className="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-            <ul className="navbar-nav align-items-center ms-auto flex-row">
+        <div className="flex items-center" id="navbar-collapse">
+            <ul className="flex items-center ml-auto flex-row">
                 <HeaderNotification user={user} />
                 <TopHeaderDropdown user={user} />
             </ul>
