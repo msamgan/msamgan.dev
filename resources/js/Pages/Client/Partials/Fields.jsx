@@ -7,7 +7,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
         <div className="flex flex-col gap-6">
             <div className="w-full">
                 <div className="relative group">
-                    <InputLabel htmlFor="col-name" required={true} className="mb-2">
+                    <InputLabel htmlFor="col-name" required={true} className="mb-4">
                         Name
                     </InputLabel>
                     <TextInput
@@ -19,7 +19,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         required={true}
                         isFocused={false}
                     />
-                    <InputError className="mt-2 text-sm text-red-500" message={errors.name} />
+                    <InputError className="mt-2" message={errors.name} />
                 </div>
             </div>
             <div className="w-full">
@@ -36,7 +36,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         onChange={(e) => setData('organization_id', e.target.value)}
                         id="col-organization"
                         required={false}
-                        className="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20"
+                        className="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20 mt-1"
                     >
                         <option value="">Select Organization</option>
                         {organizations.map((organization) => (
@@ -45,8 +45,8 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                             </option>
                         ))}
                     </select>
-                    <InputError className="mt-2 text-sm text-red-500" message={errors.organization_id} />
-                    <div className="mt-3 flex flex-wrap items-center justify-between text-xs text-gray-500">
+                    <InputError className="mt-2" message={errors.organization_id} />
+                    <div className="mt-2 flex flex-wrap items-center justify-between text-xs text-gray-500">
                         <span className="flex-grow">
                             If the Organization is not listed, please{' '}
                             <button
@@ -100,7 +100,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         required={false}
                         isFocused={false}
                     />
-                    <InputError className="mt-2 text-sm text-red-500" message={errors.emails} />
+                    <InputError className="mt-2" message={errors.emails} />
                     <p className="mt-2 text-xs text-gray-500">Separate multiple emails with a comma.</p>
                 </div>
             </div>
@@ -122,7 +122,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         required={false}
                         isFocused={false}
                     />
-                    <InputError className="mt-2 text-sm text-red-500" message={errors.phones} />
+                    <InputError className="mt-2" message={errors.phones} />
                     <p className="mt-2 text-xs text-gray-500">Separate multiple phone numbers with a comma.</p>
                 </div>
             </div>
