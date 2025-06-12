@@ -75,7 +75,7 @@ export default function OffCanvas({ id, title, w = 'w-1/2', children, childrenCl
                         </div>
 
                         {/* Body */}
-                        <div className={`flex-1 overflow-y-auto p-6 ${childrenClass}`}>{children}</div>
+                        <div className={`flex-1 overflow-y-auto p-3 ${childrenClass}`}>{children}</div>
                     </div>
                 </div>
             </div>

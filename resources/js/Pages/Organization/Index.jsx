@@ -140,7 +140,7 @@ export default function Index({ auth }) {
                 <OffCanvas
                     id="organizationFormCanvas"
                     title={pageData.title}
-                    childrenClass={'mx-auto w-full md:w-2/3'}
+
                     isOpen={isOffCanvasOpen}
                     onClose={() => setIsOffCanvasOpen(false)}
                 >
