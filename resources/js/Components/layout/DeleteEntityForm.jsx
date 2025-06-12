@@ -50,10 +50,10 @@ export default function DeleteEntityForm({ action, refresh, className = '' }) {
         <section className={`space-y-6 ${className}`}>
             <button
                 type="button"
-                className="inline-flex items-center px-3 py-2 text-sm font-medium text-red-700 hover:text-red-900 hover:bg-red-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition ease-in-out duration-150"
+                className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 focus:outline-none focus:bg-red-50 focus:text-red-700 transition-colors duration-200"
                 onClick={confirmUserDeletion}
             >
-                <svg className="h-5 w-5 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="h-4 w-4 mr-2 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="3 6 5 6 21 6" />
                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
                     <line x1="10" y1="11" x2="10" y2="17" />
@@ -64,14 +64,15 @@ export default function DeleteEntityForm({ action, refresh, className = '' }) {
 
             <Modal show={confirmingEntityDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900">Are you sure you want to delete ?</h2>
+                    <h2 className="text-xl font-semibold text-gray-800">Are you sure you want to delete?</h2>
 
-                    <p className="mt-1 text-sm text-gray-600">
+                    <p className="mt-3 text-sm text-gray-600 leading-relaxed">
                         Once this is deleted, all of its resources and data will be permanently deleted. Please enter
                         your password to confirm you would like to permanently delete this data.
                     </p>
 
                     <div className="mt-6">
+                        <InputLabel htmlFor="password" value="Password" required={true} className="text-sm font-medium text-gray-700 mb-1" />
                         <TextInput
                             id="password"
                             type="password"
@@ -79,18 +80,19 @@ export default function DeleteEntityForm({ action, refresh, className = '' }) {
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
                             isFocused
-                            placeholder="Password"
-                            className="w-full"
+                            placeholder="Enter your password"
+                            className="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20"
                         />
-                        <InputLabel htmlFor="password" value="Password" required={true} />
                         <InputError message={errors.password} className="mt-2" />
                     </div>
 
-                    <div className="mt-6 flex justify-end space-x-3">
-                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+                    <div className="mt-8 flex justify-end space-x-4">
+                        <SecondaryButton onClick={closeModal} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Cancel
+                        </SecondaryButton>
 
-                        <DangerButton disabled={processing}>
-                            Delete Account
+                        <DangerButton disabled={processing} className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            Delete
                         </DangerButton>
                     </div>
                 </form>

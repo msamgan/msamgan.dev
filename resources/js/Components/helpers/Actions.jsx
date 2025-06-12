@@ -26,7 +26,7 @@ export default function Actions({ edit, deleteAction }) {
             <div>
                 <button
                     type="button"
-                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition ease-in-out duration-150"
+                    className="inline-flex items-center justify-center p-2 rounded-full text-gray-400 hover:text-primary hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-200"
                     id={`action-menu-button-${dropdownId}`}
                     aria-expanded="false"
                     aria-haspopup="true"
@@ -42,7 +42,7 @@ export default function Actions({ edit, deleteAction }) {
             </div>
             <div
                 id={dropdownId}
-                className="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100"
+                className="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-lg bg-white shadow-md ring-1 ring-gray-200 focus:outline-none"
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby={`action-menu-button-${dropdownId}`}

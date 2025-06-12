@@ -39,37 +39,34 @@ export default function Index({ auth }) {
 
     const CreateTitleAttribute = ({ title, tags, featured_image, status, published_at }) => {
         return (
-            <div className="align-items-center flex gap-6 space-x-3">
-                <div className="mt-2">
+            <div className="flex items-center space-x-4">
+                <div>
                     <img
-                        alt={'image'}
+                        alt={'Post thumbnail'}
                         src={featured_image ? featured_image : fallbackImage}
-                        className="h-11 w-11 rounded-full"
+                        className="h-12 w-12 rounded-lg object-cover shadow-sm"
                     />
                 </div>
-                <div>
-                    <Name value={title} />
-                    <div className={'align-items-center mt-4 flex flex-row justify-start'}>
-                        <span className={'mr-4 space-x-1'}>
-                            <Badge value={ucfisrt(status)} type={status === 'published' ? 'active' : 'cancelled'} />
-                            <Badge value={formatDate(published_at)} type={'lead'} />
-                        </span>
-                        <span>
-                            {tags.length > 0 ? (
-                                <div className="text-xs">
-                                    {tags.map((tag) => {
-                                        return (
-                                            <span
-                                                key={tag.id}
-                                                className="rounded-full bg-gray-200 px-2 py-1 text-gray-900"
-                                            >
-                                                {tag.name}
-                                            </span>
-                                        )
-                                    })}
-                                </div>
-                            ) : null}
-                        </span>
+                <div className="flex-1 min-w-0">
+                    <div className="font-medium text-gray-800">
+                        <Name value={title} />
+                    </div>
+                    <div className="mt-2 flex flex-wrap items-center gap-2">
+                        <Badge value={ucfisrt(status)} type={status === 'published' ? 'active' : 'cancelled'} />
+                        <Badge value={formatDate(published_at)} type={'lead'} />
+
+                        {tags.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mt-1 sm:mt-0">
+                                {tags.map((tag) => (
+                                    <span
+                                        key={tag.id}
+                                        className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700"
+                                    >
+                                        {tag.name}
+                                    </span>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -97,10 +94,10 @@ export default function Index({ auth }) {
                                     setPageData(pageObject(post))
                                     setIsOffCanvasOpen(true)
                                 }}
-                                className={'flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'}
+                                className={'flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-primary focus:outline-none focus:bg-gray-50 focus:text-primary transition-colors duration-200'}
                                 id="postFormCanvas"
                             >
-                                <svg className="h-4 w-4 mr-2 text-indigo-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <svg className="h-4 w-4 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                                 </svg>
@@ -113,7 +110,7 @@ export default function Index({ auth }) {
                             <DeleteEntityForm
                                 action={services.post.destroy(post.id)}
                                 refresh={getPosts}
-                                className={'flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'}
+                                className={'flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 focus:outline-none focus:bg-red-50 focus:text-red-700 transition-colors duration-200'}
                             />
                         ) : null
                     }
@@ -136,28 +133,31 @@ export default function Index({ auth }) {
         <Master user={auth.user} header={'Posts'}>
             <Head title="Posts" />
 
-            <PageHeader
-                title={'Business Post List'}
-                subtitle={'Find all of your business’s posts and there associated details.'}
-                action={
-                    hasCreatePermission && (
-                        <OffCanvasButton
-                            onClick={() => {
-                                setPost(null)
-                                setPageData(pageObject(null))
-                                setIsOffCanvasOpen(true)
-                            }}
-                            id="postFormCanvas"
-                        >
-                            <svg className="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                            </svg>
-                            Create Post
-                        </OffCanvasButton>
-                    )
-                }
-            ></PageHeader>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+                <PageHeader
+                    title={'Business Post List'}
+                    subtitle={'Find all of your business\'s posts and there associated details.'}
+                    action={
+                        hasCreatePermission && (
+                            <OffCanvasButton
+                                onClick={() => {
+                                    setPost(null)
+                                    setPageData(pageObject(null))
+                                    setIsOffCanvasOpen(true)
+                                }}
+                                id="postFormCanvas"
+                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-200"
+                            >
+                                <svg className="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                Create Post
+                            </OffCanvasButton>
+                        )
+                    }
+                ></PageHeader>
+            </div>
 
             {hasCreatePermission && (
                 <OffCanvas
@@ -175,23 +175,25 @@ export default function Index({ auth }) {
                 </OffCanvas>
             )}
 
-            <div className="col-12">
-                <Table
-                    columns={columns}
-                    data={data}
-                    loading={loading}
-                    permission={hasListPermission}
-                    tdClassName={[
-                        {
-                            column: 'Title',
-                            className: 'text-wrap',
-                        },
-                        {
-                            column: 'Excerpt',
-                            className: 'text-wrap',
-                        },
-                    ]}
-                />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div className="mt-8 bg-white overflow-hidden shadow-sm rounded-lg">
+                    <Table
+                        columns={columns}
+                        data={data}
+                        loading={loading}
+                        permission={hasListPermission}
+                        tdClassName={[
+                            {
+                                column: 'Title',
+                                className: 'text-wrap',
+                            },
+                            {
+                                column: 'Excerpt',
+                                className: 'text-wrap',
+                            },
+                        ]}
+                    />
+                </div>
             </div>
         </Master>
     )
