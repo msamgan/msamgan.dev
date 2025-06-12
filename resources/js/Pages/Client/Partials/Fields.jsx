@@ -4,10 +4,10 @@ import InputError from '@/Components/InputError.jsx'
 
 export default function Fields({ data, setData, errors, organizations, getOrganizations }) {
     return (
-        <>
+        <div className="flex flex-col gap-6">
             <div className="w-full">
-                <div className="relative">
-                    <InputLabel htmlFor="col-name" required={true} className="mb-1 text-sm font-medium text-gray-700">
+                <div className="relative group">
+                    <InputLabel htmlFor="col-name" required={true} className="mb-2">
                         Name
                     </InputLabel>
                     <TextInput
@@ -18,19 +18,25 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         placeholder="Enter client name"
                         required={true}
                         isFocused={false}
-                        className="w-full rounded-lg border-gray-300 shadow-sm transition-colors duration-200 focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20"
                     />
-                    <InputError className="mt-2" message={errors.name} />
+                    <InputError className="mt-2 text-sm text-red-500" message={errors.name} />
                 </div>
             </div>
             <div className="w-full">
-                <div className="relative">
+                <div className="relative group">
+                    <InputLabel
+                        htmlFor="col-organization"
+                        required={false}
+                        className="mb-2"
+                    >
+                        Organization
+                    </InputLabel>
                     <select
                         value={data.organization_id}
                         onChange={(e) => setData('organization_id', e.target.value)}
                         id="col-organization"
                         required={false}
-                        className="w-full rounded-lg border-gray-300 shadow-sm transition-colors duration-200 focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20"
+                        className="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20"
                     >
                         <option value="">Select Organization</option>
                         {organizations.map((organization) => (
@@ -39,20 +45,13 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                             </option>
                         ))}
                     </select>
-                    <InputLabel
-                        htmlFor="col-organization"
-                        required={false}
-                        className="mb-1 text-sm font-medium text-gray-700"
-                    >
-                        Organization
-                    </InputLabel>
-                    <InputError className="mt-2" message={errors.organization_id} />
-                    <div className="mt-2 flex flex-wrap items-center justify-between text-xs text-gray-500">
+                    <InputError className="mt-2 text-sm text-red-500" message={errors.organization_id} />
+                    <div className="mt-3 flex flex-wrap items-center justify-between text-xs text-gray-500">
                         <span className="flex-grow">
                             If the Organization is not listed, please{' '}
                             <button
                                 type="button"
-                                className="text-primary underline transition-colors duration-200 hover:text-secondary focus:outline-none"
+                                className="text-gray-700 underline transition-colors duration-200 hover:text-black focus:outline-none"
                                 onClick={getOrganizations}
                             >
                                 click here
@@ -62,10 +61,10 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         <a
                             target="_blank"
                             href={route('organization.index')}
-                            className="mt-1 flex items-center text-primary underline transition-colors duration-200 hover:text-secondary focus:outline-none sm:mt-0"
+                            className="mt-1 flex items-center text-gray-700 underline transition-colors duration-200 hover:text-black focus:outline-none sm:mt-0"
                         >
                             <svg
-                                className="mr-1 h-4 w-4"
+                                className="mr-1.5 h-4 w-4"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -84,11 +83,11 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                 </div>
             </div>
             <div className="w-full">
-                <div className="relative">
+                <div className="relative group">
                     <InputLabel
                         htmlFor="col-emails"
                         required={false}
-                        className="mb-1 text-sm font-medium text-gray-700"
+                        className="mb-2"
                     >
                         Emails
                     </InputLabel>
@@ -100,18 +99,17 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         placeholder="Enter email addresses"
                         required={false}
                         isFocused={false}
-                        className="w-full rounded-lg border-gray-300 shadow-sm transition-colors duration-200 focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20"
                     />
-                    <InputError className="mt-2" message={errors.emails} />
-                    <p className="mt-1.5 text-xs text-gray-500">Separate multiple emails with a comma.</p>
+                    <InputError className="mt-2 text-sm text-red-500" message={errors.emails} />
+                    <p className="mt-2 text-xs text-gray-500">Separate multiple emails with a comma.</p>
                 </div>
             </div>
             <div className="w-full">
-                <div className="relative">
+                <div className="relative group">
                     <InputLabel
                         htmlFor="col-phones"
                         required={false}
-                        className="mb-1 text-sm font-medium text-gray-700"
+                        className="mb-2"
                     >
                         Phones
                     </InputLabel>
@@ -123,12 +121,11 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         placeholder="Enter phone numbers"
                         required={false}
                         isFocused={false}
-                        className="w-full rounded-lg border-gray-300 shadow-sm transition-colors duration-200 focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20"
                     />
-                    <InputError className="mt-2" message={errors.phones} />
-                    <p className="mt-1.5 text-xs text-gray-500">Separate multiple phone numbers with a comma.</p>
+                    <InputError className="mt-2 text-sm text-red-500" message={errors.phones} />
+                    <p className="mt-2 text-xs text-gray-500">Separate multiple phone numbers with a comma.</p>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
