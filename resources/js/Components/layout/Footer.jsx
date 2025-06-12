@@ -1,15 +1,15 @@
 export default function Footer() {
     return (
-        <footer className="w-full bg-gray-100 border-t">
+        <footer className="w-full border-t bg-gray-100">
             <div className="container mx-auto">
-                <div className="flex items-center justify-between md:flex-row flex-col py-4">
-                    <div className="text-gray-700 md:mb-0 mb-2">
+                <div className="flex flex-col items-center justify-between py-4 md:flex-row">
+                    <div className="mb-2 text-gray-700 md:mb-0">
                         ©{new Date().getFullYear()}, made with
-                        <span className="text-red-600 ml-1 mr-2">
+                        <span className="ml-1 mr-2 text-red-600">
                             <i className="ri-heart-fill"></i>
                         </span>
                         by
-                        <a href="https://msamgan.com" target="_blank" className="text-primary hover:underline ml-1">
+                        <a href="https://msamgan.com" target="_blank" className="ml-1 text-primary hover:underline">
                             msamgan
                         </a>
                     </div>
@@ -18,7 +18,7 @@ export default function Footer() {
                             <a
                                 href="https://demos.pixinvent.com/materialize-html-admin-template/documentation/"
                                 target="_blank"
-                                className="text-primary hover:underline mr-4"
+                                className="mr-4 text-primary hover:underline"
                             >
                                 Documentation
                             </a>

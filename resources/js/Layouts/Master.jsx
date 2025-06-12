@@ -4,14 +4,14 @@ import Footer from '@/Components/layout/Footer.jsx'
 import { useState } from 'react'
 
 export default function Master({ children, header, user }) {
-    const [menuOpen, setMenuOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false)
 
     const toggleMenu = () => {
-        setMenuOpen(!menuOpen);
-    };
+        setMenuOpen(!menuOpen)
+    }
 
     return (
-        <div className="min-h-screen flex flex-col">
+        <div className="flex min-h-screen flex-col">
             <div className="w-full">
                 <TopHeader user={user} toggleMenu={toggleMenu} />
 
@@ -19,7 +19,7 @@ export default function Master({ children, header, user }) {
                     <div className="flex flex-col">
                         <TopMenu />
 
-                        <div className="container mx-auto px-4 py-6 flex-grow">
+                        <div className="container mx-auto flex-grow px-4 py-6">
                             {/*<h4 className="pt-4 text-2xl font-semibold">{header}</h4>*/}
                             {children}
                         </div>
@@ -27,7 +27,7 @@ export default function Master({ children, header, user }) {
                         <Footer />
                         {/* Overlay for mobile menu */}
                         <div
-                            className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ease-in-out ${menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                            className={`fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out ${menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
                             onClick={toggleMenu}
                             aria-hidden="true"
                         ></div>

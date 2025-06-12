@@ -9,11 +9,11 @@ export default function DependentMenu({ menuItems, itemKey, index }) {
             }}
             className={
                 menuItems[itemKey].map((item, index) => route().current(item.route)).includes(true)
-                    ? 'py-2 px-4 border-b-2 border-primary relative group'
-                    : 'py-2 px-4 hover:text-primary relative group'
+                    ? 'group relative border-b-2 border-primary px-4 py-2'
+                    : 'group relative px-4 py-2 hover:text-primary'
             }
         >
-            <a href="#" className="flex items-center space-x-2 cursor-pointer">
+            <a href="#" className="flex cursor-pointer items-center space-x-2">
                 <i
                     onClick={(e) => {
                         e.target.parentElement.parentElement.classList.toggle('open')
@@ -29,7 +29,7 @@ export default function DependentMenu({ menuItems, itemKey, index }) {
                     {itemKey}
                 </div>
             </a>
-            <ul className="hidden group-[.open]:block absolute left-0 mt-2 bg-white shadow-lg rounded-md py-2 z-10 min-w-[200px]">
+            <ul className="absolute left-0 z-10 mt-2 hidden min-w-[200px] rounded-md bg-white py-2 shadow-lg group-[.open]:block">
                 {menuItems[itemKey].map((item, index) => (
                     <li key={index} className={route().current(item.route) ? 'bg-gray-100' : 'hover:bg-gray-50'}>
                         <Link href={route(item.route)} className="flex items-center space-x-2 px-4 py-2">

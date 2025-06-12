@@ -50,10 +50,19 @@ export default function DeleteEntityForm({ action, refresh, className = '' }) {
         <section className={`space-y-6 ${className}`}>
             <button
                 type="button"
-                className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 focus:outline-none focus:bg-red-50 focus:text-red-700 transition-colors duration-200"
+                className="hover:bg-red-50 focus:bg-red-50 flex w-full items-center px-4 py-2 text-sm text-red-600 transition-colors duration-200 hover:text-red-700 focus:text-red-700 focus:outline-none"
                 onClick={confirmUserDeletion}
             >
-                <svg className="h-4 w-4 mr-2 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                    className="mr-2 h-4 w-4 text-red-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
                     <polyline points="3 6 5 6 21 6" />
                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
                     <line x1="10" y1="11" x2="10" y2="17" />
@@ -66,13 +75,18 @@ export default function DeleteEntityForm({ action, refresh, className = '' }) {
                 <form onSubmit={deleteUser} className="p-6">
                     <h2 className="text-xl font-semibold text-gray-800">Are you sure you want to delete?</h2>
 
-                    <p className="mt-3 text-sm text-gray-600 leading-relaxed">
+                    <p className="mt-3 text-sm leading-relaxed text-gray-600">
                         Once this is deleted, all of its resources and data will be permanently deleted. Please enter
                         your password to confirm you would like to permanently delete this data.
                     </p>
 
                     <div className="mt-6">
-                        <InputLabel htmlFor="password" value="Password" required={true} className="text-sm font-medium text-gray-700 mb-1" />
+                        <InputLabel
+                            htmlFor="password"
+                            value="Password"
+                            required={true}
+                            className="mb-1 text-sm font-medium text-gray-700"
+                        />
                         <TextInput
                             id="password"
                             type="password"
@@ -87,11 +101,17 @@ export default function DeleteEntityForm({ action, refresh, className = '' }) {
                     </div>
 
                     <div className="mt-8 flex justify-end space-x-4">
-                        <SecondaryButton onClick={closeModal} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        <SecondaryButton
+                            onClick={closeModal}
+                            className="hover:bg-gray-50 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        >
                             Cancel
                         </SecondaryButton>
 
-                        <DangerButton disabled={processing} className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        <DangerButton
+                            disabled={processing}
+                            className="border-transparent rounded-md border bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                        >
                             Delete
                         </DangerButton>
                     </div>

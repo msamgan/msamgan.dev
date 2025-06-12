@@ -4,7 +4,7 @@ export default function FormLayout({ children, submit, processing, recentlySucce
     return (
         <form onSubmit={submit} className="space-y-6">
             <div className={w}>
-                <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
                     <div className="grid grid-cols-1 gap-6">{children}</div>
                 </div>
             </div>
@@ -13,7 +13,7 @@ export default function FormLayout({ children, submit, processing, recentlySucce
                 <button
                     disabled={processing}
                     id={'savePostBtn'}
-                    className="inline-flex items-center px-4 py-2 bg-primary border border-transparent rounded-md font-medium text-sm text-white shadow-sm hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50"
+                    className="border-transparent inline-flex items-center rounded-md border bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50"
                 >
                     Save Changes
                 </button>
@@ -26,9 +26,20 @@ export default function FormLayout({ children, submit, processing, recentlySucce
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <p className="text-sm font-medium text-green-600 flex items-center">
-                        <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    <p className="flex items-center text-sm font-medium text-green-600">
+                        <svg
+                            className="mr-1.5 h-4 w-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M5 13l4 4L19 7"
+                            ></path>
                         </svg>
                         Saved successfully
                     </p>

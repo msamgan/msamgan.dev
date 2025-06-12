@@ -38,7 +38,9 @@ export default function Index({ auth }) {
 
             {notification && (
                 <div className="mt-5">
-                    <div className="bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded">{notification}</div>
+                    <div className="rounded border border-green-400 bg-green-100 px-4 py-3 text-green-800">
+                        {notification}
+                    </div>
                 </div>
             )}
 
@@ -60,7 +62,7 @@ export default function Index({ auth }) {
                                             setNotification(null)
                                         }, 2000)
                                     }}
-                                    className="object-contain h-48 w-full cursor-pointer rounded-lg"
+                                    className="h-48 w-full cursor-pointer rounded-lg object-contain"
                                 />
                             </div>
                         )

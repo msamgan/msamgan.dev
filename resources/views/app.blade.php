@@ -33,9 +33,9 @@
         @inertia
 
         <!-- Overlay -->
-        <div class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+        <div class="fixed inset-0 z-40 hidden bg-black bg-opacity-50"></div>
 
         <!-- Drag Target Area To SlideIn Menu On Small Screens -->
-        <div class="fixed inset-y-0 left-0 w-10 z-30 lg:hidden"></div>
+        <div class="fixed inset-y-0 left-0 z-30 w-10 lg:hidden"></div>
     </body>
 </html>

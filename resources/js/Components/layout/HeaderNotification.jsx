@@ -37,7 +37,7 @@ export default function HeaderNotification({ user }) {
     return (
         <li className="relative mx-4 xl:mx-1" ref={dropdownRef}>
             <button
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-150 ease-in-out"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 onClick={() => setIsOpen(!isOpen)}
                 onKeyDown={handleKeyDown}
                 aria-expanded={isOpen}
@@ -46,17 +46,17 @@ export default function HeaderNotification({ user }) {
             >
                 <i className="ri-notification-2-line text-2xl"></i>
                 {unreadNotifications > 0 && (
-                    <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full border border-white"></span>
+                    <span className="absolute right-1 top-1 h-2 w-2 rounded-full border border-white bg-red-600"></span>
                 )}
             </button>
 
             {isOpen && (
-                <ul className="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-0 z-20 transition transform origin-top-right ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <ul className="absolute right-0 z-20 mt-2 w-80 origin-top-right transform rounded-md bg-white py-0 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none">
                     <li className="border-b">
-                        <div className="flex items-center justify-between py-3 px-4">
-                            <h6 className="text-sm font-medium m-0">Notifications</h6>
+                        <div className="flex items-center justify-between px-4 py-3">
+                            <h6 className="m-0 text-sm font-medium">Notifications</h6>
                             <div className="flex items-center">
-                                <span className="bg-primary bg-opacity-10 text-primary text-xs rounded-full px-2 py-1">
+                                <span className="rounded-full bg-primary bg-opacity-10 px-2 py-1 text-xs text-primary">
                                     {unreadNotifications} New
                                 </span>
                             </div>
@@ -73,13 +73,17 @@ export default function HeaderNotification({ user }) {
                                     >
                                         <div className="flex p-3">
                                             <div className="flex-grow">
-                                                <h6 className="text-sm font-medium mb-1">{notification.data.title}</h6>
-                                                <p className="text-xs text-gray-700 mb-1">{notification.data.message}</p>
-                                                <p className="text-xs text-gray-500">{formatDuration(notification.created_at)}</p>
+                                                <h6 className="mb-1 text-sm font-medium">{notification.data.title}</h6>
+                                                <p className="mb-1 text-xs text-gray-700">
+                                                    {notification.data.message}
+                                                </p>
+                                                <p className="text-xs text-gray-500">
+                                                    {formatDuration(notification.created_at)}
+                                                </p>
                                             </div>
-                                            <div className="flex-shrink-0 flex items-center">
+                                            <div className="flex flex-shrink-0 items-center">
                                                 {!notification.read_at && (
-                                                    <span className="w-2 h-2 bg-primary rounded-full"></span>
+                                                    <span className="h-2 w-2 rounded-full bg-primary"></span>
                                                 )}
                                             </div>
                                         </div>
@@ -87,16 +91,14 @@ export default function HeaderNotification({ user }) {
                                 ))}
                             </ul>
                         ) : (
-                            <div className="p-4 text-center text-gray-500 text-sm">
-                                No notifications
-                            </div>
+                            <div className="p-4 text-center text-sm text-gray-500">No notifications</div>
                         )}
                     </li>
 
                     <li className="border-t">
                         <div className="p-4">
                             <a
-                                className="block w-full bg-primary hover:bg-opacity-90 text-white text-center rounded py-2 text-sm transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                                className="block w-full rounded bg-primary py-2 text-center text-sm text-white transition duration-150 ease-in-out hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                                 href={routes.notifications.index}
                             >
                                 View all notifications

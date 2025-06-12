@@ -7,7 +7,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
         <>
             <div className="w-full">
                 <div className="relative">
-                    <InputLabel htmlFor="col-name" required={true} className="text-sm font-medium text-gray-700 mb-1">
+                    <InputLabel htmlFor="col-name" required={true} className="mb-1 text-sm font-medium text-gray-700">
                         Name
                     </InputLabel>
                     <TextInput
@@ -18,7 +18,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         placeholder="Enter client name"
                         required={true}
                         isFocused={false}
-                        className="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20 transition-colors duration-200"
+                        className="w-full rounded-lg border-gray-300 shadow-sm transition-colors duration-200 focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20"
                     />
                     <InputError className="mt-2" message={errors.name} />
                 </div>
@@ -30,7 +30,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         onChange={(e) => setData('organization_id', e.target.value)}
                         id="col-organization"
                         required={false}
-                        className="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20 transition-colors duration-200"
+                        className="w-full rounded-lg border-gray-300 shadow-sm transition-colors duration-200 focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20"
                     >
                         <option value="">Select Organization</option>
                         {organizations.map((organization) => (
@@ -39,21 +39,44 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                             </option>
                         ))}
                     </select>
-                    <InputLabel htmlFor="col-organization" required={false} className="text-sm font-medium text-gray-700 mb-1">
+                    <InputLabel
+                        htmlFor="col-organization"
+                        required={false}
+                        className="mb-1 text-sm font-medium text-gray-700"
+                    >
                         Organization
                     </InputLabel>
                     <InputError className="mt-2" message={errors.organization_id} />
-                    <div className="mt-2 text-xs text-gray-500 flex flex-wrap justify-between items-center">
+                    <div className="mt-2 flex flex-wrap items-center justify-between text-xs text-gray-500">
                         <span className="flex-grow">
                             If the Organization is not listed, please{' '}
-                            <button type="button" className="text-primary hover:text-secondary underline focus:outline-none transition-colors duration-200" onClick={getOrganizations}>
+                            <button
+                                type="button"
+                                className="text-primary underline transition-colors duration-200 hover:text-secondary focus:outline-none"
+                                onClick={getOrganizations}
+                            >
                                 click here
                             </button>{' '}
                             to refresh the list.
                         </span>
-                        <a target="_blank" href={route('organization.index')} className="mt-1 sm:mt-0 text-primary hover:text-secondary underline focus:outline-none transition-colors duration-200 flex items-center">
-                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        <a
+                            target="_blank"
+                            href={route('organization.index')}
+                            className="mt-1 flex items-center text-primary underline transition-colors duration-200 hover:text-secondary focus:outline-none sm:mt-0"
+                        >
+                            <svg
+                                className="mr-1 h-4 w-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                ></path>
                             </svg>
                             Add Organization
                         </a>
@@ -62,7 +85,11 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
             </div>
             <div className="w-full">
                 <div className="relative">
-                    <InputLabel htmlFor="col-emails" required={false} className="text-sm font-medium text-gray-700 mb-1">
+                    <InputLabel
+                        htmlFor="col-emails"
+                        required={false}
+                        className="mb-1 text-sm font-medium text-gray-700"
+                    >
                         Emails
                     </InputLabel>
                     <TextInput
@@ -73,7 +100,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         placeholder="Enter email addresses"
                         required={false}
                         isFocused={false}
-                        className="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20 transition-colors duration-200"
+                        className="w-full rounded-lg border-gray-300 shadow-sm transition-colors duration-200 focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20"
                     />
                     <InputError className="mt-2" message={errors.emails} />
                     <p className="mt-1.5 text-xs text-gray-500">Separate multiple emails with a comma.</p>
@@ -81,7 +108,11 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
             </div>
             <div className="w-full">
                 <div className="relative">
-                    <InputLabel htmlFor="col-phones" required={false} className="text-sm font-medium text-gray-700 mb-1">
+                    <InputLabel
+                        htmlFor="col-phones"
+                        required={false}
+                        className="mb-1 text-sm font-medium text-gray-700"
+                    >
                         Phones
                     </InputLabel>
                     <TextInput
@@ -92,7 +123,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         placeholder="Enter phone numbers"
                         required={false}
                         isFocused={false}
-                        className="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20 transition-colors duration-200"
+                        className="w-full rounded-lg border-gray-300 shadow-sm transition-colors duration-200 focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20"
                     />
                     <InputError className="mt-2" message={errors.phones} />
                     <p className="mt-1.5 text-xs text-gray-500">Separate multiple phone numbers with a comma.</p>
