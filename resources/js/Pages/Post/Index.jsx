@@ -133,7 +133,7 @@ export default function Index({ auth }) {
         <Master user={auth.user} header={'Posts'}>
             <Head title="Posts" />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+            <div className="container mx-auto px-4 pt-6">
                 <PageHeader
                     title={'Business Post List'}
                     subtitle={'Find all of your business\'s posts and there associated details.'}
@@ -175,7 +175,7 @@ export default function Index({ auth }) {
                 </OffCanvas>
             )}
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="container mx-auto px-4 py-6">
                 <div className="mt-8 bg-white overflow-hidden shadow-sm rounded-lg">
                     <Table
                         columns={columns}

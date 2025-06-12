@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export default function OffCanvas({ id, title, w = 'w-full sm:w-[90%] md:w-[75%] lg:w-[50%] xl:w-[40%] 2xl:w-[600px]', children, childrenClass = '', isOpen, onClose }) {
+export default function OffCanvas({ id, title, w = 'w-full sm:w-1/2', children, childrenClass = '', isOpen, onClose }) {
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {

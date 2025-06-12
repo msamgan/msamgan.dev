@@ -91,31 +91,34 @@ export default function Index({ auth }) {
         <Master user={auth.user} header={'Transactions'}>
             <Head title="Transactions" />
 
-            <PageHeader
-                title={'Transaction List'}
-                subtitle={'Find all of your business’s transactions and there associated details.'}
-                action={
-                    hasCreatePermission && (
-                        <div className={'flex gap-2'}>
-                            <OffCanvasButton
-                                onClick={() => {
-                                    setTransaction(null)
-                                    setPageData(pageObject(null))
-                                    setIsOffCanvasOpen(true)
-                                }}
-                                id="transactionFormCanvas"
-                            >
-                                <svg className="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                                Create Transaction
-                            </OffCanvasButton>
-                            <ToggleFilterButton showFilters={showFilters} setShowFilters={setShowFilters} />
-                        </div>
-                    )
-                }
-            ></PageHeader>
+            <div className="container mx-auto px-4 pt-6">
+                <PageHeader
+                    title={'Transaction List'}
+                    subtitle={'Find all of your business\'s transactions and there associated details.'}
+                    action={
+                        hasCreatePermission && (
+                            <div className={'flex gap-2'}>
+                                <OffCanvasButton
+                                    onClick={() => {
+                                        setTransaction(null)
+                                        setPageData(pageObject(null))
+                                        setIsOffCanvasOpen(true)
+                                    }}
+                                    id="transactionFormCanvas"
+                                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-200"
+                                >
+                                    <svg className="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                    Create Transaction
+                                </OffCanvasButton>
+                                <ToggleFilterButton showFilters={showFilters} setShowFilters={setShowFilters} />
+                            </div>
+                        )
+                    }
+                ></PageHeader>
+            </div>
 
             {hasCreatePermission && (
                 <OffCanvas
@@ -136,14 +139,16 @@ export default function Index({ auth }) {
                 </OffCanvas>
             )}
 
-            <div className="w-full">
-                <Table
-                    columns={columns}
-                    data={data}
-                    loading={loading}
-                    permission={hasListPermission}
-                    filters={showFilters ? <Filters params={params} /> : null}
-                />
+            <div className="container mx-auto px-4 py-6">
+                <div className="mt-8 bg-white overflow-hidden shadow-sm rounded-lg">
+                    <Table
+                        columns={columns}
+                        data={data}
+                        loading={loading}
+                        permission={hasListPermission}
+                        filters={showFilters ? <Filters params={params} /> : null}
+                    />
+                </div>
             </div>
         </Master>
     )

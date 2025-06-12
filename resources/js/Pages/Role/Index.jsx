@@ -55,10 +55,10 @@ export default function Index({ auth }) {
                                     getRole(role.id)
                                     setIsOffCanvasOpen(true)
                                 }}
-                                className={'flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'}
+                                className={'flex items-center w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-primary focus:outline-none focus:bg-gray-50 focus:text-primary transition-colors duration-200'}
                                 id="roleFormCanvas"
                             >
-                                <svg className="h-4 w-4 mr-2 text-indigo-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <svg className="h-4 w-4 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                                 </svg>
@@ -71,7 +71,7 @@ export default function Index({ auth }) {
                             <DeleteEntityForm
                                 action={route('service.role.destroy', role.id)}
                                 refresh={getRoles}
-                                className={'flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'}
+                                className={'flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 focus:outline-none focus:bg-red-50 focus:text-red-700 transition-colors duration-200'}
                             />
                         ) : null
                     }
@@ -100,28 +100,31 @@ export default function Index({ auth }) {
         <Master user={auth.user}>
             <Head title="Roles" />
 
-            <PageHeader
-                title={'Roles List'}
-                subtitle={'Find all of your business’s roles and there associated permissions.'}
-                action={
-                    hasCreatePermission && (
-                        <OffCanvasButton
-                            onClick={() => {
-                                setRole(null)
-                                setPageData(pageObject(null))
-                                setIsOffCanvasOpen(true)
-                            }}
-                            id="roleFormCanvas"
-                        >
-                            <svg className="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                            </svg>
-                            Create Role
-                        </OffCanvasButton>
-                    )
-                }
-            ></PageHeader>
+            <div className="container mx-auto px-4 pt-6">
+                <PageHeader
+                    title={'Roles List'}
+                    subtitle={'Find all of your business\'s roles and there associated permissions.'}
+                    action={
+                        hasCreatePermission && (
+                            <OffCanvasButton
+                                onClick={() => {
+                                    setRole(null)
+                                    setPageData(pageObject(null))
+                                    setIsOffCanvasOpen(true)
+                                }}
+                                id="roleFormCanvas"
+                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-200"
+                            >
+                                <svg className="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                Create Role
+                            </OffCanvasButton>
+                        )
+                    }
+                ></PageHeader>
+            </div>
 
             {hasCreatePermission && (
                 <OffCanvas
@@ -140,8 +143,10 @@ export default function Index({ auth }) {
                 </OffCanvas>
             )}
 
-            <div className="w-full">
-                <Table columns={columns} data={data} loading={loading} permission={hasListPermission} />
+            <div className="container mx-auto px-4 py-6">
+                <div className="mt-8 bg-white overflow-hidden shadow-sm rounded-lg">
+                    <Table columns={columns} data={data} loading={loading} permission={hasListPermission} />
+                </div>
             </div>
         </Master>
     )
