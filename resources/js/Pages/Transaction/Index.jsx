@@ -25,6 +25,7 @@ export default function Index({ auth }) {
     const [transaction, setTransaction] = useState(null)
     const [loading, setLoading] = useState(true)
     const [pageData, setPageData] = useState(pageObject(null))
+    const [isOffCanvasOpen, setIsOffCanvasOpen] = useState(false)
     const [projects, setProjects] = useState([])
     const [descriptions, setDescriptions] = useState([])
     const [params, setParams] = useState({})
@@ -100,10 +101,14 @@ export default function Index({ auth }) {
                                 onClick={() => {
                                     setTransaction(null)
                                     setPageData(pageObject(null))
+                                    setIsOffCanvasOpen(true)
                                 }}
                                 id="transactionFormCanvas"
                             >
-                                <i className="ri-add-line me-2"></i>
+                                <svg className="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
                                 Create Transaction
                             </OffCanvasButton>
                             <ToggleFilterButton showFilters={showFilters} setShowFilters={setShowFilters} />
@@ -113,18 +118,26 @@ export default function Index({ auth }) {
             ></PageHeader>
 
             {hasCreatePermission && (
-                <OffCanvas id="transactionFormCanvas" title={pageData.title}>
+                <OffCanvas
+                    id="transactionFormCanvas"
+                    title={pageData.title}
+                    w={'w-full md:w-2/3 lg:w-1/2'}
+                    childrenClass={'mx-auto w-full md:w-2/3'}
+                    isOpen={isOffCanvasOpen}
+                    onClose={() => setIsOffCanvasOpen(false)}
+                >
                     <Form
                         getTransactions={getTransactions}
                         transaction={transaction}
                         projects={projects}
                         getProjects={getProjects}
                         descriptions={descriptions}
+                        onSuccess={() => setIsOffCanvasOpen(false)}
                     />
                 </OffCanvas>
             )}
 
-            <div className="col-12">
+            <div className="w-full">
                 <Table
                     columns={columns}
                     data={data}
