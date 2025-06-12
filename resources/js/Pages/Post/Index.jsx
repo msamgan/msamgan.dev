@@ -27,6 +27,7 @@ export default function Index({ auth }) {
     const [post, setPost] = useState(null)
     const [loading, setLoading] = useState(true)
     const [pageData, setPageData] = useState(pageObject(null))
+    const [isOffCanvasOpen, setIsOffCanvasOpen] = useState(false)
 
     const getPosts = () => {
         makeGetCall(services.post.list, setPosts, setLoading)
@@ -94,6 +95,7 @@ export default function Index({ auth }) {
                                 onClick={() => {
                                     getPost(post.id)
                                     setPageData(pageObject(post))
+                                    setIsOffCanvasOpen(true)
                                 }}
                                 className={'flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'}
                                 id="postFormCanvas"
@@ -143,6 +145,7 @@ export default function Index({ auth }) {
                             onClick={() => {
                                 setPost(null)
                                 setPageData(pageObject(null))
+                                setIsOffCanvasOpen(true)
                             }}
                             id="postFormCanvas"
                         >
@@ -157,8 +160,19 @@ export default function Index({ auth }) {
             ></PageHeader>
 
             {hasCreatePermission && (
-                <OffCanvas id="postFormCanvas" title={pageData.title} w={'w-100'} childrenClass={'mx-auto w-2/3'}>
-                    <Form getPosts={getPosts} postData={post} />
+                <OffCanvas
+                    id="postFormCanvas"
+                    title={pageData.title}
+                    w={'w-full md:w-2/3 lg:w-1/2'}
+                    childrenClass={'mx-auto w-full md:w-2/3'}
+                    isOpen={isOffCanvasOpen}
+                    onClose={() => setIsOffCanvasOpen(false)}
+                >
+                    <Form
+                        getPosts={getPosts}
+                        postData={post}
+                        onSuccess={() => setIsOffCanvasOpen(false)}
+                    />
                 </OffCanvas>
             )}
 

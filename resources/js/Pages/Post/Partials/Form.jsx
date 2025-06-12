@@ -9,7 +9,7 @@ import { services } from '@/Utils/services/index.js'
 import { makeGetCall, objectIsEmpty } from '@/Utils/methods.js'
 import { initEditor } from '@/Pages/Post/Partials/editor.js'
 
-export default function Form({ getPosts, postData = null }) {
+export default function Form({ getPosts, postData = null, onSuccess }) {
     const [action, setAction] = useState(routes.post.store)
     const { data, setData, post, errors, processing, recentlySuccessful, reset } = useForm(dataObject(null))
     const [content, setContent] = useState({})
@@ -49,6 +49,11 @@ export default function Form({ getPosts, postData = null }) {
                 }
 
                 getPosts()
+
+                // Call onSuccess callback if provided
+                if (typeof onSuccess === 'function') {
+                    onSuccess()
+                }
             },
             onError: () => {},
             onFinish: () => {
