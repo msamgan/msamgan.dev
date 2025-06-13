@@ -123,7 +123,7 @@ function SidebarDependentMenu({ menuItems, itemKey, index }) {
             </button>
             <ul className={`bg-gray-50 space-y-1 pl-10 ${isSubmenuOpen ? 'block' : 'hidden'}`}>
                 {menuItems[itemKey].map((item, index) => (
-                    <li key={index} className={route().current(item.route) ? 'bg-gray-100' : ''}>
+                    <li key={index}>
                         <Link
                             href={route(item.route)}
                             className={`block py-2 text-sm text-gray-700 transition-colors duration-200 hover:text-primary ${
