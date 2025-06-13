@@ -15,6 +15,8 @@ import DeleteEntityForm from '@/Components/layout/DeleteEntityForm.jsx'
 import { services } from '@/Utils/services/index.js'
 import Badge from '@/Components/helpers/Badge.jsx'
 import { fallbackImage } from '@/Utils/constants.js'
+import Filters from '@/Pages/Post/Partials/Filters.jsx'
+import ToggleFilterButton from '@/Components/ToggleFilterButton.jsx'
 
 export default function Index({ auth }) {
     let hasListPermission = hasPermission(auth.user, permissions.post.list)
@@ -28,9 +30,11 @@ export default function Index({ auth }) {
     const [loading, setLoading] = useState(true)
     const [pageData, setPageData] = useState(pageObject(null))
     const [isOffCanvasOpen, setIsOffCanvasOpen] = useState(false)
+    const [params, setParams] = useState({})
+    const [showFilters, setShowFilters] = useState(false)
 
-    const getPosts = () => {
-        makeGetCall(services.post.list, setPosts, setLoading)
+    const getPosts = (filters = {}) => {
+        makeGetCall(services.post.list(filters), setPosts, setLoading)
     }
 
     const getPost = (id) => {
@@ -133,8 +137,22 @@ export default function Index({ auth }) {
     }
 
     useEffect(() => {
+        // get the search query from the URL
+        const params = new URLSearchParams(window.location.search)
+        setParams(params)
+
+        // if any params are present, set the show filters to true
+        if (params.get('q') || params.get('status') || params.get('start-date') || params.get('end-date')) {
+            setShowFilters(true)
+        }
+
         if (hasListPermission) {
-            getPosts()
+            getPosts({
+                q: params.get('q'),
+                status: params.get('status'),
+                'start-date': params.get('start-date'),
+                'end-date': params.get('end-date'),
+            })
         }
     }, [])
 
@@ -152,30 +170,33 @@ export default function Index({ auth }) {
                     subtitle={"Find all of your business's posts and there associated details."}
                     action={
                         hasCreatePermission && (
-                            <OffCanvasButton
-                                onClick={() => {
-                                    setPost(null)
-                                    setPageData(pageObject(null))
-                                    setIsOffCanvasOpen(true)
-                                }}
-                                id="postFormCanvas"
-                                className="border-transparent inline-flex items-center rounded-md border bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                            >
-                                <svg
-                                    className="mr-2 h-5 w-5"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
+                            <div className={'flex gap-2'}>
+                                <OffCanvasButton
+                                    onClick={() => {
+                                        setPost(null)
+                                        setPageData(pageObject(null))
+                                        setIsOffCanvasOpen(true)
+                                    }}
+                                    id="postFormCanvas"
+                                    className="border-transparent inline-flex items-center rounded-md border bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                                 >
-                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                                Create Post
-                            </OffCanvasButton>
+                                    <svg
+                                        className="mr-2 h-5 w-5"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                    Create Post
+                                </OffCanvasButton>
+                                <ToggleFilterButton showFilters={showFilters} setShowFilters={setShowFilters} />
+                            </div>
                         )
                     }
                 ></PageHeader>
@@ -199,6 +220,7 @@ export default function Index({ auth }) {
                         data={data}
                         loading={loading}
                         permission={hasListPermission}
+                        filters={showFilters ? <Filters params={params} /> : null}
                         tdClassName={[
                             {
                                 column: 'Title',

@@ -16,6 +16,7 @@ use App\Notifications\PostUpdated;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -68,10 +69,17 @@ class PostController extends Controller
         $post->delete();
     }
 
-    public function posts(): Collection
+    public function posts(Request $request): Collection
     {
         return Post::query()
             ->with('tags')
+            ->when($request->get('q'), function ($query) use ($request): void {
+                $query->where('title', 'like', '%' . $request->get('q') . '%')
+                    ->orWhere('content_raw', 'like', '%' . $request->get('q') . '%');
+            })
+            ->when($request->get('status'), function ($query) use ($request): void {
+                $query->where('status', $request->get('status'));
+            })
             ->orderBy('created_at', 'desc')
             ->get();
     }

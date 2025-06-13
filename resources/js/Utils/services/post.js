@@ -1,5 +1,7 @@
 export const post = {
-    list: route('service.posts'),
+    list: (filters = {}) => {
+        return route('service.posts', { ...filters })
+    },
     last: route('service.post.last'),
     tag: {
         list: route('service.post.tag.list'),
