@@ -1,4 +1,5 @@
 import { Transition } from '@headlessui/react'
+import PrimaryButton from '@/Components/PrimaryButton.jsx'
 
 export default function FormLayout({ children, submit, processing, recentlySuccessful, w = 'w-full' }) {
     return (
@@ -10,13 +11,12 @@ export default function FormLayout({ children, submit, processing, recentlySucce
             </div>
 
             <div className={`flex items-center justify-end gap-4 ${w}`}>
-                <button
+                <PrimaryButton
                     disabled={processing}
                     id={'savePostBtn'}
-                    className="inline-flex items-center rounded-md bg-black px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50"
                 >
                     Save Changes
-                </button>
+                </PrimaryButton>
                 <Transition
                     show={recentlySuccessful}
                     enter="transition ease-in-out duration-300"
