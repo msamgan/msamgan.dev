@@ -133,7 +133,6 @@ export default function Index({ auth }) {
                 <OffCanvas
                     id="transactionFormCanvas"
                     title={pageData.title}
-
                     isOpen={isOffCanvasOpen}
                     onClose={() => setIsOffCanvasOpen(false)}
                 >

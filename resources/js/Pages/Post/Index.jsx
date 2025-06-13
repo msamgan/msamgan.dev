@@ -185,7 +185,6 @@ export default function Index({ auth }) {
                 <OffCanvas
                     id="postFormCanvas"
                     title={pageData.title}
-
                     isOpen={isOffCanvasOpen}
                     onClose={() => setIsOffCanvasOpen(false)}
                 >

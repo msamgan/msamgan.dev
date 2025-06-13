@@ -6,7 +6,7 @@ export default function Fields({ data, setData, errors, projects, getProjects, d
     return (
         <div className="flex flex-col gap-6">
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-type" required={true} className="mb-2">
                         Type
                     </InputLabel>
@@ -15,7 +15,7 @@ export default function Fields({ data, setData, errors, projects, getProjects, d
                         onChange={(e) => setData('type', e.target.value)}
                         id="col-type"
                         required={true}
-                        className="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20 mt-1"
+                        className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20"
                     >
                         <option value="">Select Type</option>
                         <option value="incoming">Incoming</option>
@@ -25,7 +25,7 @@ export default function Fields({ data, setData, errors, projects, getProjects, d
                 </div>
             </div>
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-project" required={false} className="mb-2">
                         Project
                     </InputLabel>
@@ -34,7 +34,7 @@ export default function Fields({ data, setData, errors, projects, getProjects, d
                         onChange={(e) => setData('project_id', e.target.value)}
                         id="col-project"
                         required={false}
-                        className="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20 mt-1"
+                        className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20"
                     >
                         <option value="">Select Project</option>
                         {projects.map((project) => (
@@ -81,7 +81,7 @@ export default function Fields({ data, setData, errors, projects, getProjects, d
                 </div>
             </div>
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-description" required={false} className="mb-2">
                         Description
                     </InputLabel>
@@ -108,7 +108,7 @@ export default function Fields({ data, setData, errors, projects, getProjects, d
             </div>
             <div className="flex flex-wrap gap-6">
                 <div className="w-full md:w-[calc(50%-12px)]">
-                    <div className="relative group">
+                    <div className="group relative">
                         <InputLabel htmlFor="col-amount" required={true} className="mb-2">
                             Amount
                         </InputLabel>
@@ -125,7 +125,7 @@ export default function Fields({ data, setData, errors, projects, getProjects, d
                     </div>
                 </div>
                 <div className="w-full md:w-[calc(50%-12px)]">
-                    <div className="relative group">
+                    <div className="group relative">
                         <InputLabel htmlFor="col-date" required={true} className="mb-2">
                             Date
                         </InputLabel>

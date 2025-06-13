@@ -38,12 +38,12 @@ export default function OffCanvas({ id, title, w = 'w-full sm:w-1/2', children, 
             ></div>
 
             {/* Panel */}
-            <div className={`${w} fixed inset-y-0 right-0 flex max-w-full pl-0 sm:pl-4 md:pl-10 bg-white`}>
+            <div className={`${w} fixed inset-y-0 right-0 flex max-w-full bg-white pl-0 sm:pl-4 md:pl-10`}>
                 <div
                     className={`w-full transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
                     id={id}
                 >
-                    <div className="flex h-full flex-col overflow-y-auto rounded-lg bg-gray-50 shadow-md">
+                    <div className="bg-gray-50 flex h-full flex-col overflow-y-auto rounded-lg shadow-md">
                         {/* Header */}
                         <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
                             <h5 id={id + 'Label'} className="text-xl font-semibold text-gray-800">
@@ -75,7 +75,7 @@ export default function OffCanvas({ id, title, w = 'w-full sm:w-1/2', children, 
                         </div>
 
                         {/* Body */}
-                        <div className={`flex-1 overflow-y-auto p-6 space-y-4 ${childrenClass}`}>{children}</div>
+                        <div className={`flex-1 space-y-4 overflow-y-auto p-6 ${childrenClass}`}>{children}</div>
                     </div>
                 </div>
             </div>

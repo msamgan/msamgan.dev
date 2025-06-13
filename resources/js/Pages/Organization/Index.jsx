@@ -140,7 +140,6 @@ export default function Index({ auth }) {
                 <OffCanvas
                     id="organizationFormCanvas"
                     title={pageData.title}
-
                     isOpen={isOffCanvasOpen}
                     onClose={() => setIsOffCanvasOpen(false)}
                 >

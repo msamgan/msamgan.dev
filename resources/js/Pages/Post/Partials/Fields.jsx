@@ -6,7 +6,7 @@ export default function Fields({ data, setData, errors, tagList }) {
     return (
         <div className="flex flex-col gap-6">
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-title" required={true} className="mb-2">
                         Title
                     </InputLabel>
@@ -24,7 +24,7 @@ export default function Fields({ data, setData, errors, tagList }) {
             </div>
             {data.slug && (
                 <div className="w-full">
-                    <div className="relative group">
+                    <div className="group relative">
                         <InputLabel htmlFor="col-slug" required={true} className="mb-2">
                             Slug
                         </InputLabel>
@@ -43,7 +43,7 @@ export default function Fields({ data, setData, errors, tagList }) {
             )}
             <div className="flex flex-wrap gap-6">
                 <div className="w-full md:w-[calc(50%-12px)]">
-                    <div className="relative group">
+                    <div className="group relative">
                         <InputLabel htmlFor="col-status" required={true} className="mb-2">
                             Status
                         </InputLabel>
@@ -52,7 +52,7 @@ export default function Fields({ data, setData, errors, tagList }) {
                             onChange={(e) => setData('status', e.target.value)}
                             id="col-status"
                             required={true}
-                            className="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20 mt-1"
+                            className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20"
                         >
                             <option value="">Select Status</option>
                             <option value="draft">Draft</option>
@@ -62,7 +62,7 @@ export default function Fields({ data, setData, errors, tagList }) {
                     </div>
                 </div>
                 <div className="w-full md:w-[calc(50%-12px)]">
-                    <div className="relative group">
+                    <div className="group relative">
                         <InputLabel htmlFor="col-featured_image" required={false} className="mb-2">
                             Featured Image
                         </InputLabel>
@@ -80,7 +80,7 @@ export default function Fields({ data, setData, errors, tagList }) {
                 </div>
             </div>
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-excerpt" required={true} className="mb-2">
                         Excerpt
                     </InputLabel>
@@ -90,13 +90,13 @@ export default function Fields({ data, setData, errors, tagList }) {
                         id="col-excerpt"
                         placeholder="Enter post excerpt"
                         required={true}
-                        className="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20 mt-1"
+                        className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20"
                     />
                     <InputError className="mt-2" message={errors.excerpt} />
                 </div>
             </div>
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-tags" required={false} className="mb-2">
                         Tags
                     </InputLabel>
@@ -150,7 +150,7 @@ export default function Fields({ data, setData, errors, tagList }) {
                 )}
             </div>
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <div id="editor" className="mt-1" />
                     <InputError className="mt-2" message={errors.content} />
                 </div>

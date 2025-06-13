@@ -7,7 +7,7 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
     return (
         <div className="flex flex-col gap-6">
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-client" required={true} className="mb-2">
                         Client
                     </InputLabel>
@@ -16,7 +16,7 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
                         onChange={(e) => setData('client_id', e.target.value)}
                         id="col-client"
                         required={true}
-                        className="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20 mt-1"
+                        className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20"
                     >
                         <option value="">Select Client</option>
                         {clients.map((client) => (
@@ -63,7 +63,7 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
                 </div>
             </div>
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-name" required={true} className="mb-2">
                         Name
                     </InputLabel>
@@ -80,7 +80,7 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
                 </div>
             </div>
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-description" required={false} className="mb-2">
                         Description
                     </InputLabel>
@@ -90,13 +90,13 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
                         id="col-description"
                         placeholder="Enter project description"
                         required={false}
-                        className="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20 mt-1"
+                        className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20"
                     />
                     <InputError className="mt-2" message={errors.description} />
                 </div>
             </div>
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-document_url" required={false} className="mb-2">
                         Document URL
                     </InputLabel>
@@ -114,7 +114,7 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
             </div>
             <div className="flex flex-wrap gap-6">
                 <div className="w-full md:w-[calc(33.333%-16px)]">
-                    <div className="relative group">
+                    <div className="group relative">
                         <InputLabel htmlFor="col-status" required={true} className="mb-2">
                             Status
                         </InputLabel>
@@ -123,7 +123,7 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
                             onChange={(e) => setData('status', e.target.value)}
                             id="col-status"
                             required={true}
-                            className="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20 mt-1"
+                            className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20"
                         >
                             <option value="">Select Status</option>
                             {projectStatuses.map((status, index) => (
@@ -136,7 +136,7 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
                     </div>
                 </div>
                 <div className="w-full md:w-[calc(33.333%-16px)]">
-                    <div className="relative group">
+                    <div className="group relative">
                         <InputLabel htmlFor="col-costing" required={true} className="mb-2">
                             Costing
                         </InputLabel>
@@ -153,7 +153,7 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
                     </div>
                 </div>
                 <div className="w-full md:w-[calc(33.333%-16px)]">
-                    <div className="relative group">
+                    <div className="group relative">
                         <InputLabel htmlFor="col-type" required={true} className="mb-2">
                             Type
                         </InputLabel>
@@ -162,7 +162,7 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
                             onChange={(e) => setData('type', e.target.value)}
                             id="col-type"
                             required={true}
-                            className="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20 mt-1"
+                            className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring focus:ring-primary/20"
                         >
                             <option value="">Select Type</option>
                             <option value="singular">Singular</option>
@@ -174,7 +174,7 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
             </div>
             <div className="flex flex-wrap gap-6">
                 <div className="w-full md:w-[calc(50%-12px)]">
-                    <div className="relative group">
+                    <div className="group relative">
                         <InputLabel htmlFor="start_date" required={false} className="mb-2">
                             Start Date
                         </InputLabel>
@@ -189,7 +189,7 @@ export default function Fields({ data, setData, errors, clients, getClients }) {
                     </div>
                 </div>
                 <div className="w-full md:w-[calc(50%-12px)]">
-                    <div className="relative group">
+                    <div className="group relative">
                         <InputLabel htmlFor="end_date" required={false} className="mb-2">
                             End Date
                         </InputLabel>

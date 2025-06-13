@@ -6,7 +6,7 @@ export default function Fields({ data, setData, errors }) {
     return (
         <div className="flex flex-col gap-6">
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-name" required={true} className="mb-2">
                         Name
                     </InputLabel>
@@ -23,7 +23,7 @@ export default function Fields({ data, setData, errors }) {
                 </div>
             </div>
             <div className="w-full">
-                <div className="relative group">
+                <div className="group relative">
                     <InputLabel htmlFor="col-location" required={false} className="mb-2">
                         Location
                     </InputLabel>
