@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Notification\NotifyUser;
+use App\Http\Requests\DeleteMediaRequest;
 use App\Http\Requests\StoreMediaRequest;
 use App\Notifications\MediaCreated;
 use Exception;
@@ -41,12 +42,17 @@ class MediaController extends Controller
         }
     }
 
-    /*public function destroy(DeleteMediaRequest $request, Media $media, NotifyUser $notifyUser): void
+    public function destroy(DeleteMediaRequest $request): void
     {
-        $notifyUser->handle(new MediaDeleted(request()->user()));
+        $filename = $request->get('name');
 
-        $media->delete();
-    }*/
+        throw_unless($filename, new Exception('File name is required for deletion.'));
+
+        $filePath = 'images/' . $filename;
+        throw_unless(Storage::disk('public')->exists($filePath), new Exception('File not found.'));
+
+        Storage::disk('public')->delete($filePath);
+    }
 
     public function media(): Collection
     {

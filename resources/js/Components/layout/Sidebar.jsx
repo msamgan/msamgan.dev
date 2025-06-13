@@ -50,10 +50,14 @@ export default function Sidebar({ isOpen }) {
         >
             <div className="h-full overflow-y-auto">
                 <ul className="flex flex-col space-y-1 p-4">
-                    <SidebarIndependentMenu item={{ route: 'dashboard', icon: 'ri-home-smile-line', label: 'Dashboard' }} />
+                    <SidebarIndependentMenu
+                        item={{ route: 'dashboard', icon: 'ri-home-smile-line', label: 'Dashboard' }}
+                    />
                     {Object.keys(menuItems).map((itemKey, index) =>
                         itemKey === ''
-                            ? menuItems[itemKey].map((item, index) => <SidebarIndependentMenu key={index} item={item} />)
+                            ? menuItems[itemKey].map((item, index) => (
+                                  <SidebarIndependentMenu key={index} item={item} />
+                              ))
                             : menuItems[itemKey].length > 0 && (
                                   <SidebarDependentMenu key={index} menuItems={menuItems} itemKey={itemKey} />
                               ),
@@ -69,14 +73,13 @@ function SidebarIndependentMenu({ item, index }) {
     return (
         <li
             key={index}
-            className={route().current(item.route)
-                ? 'border-l-4 border-primary bg-gray-50'
-                : 'border-l-4 border-transparent'
+            className={
+                route().current(item.route) ? 'bg-gray-50 border-l-4 border-primary' : 'border-transparent border-l-4'
             }
         >
             <Link
                 href={route(item.route)}
-                className={`flex items-center space-x-3 px-4 py-3 text-gray-700 transition-colors duration-200 hover:bg-gray-50 hover:text-primary ${
+                className={`hover:bg-gray-50 flex items-center space-x-3 px-4 py-3 text-gray-700 transition-colors duration-200 hover:text-primary ${
                     route().current(item.route) ? 'font-medium text-primary' : ''
                 }`}
             >
@@ -92,7 +95,7 @@ function SidebarIndependentMenu({ item, index }) {
 // Sidebar version of DependentMenu
 function SidebarDependentMenu({ menuItems, itemKey, index }) {
     const [isSubmenuOpen, setIsSubmenuOpen] = useState(
-        menuItems[itemKey].map((item) => route().current(item.route)).includes(true)
+        menuItems[itemKey].map((item) => route().current(item.route)).includes(true),
     )
 
     return (
@@ -100,13 +103,13 @@ function SidebarDependentMenu({ menuItems, itemKey, index }) {
             key={index}
             className={
                 menuItems[itemKey].map((item) => route().current(item.route)).includes(true)
-                    ? 'border-l-4 border-primary bg-gray-50'
-                    : 'border-l-4 border-transparent'
+                    ? 'bg-gray-50 border-l-4 border-primary'
+                    : 'border-transparent border-l-4'
             }
         >
             <button
                 onClick={() => setIsSubmenuOpen(!isSubmenuOpen)}
-                className="flex w-full items-center justify-between px-4 py-3 text-gray-700 transition-colors duration-200 hover:bg-gray-50 hover:text-primary"
+                className="hover:bg-gray-50 flex w-full items-center justify-between px-4 py-3 text-gray-700 transition-colors duration-200 hover:text-primary"
             >
                 <div className="flex items-center space-x-3">
                     <i className={menuItems[itemKey][0].parent.icon + ' text-lg opacity-80'}></i>
@@ -124,7 +127,7 @@ function SidebarDependentMenu({ menuItems, itemKey, index }) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </button>
-            <ul className={`space-y-1 bg-gray-50 pl-10 ${isSubmenuOpen ? 'block' : 'hidden'}`}>
+            <ul className={`bg-gray-50 space-y-1 pl-10 ${isSubmenuOpen ? 'block' : 'hidden'}`}>
                 {menuItems[itemKey].map((item, index) => (
                     <li key={index} className={route().current(item.route) ? 'bg-gray-100' : ''}>
                         <Link

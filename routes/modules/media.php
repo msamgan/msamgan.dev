@@ -21,7 +21,7 @@ Route::middleware(['auth', 'check_has_business'])->group(function (): void {
         ->middleware([PermissionEnum::MediaList->can()])
         ->name('service.media');
 
-    Route::delete('service/media/destroy/{media}', [MediaController::class, 'destroy'])
+    Route::delete('service/media/destroy', [MediaController::class, 'destroy'])
         ->middleware([PermissionEnum::MediaDelete->can()])
         ->name('service.media.destroy');
 });
