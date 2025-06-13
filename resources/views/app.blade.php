@@ -20,27 +20,13 @@
             rel="stylesheet"
         />
 
-        <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/remixicon/remixicon.css') }}" />
-        <!-- <link rel="stylesheet" href="../../assets/vendor/fonts/flag-icons.css" /> -->
-
-        <!-- Menu waves for no-customizer fix -->
-        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}" />
-
-        <!-- Core CSS -->
-        <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-default.css') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
-
-        <!-- Vendors CSS -->
-        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/spinkit/spinkit.css') }}" />
-        <!-- Page CSS -->
-
-        <!-- Helpers -->
-        <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
-        <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-        <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-        <script src="{{ asset('assets/js/config.js') }}"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css"
+            integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
 
         <!-- Scripts -->
         @routes
@@ -52,29 +38,9 @@
         @inertia
 
         <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
+        <div class="fixed inset-0 z-40 hidden bg-black bg-opacity-50"></div>
 
         <!-- Drag Target Area To SlideIn Menu On Small Screens -->
-        <div class="drag-target"></div>
-
-        <!--/ Layout wrapper -->
-
-        <!-- Core JS -->
-        <!-- build:js assets/vendor/js/core.js -->
-        <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
-        <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
-        <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
-        <script src="{{ asset('assets/vendor/libs/node-waves/node-waves.js') }}"></script>
-        <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-        <script src="{{ asset('assets/vendor/libs/hammer/hammer.js') }}"></script>
-
-        <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
-
-        <!-- endbuild -->
-
-        <!-- Vendors JS -->
-
-        <!-- Main JS -->
-        <script src="{{ asset('assets/js/main.js') }}"></script>
+        <div class="fixed inset-y-0 left-0 z-30 w-10 lg:hidden"></div>
     </body>
 </html>

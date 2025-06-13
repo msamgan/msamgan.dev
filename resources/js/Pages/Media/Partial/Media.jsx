@@ -21,27 +21,39 @@ export default function Media({ getMedia }) {
     const [files, setFiles] = useState([])
 
     return (
-        <div className={'mt-5'}>
-            <FilePond
-                files={files}
-                onupdatefiles={setFiles}
-                allowMultiple={true}
-                maxFiles={1}
-                fileSizeBase={1000}
-                server={{
-                    url: routes.media.store,
-                    process: {
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf"]').getAttribute('content'),
+        <div className="mb-10 mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="mb-4 flex items-center">
+                <i className="ri-upload-cloud-line mr-3 text-sm text-gray-600"></i>
+                <h3 className="text-lg font-medium text-gray-700">Upload Media</h3>
+            </div>
+
+            <div className="filepond-wrapper">
+                <FilePond
+                    files={files}
+                    onupdatefiles={setFiles}
+                    allowMultiple={true}
+                    maxFiles={1}
+                    fileSizeBase={1000}
+                    server={{
+                        url: routes.media.store,
+                        process: {
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf"]').getAttribute('content'),
+                            },
+                            onload: (response) => {
+                                getMedia()
+                            },
                         },
-                        onload: (response) => {
-                            getMedia()
-                        },
-                    },
-                }}
-                name="files" /* sets the file input name, it's filepond by default */
-                labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
-            />
+                    }}
+                    name="files" /* sets the file input name, it's filepond by default */
+                    labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+                    className="file-upload"
+                />
+            </div>
+
+            <div className="mt-3 text-xs text-gray-500">
+                Supported file types: Images, PDFs, and documents. Maximum file size: 10MB.
+            </div>
         </div>
     )
 }

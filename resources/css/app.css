@@ -1,3 +1,58 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ce-toolbar__plus {
+    margin-right: 0.2rem;
+}
+
+.ce-toolbar__settings-btn {
+    margin-right: 4rem;
+}
+
+/* FilePond custom styles */
+.filepond-wrapper {
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.filepond--root {
+    margin-bottom: 0;
+}
+
+.filepond--panel-root {
+    background-color: #f9fafb;
+    border: 1px dashed #d1d5db;
+}
+
+.filepond--drop-label {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.filepond--label-action {
+    color: #4f46e5;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.filepond--file-action-button {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.filepond--file {
+    color: #1f2937;
+}
+
+.filepond--file-info {
+    color: #374151;
+}
+
+.filepond--file-status {
+    color: #6b7280;
+}
+
+.filepond--item {
+    margin-bottom: 0.25rem;
+}

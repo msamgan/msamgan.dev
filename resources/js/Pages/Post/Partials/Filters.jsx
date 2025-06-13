@@ -5,7 +5,7 @@ import TextInput from '@/Components/TextInput.jsx'
 
 export default function Filters({ params }) {
     const [search, setSearch] = useState(params.get('q'))
-    const [type, setType] = useState(params.get('type'))
+    const [status, setStatus] = useState(params.get('status'))
     const [startDate, setStartDate] = useState(params.get('start-date'))
     const [endDate, setEndDate] = useState(params.get('end-date'))
 
@@ -46,19 +46,19 @@ export default function Filters({ params }) {
                 </div>
                 <div className="w-full max-w-xs">
                     <div className="group relative">
-                        <InputLabel htmlFor="col-type" required={false} className="mb-1">
-                            Type
+                        <InputLabel htmlFor="col-status" required={false} className="mb-1">
+                            Status
                         </InputLabel>
                         <select
-                            value={type}
-                            onChange={(e) => setType(e.target.value)}
-                            id="col-type"
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                            id="col-status"
                             className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-700 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-0"
-                            name="type"
+                            name="status"
                         >
-                            <option value="">Select Type</option>
-                            <option value="incoming">Incoming</option>
-                            <option value="outgoing">Outgoing</option>
+                            <option value="">All Statuses</option>
+                            <option value="published">Published</option>
+                            <option value="draft">Draft</option>
                         </select>
                     </div>
                 </div>

@@ -25,6 +25,7 @@ export default function Index({ auth }) {
     const [organization, setOrganization] = useState(null)
     const [loading, setLoading] = useState(true)
     const [pageData, setPageData] = useState(pageObject(null))
+    const [isOffCanvasOpen, setIsOffCanvasOpen] = useState(false)
 
     const getOrganizations = () => {
         makeGetCall(services.organization.list, setOrganizations, setLoading)
@@ -46,11 +47,15 @@ export default function Index({ auth }) {
                                 onClick={() => {
                                     getOrganization(organization.id)
                                     setPageData(pageObject(organization))
+                                    setIsOffCanvasOpen(true)
                                 }}
-                                className={'dropdown-item'}
+                                className={
+                                    'hover:bg-gray-50 focus:bg-gray-50 ml-4 flex w-full items-center px-4 py-2 text-sm text-gray-600 transition-colors duration-200 hover:text-primary focus:text-primary focus:outline-none'
+                                }
                                 id="organizationFormCanvas"
                             >
-                                <i className="ri-pencil-line me-1 text-primary"></i> Edit
+                                <i className="ri-edit-line mr-2 text-sm text-primary"></i>
+                                Edit
                             </OffCanvasButton>
                         ) : null
                     }
@@ -59,7 +64,9 @@ export default function Index({ auth }) {
                             <DeleteEntityForm
                                 action={route('service.organization.destroy', organization.id)}
                                 refresh={getOrganizations}
-                                className={'dropdown-item'}
+                                className={
+                                    'hover:bg-red-50 focus:bg-red-50 flex w-full items-center px-4 py-2 text-sm text-red-600 transition-colors duration-200 hover:text-red-700 focus:text-red-700 focus:outline-none'
+                                }
                             />
                         ) : null
                     }
@@ -82,33 +89,48 @@ export default function Index({ auth }) {
         <Master user={auth.user} header={'Organizations'}>
             <Head title="Organizations" />
 
-            <PageHeader
-                title={'Organization List'}
-                subtitle={'Find all of your business’s organizations and there associated details.'}
-                action={
-                    hasCreatePermission && (
-                        <OffCanvasButton
-                            onClick={() => {
-                                setOrganization(null)
-                                setPageData(pageObject(null))
-                            }}
-                            id="organizationFormCanvas"
-                        >
-                            <i className="ri-add-line me-2"></i>
-                            Create Organization
-                        </OffCanvasButton>
-                    )
-                }
-            ></PageHeader>
+            <div className="container mx-auto px-4 pt-6">
+                <PageHeader
+                    title={'Organization List'}
+                    subtitle={"Find all of your business's organizations and there associated details."}
+                    action={
+                        hasCreatePermission && (
+                            <OffCanvasButton
+                                onClick={() => {
+                                    setOrganization(null)
+                                    setPageData(pageObject(null))
+                                    setIsOffCanvasOpen(true)
+                                }}
+                                id="organizationFormCanvas"
+                                className="border-transparent inline-flex items-center rounded-md border bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                            >
+                                <i className="ri-add-line mr-2 text-sm"></i>
+                                Create Organization
+                            </OffCanvasButton>
+                        )
+                    }
+                ></PageHeader>
+            </div>
 
             {hasCreatePermission && (
-                <OffCanvas id="organizationFormCanvas" title={pageData.title}>
-                    <Form getOrganizations={getOrganizations} organization={organization} />
+                <OffCanvas
+                    id="organizationFormCanvas"
+                    title={pageData.title}
+                    isOpen={isOffCanvasOpen}
+                    onClose={() => setIsOffCanvasOpen(false)}
+                >
+                    <Form
+                        getOrganizations={getOrganizations}
+                        organization={organization}
+                        onSuccess={() => setIsOffCanvasOpen(false)}
+                    />
                 </OffCanvas>
             )}
 
-            <div className="col-12">
-                <Table columns={columns} data={data} loading={loading} permission={hasListPermission} />
+            <div className="container mx-auto px-4 py-6">
+                <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-sm">
+                    <Table columns={columns} data={data} loading={loading} permission={hasListPermission} />
+                </div>
             </div>
         </Master>
     )

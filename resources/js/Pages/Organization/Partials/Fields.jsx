@@ -4,41 +4,41 @@ import InputError from '@/Components/InputError.jsx'
 
 export default function Fields({ data, setData, errors }) {
     return (
-        <>
-            <div className="col-6 col-md-6">
-                <div className="form-floating form-floating-outline">
+        <div className="flex flex-col gap-6">
+            <div className="w-full">
+                <div className="group relative">
+                    <InputLabel htmlFor="col-name" required={true} className="mb-2">
+                        Name
+                    </InputLabel>
                     <TextInput
                         type="text"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                         id="col-name"
-                        placeholder="Name"
+                        placeholder="Enter organization name"
                         required={true}
                         isFocused={false}
                     />
-                    <InputLabel htmlFor="col-name" required={true}>
-                        Name
-                    </InputLabel>
                     <InputError className="mt-2" message={errors.name} />
                 </div>
             </div>
-            <div className="col-6 col-md-6">
-                <div className="form-floating form-floating-outline">
+            <div className="w-full">
+                <div className="group relative">
+                    <InputLabel htmlFor="col-location" required={false} className="mb-2">
+                        Location
+                    </InputLabel>
                     <TextInput
                         type="text"
                         value={data.location}
                         onChange={(e) => setData('location', e.target.value)}
                         id="col-location"
-                        placeholder="Location"
+                        placeholder="Enter location"
                         required={false}
                         isFocused={false}
                     />
-                    <InputLabel htmlFor="col-location" required={false}>
-                        Location
-                    </InputLabel>
                     <InputError className="mt-2" message={errors.location} />
                 </div>
             </div>
-        </>
+        </div>
     )
 }

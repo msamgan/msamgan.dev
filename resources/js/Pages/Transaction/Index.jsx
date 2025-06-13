@@ -25,6 +25,7 @@ export default function Index({ auth }) {
     const [transaction, setTransaction] = useState(null)
     const [loading, setLoading] = useState(true)
     const [pageData, setPageData] = useState(pageObject(null))
+    const [isOffCanvasOpen, setIsOffCanvasOpen] = useState(false)
     const [projects, setProjects] = useState([])
     const [descriptions, setDescriptions] = useState([])
     const [params, setParams] = useState({})
@@ -90,48 +91,60 @@ export default function Index({ auth }) {
         <Master user={auth.user} header={'Transactions'}>
             <Head title="Transactions" />
 
-            <PageHeader
-                title={'Transaction List'}
-                subtitle={'Find all of your business’s transactions and there associated details.'}
-                action={
-                    hasCreatePermission && (
-                        <div className={'flex gap-2'}>
-                            <OffCanvasButton
-                                onClick={() => {
-                                    setTransaction(null)
-                                    setPageData(pageObject(null))
-                                }}
-                                id="transactionFormCanvas"
-                            >
-                                <i className="ri-add-line me-2"></i>
-                                Create Transaction
-                            </OffCanvasButton>
-                            <ToggleFilterButton showFilters={showFilters} setShowFilters={setShowFilters} />
-                        </div>
-                    )
-                }
-            ></PageHeader>
+            <div className="container mx-auto px-4 pt-6">
+                <PageHeader
+                    title={'Transaction List'}
+                    subtitle={"Find all of your business's transactions and there associated details."}
+                    action={
+                        hasCreatePermission && (
+                            <div className={'flex gap-2'}>
+                                <OffCanvasButton
+                                    onClick={() => {
+                                        setTransaction(null)
+                                        setPageData(pageObject(null))
+                                        setIsOffCanvasOpen(true)
+                                    }}
+                                    id="transactionFormCanvas"
+                                    className="border-transparent inline-flex items-center rounded-md border bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                                >
+                                    <i className="ri-add-line mr-2 text-sm"></i>
+                                    Create Transaction
+                                </OffCanvasButton>
+                                <ToggleFilterButton showFilters={showFilters} setShowFilters={setShowFilters} />
+                            </div>
+                        )
+                    }
+                ></PageHeader>
+            </div>
 
             {hasCreatePermission && (
-                <OffCanvas id="transactionFormCanvas" title={pageData.title}>
+                <OffCanvas
+                    id="transactionFormCanvas"
+                    title={pageData.title}
+                    isOpen={isOffCanvasOpen}
+                    onClose={() => setIsOffCanvasOpen(false)}
+                >
                     <Form
                         getTransactions={getTransactions}
                         transaction={transaction}
                         projects={projects}
                         getProjects={getProjects}
                         descriptions={descriptions}
+                        onSuccess={() => setIsOffCanvasOpen(false)}
                     />
                 </OffCanvas>
             )}
 
-            <div className="col-12">
-                <Table
-                    columns={columns}
-                    data={data}
-                    loading={loading}
-                    permission={hasListPermission}
-                    filters={showFilters ? <Filters params={params} /> : null}
-                />
+            <div className="container mx-auto px-4 py-6">
+                <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-sm">
+                    <Table
+                        columns={columns}
+                        data={data}
+                        loading={loading}
+                        permission={hasListPermission}
+                        filters={showFilters ? <Filters params={params} /> : null}
+                    />
+                </div>
             </div>
         </Master>
     )

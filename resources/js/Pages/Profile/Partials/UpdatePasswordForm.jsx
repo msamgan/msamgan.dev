@@ -38,59 +38,69 @@ export default function UpdatePasswordForm({ className = '' }) {
 
     return (
         <section className={className}>
-            <header>
+            <div className="border-b border-gray-200 px-6 py-5">
                 <h2 className="text-lg font-medium text-gray-900">Update Password</h2>
-
                 <p className="mt-1 text-sm text-gray-600">
                     Ensure your account is using a long, random password to stay secure.
                 </p>
-            </header>
+            </div>
 
-            <form onSubmit={updatePassword} className="mt-6 space-y-6">
-                <div className={'form-floating form-floating-outline'}>
-                    <TextInput
-                        id="current_password"
-                        ref={currentPasswordInput}
-                        value={data.current_password}
-                        onChange={(e) => setData('current_password', e.target.value)}
-                        type="password"
-                        autoComplete="current-password"
-                        placeholder={'Current Password'}
-                    />
-                    <InputLabel htmlFor="current_password" value="Current Password" />
-                    <InputError message={errors.current_password} className="mt-2" />
+            <form onSubmit={updatePassword} className="space-y-6 p-6">
+                <div className="w-full">
+                    <div className="group relative">
+                        <InputLabel htmlFor="current_password" required={true} className="mb-2">
+                            Current Password
+                        </InputLabel>
+                        <TextInput
+                            id="current_password"
+                            ref={currentPasswordInput}
+                            value={data.current_password}
+                            onChange={(e) => setData('current_password', e.target.value)}
+                            type="password"
+                            autoComplete="current-password"
+                            placeholder="Enter your current password"
+                        />
+                        <InputError message={errors.current_password} className="mt-2" />
+                    </div>
                 </div>
 
-                <div className={'form-floating form-floating-outline'}>
-                    <TextInput
-                        id="password"
-                        ref={passwordInput}
-                        value={data.password}
-                        onChange={(e) => setData('password', e.target.value)}
-                        type="password"
-                        autoComplete="new-password"
-                        placeholder={'New Password'}
-                    />
-                    <InputLabel htmlFor="password" value="New Password" />
-                    <InputError message={errors.password} className="mt-2" />
+                <div className="w-full">
+                    <div className="group relative">
+                        <InputLabel htmlFor="password" required={true} className="mb-2">
+                            New Password
+                        </InputLabel>
+                        <TextInput
+                            id="password"
+                            ref={passwordInput}
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                            type="password"
+                            autoComplete="new-password"
+                            placeholder="Enter your new password"
+                        />
+                        <InputError message={errors.password} className="mt-2" />
+                    </div>
                 </div>
 
-                <div className={'form-floating form-floating-outline'}>
-                    <TextInput
-                        id="password_confirmation"
-                        value={data.password_confirmation}
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        placeholder={'Confirm Password'}
-                    />
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
-                    <InputError message={errors.password_confirmation} className="mt-2" />
+                <div className="w-full">
+                    <div className="group relative">
+                        <InputLabel htmlFor="password_confirmation" required={true} className="mb-2">
+                            Confirm Password
+                        </InputLabel>
+                        <TextInput
+                            id="password_confirmation"
+                            value={data.password_confirmation}
+                            onChange={(e) => setData('password_confirmation', e.target.value)}
+                            type="password"
+                            autoComplete="new-password"
+                            placeholder="Confirm your new password"
+                        />
+                        <InputError message={errors.password_confirmation} className="mt-2" />
+                    </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                <div className="flex items-center justify-end gap-4 pt-2">
+                    <PrimaryButton disabled={processing}>Save Changes</PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}

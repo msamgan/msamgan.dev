@@ -3,37 +3,60 @@ import DisplayMessage from '@/Components/DisplayMessage.jsx'
 
 const TableContainer = ({ columns, data, tdClassName }) => {
     return (
-        <div className="mt">
-            <div className="table-responsive text-nowrap">
-                <h5 className="card-header text-end text-lg font-light">
-                    Total Records:
-                    <span className="badge rounded-pill ms-4 bg-primary">{data.length}</span>
-                </h5>
-                <table className="table-sm table-hover mt-8 table">
-                    <thead className={'table-dark'}>
-                        <tr>
-                            {columns.map((column, index) => (
-                                <th key={index}>{column}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody className="table-border-bottom-0">
-                        {data.map((row, index) => (
-                            <tr key={index}>
-                                {Object.values(row).map((cell, index) => (
-                                    <td
-                                        key={index}
-                                        className={
-                                            tdClassName.filter((item) => item.column === columns[index])[0]?.className
-                                        }
-                                    >
-                                        {cell}
-                                    </td>
-                                ))}
+        <div className="mt-4">
+            <div className="overflow-hidden rounded-lg border border-gray-200 shadow-sm ring-1 ring-black ring-opacity-5">
+                <div className="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-3">
+                    <h3 className="text-base font-medium text-gray-700">Data Table</h3>
+                    <div className="flex items-center">
+                        <span className="text-sm font-medium text-gray-600">Total Records:</span>
+                        <span className="ml-2 rounded-full bg-primary/90 px-3 py-1 text-xs font-medium text-white shadow-sm">
+                            {data.length}
+                        </span>
+                    </div>
+                </div>
+                <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                {columns.map((column, index) => {
+                                    const isActionColumn = column === 'Actions'
+                                    return (
+                                        <th
+                                            key={index}
+                                            className={`whitespace-nowrap px-6 py-3.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 ${isActionColumn ? 'text-right' : ''}`}
+                                            scope="col"
+                                        >
+                                            {column}
+                                        </th>
+                                    )
+                                })}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 bg-white">
+                            {data.map((row, index) => (
+                                <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
+                                    {Object.values(row).map((cell, cellIndex) => {
+                                        const isActionColumn = columns[cellIndex] === 'Actions'
+                                        return (
+                                            <td
+                                                key={cellIndex}
+                                                className={`whitespace-nowrap px-6 py-4 text-sm ${
+                                                    isActionColumn
+                                                        ? 'w-24 text-right'
+                                                        : tdClassName.filter(
+                                                              (item) => item.column === columns[cellIndex],
+                                                          )[0]?.className || 'text-gray-700'
+                                                }`}
+                                            >
+                                                {cell}
+                                            </td>
+                                        )
+                                    })}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )
@@ -45,12 +68,12 @@ export default function Table({ columns, data, tdClassName = [], loading, permis
             <Loading />
         ) : data.length > 0 ? (
             <>
-                <div className={'mb-8'}>{filters}</div>
-                <TableContainer columns={columns} data={data} tdClassName={tdClassName} filters={filters} />
+                {filters && <div className="mb-8">{filters}</div>}
+                <TableContainer columns={columns} data={data} tdClassName={tdClassName} />
             </>
         ) : (
             <>
-                <div className={'mb-8'}>{filters}</div>
+                {filters && <div className="mb-8">{filters}</div>}
                 <DisplayMessage text={'No data available.'} />
             </>
         )

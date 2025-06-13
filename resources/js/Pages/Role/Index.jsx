@@ -26,6 +26,7 @@ export default function Index({ auth }) {
     const [role, setRole] = useState(null)
     const [pageData, setPageData] = useState(pageObject(null))
     const [loading, setLoading] = useState(true)
+    const [isOffCanvasOpen, setIsOffCanvasOpen] = useState(false)
     const [permissionsList, setPermissionsList] = useState([])
 
     const getPermissions = () => {
@@ -52,11 +53,15 @@ export default function Index({ auth }) {
                             <OffCanvasButton
                                 onClick={() => {
                                     getRole(role.id)
+                                    setIsOffCanvasOpen(true)
                                 }}
-                                className={'dropdown-item'}
+                                className={
+                                    'hover:bg-gray-50 focus:bg-gray-50 ml-4 flex w-full items-center px-4 py-2 text-sm text-gray-600 transition-colors duration-200 hover:text-primary focus:text-primary focus:outline-none'
+                                }
                                 id="roleFormCanvas"
                             >
-                                <i className="ri-pencil-line me-1 text-primary"></i> Edit
+                                <i className="ri-edit-line mr-2 text-sm text-primary"></i>
+                                Edit
                             </OffCanvasButton>
                         ) : null
                     }
@@ -65,7 +70,9 @@ export default function Index({ auth }) {
                             <DeleteEntityForm
                                 action={route('service.role.destroy', role.id)}
                                 refresh={getRoles}
-                                className={'dropdown-item'}
+                                className={
+                                    'hover:bg-red-50 focus:bg-red-50 flex w-full items-center px-4 py-2 text-sm text-red-600 transition-colors duration-200 hover:text-red-700 focus:text-red-700 focus:outline-none'
+                                }
                             />
                         ) : null
                     }
@@ -94,33 +101,49 @@ export default function Index({ auth }) {
         <Master user={auth.user}>
             <Head title="Roles" />
 
-            <PageHeader
-                title={'Roles List'}
-                subtitle={'Find all of your business’s roles and there associated permissions.'}
-                action={
-                    hasCreatePermission && (
-                        <OffCanvasButton
-                            onClick={() => {
-                                setRole(null)
-                                setPageData(pageObject(null))
-                            }}
-                            id="roleFormCanvas"
-                        >
-                            <i className="ri-add-line me-2"></i>
-                            Create Role
-                        </OffCanvasButton>
-                    )
-                }
-            ></PageHeader>
+            <div className="container mx-auto px-4 pt-6">
+                <PageHeader
+                    title={'Roles List'}
+                    subtitle={"Find all of your business's roles and there associated permissions."}
+                    action={
+                        hasCreatePermission && (
+                            <OffCanvasButton
+                                onClick={() => {
+                                    setRole(null)
+                                    setPageData(pageObject(null))
+                                    setIsOffCanvasOpen(true)
+                                }}
+                                id="roleFormCanvas"
+                                className="border-transparent inline-flex items-center rounded-md border bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                            >
+                                <i className="ri-add-line mr-2 text-sm"></i>
+                                Create Role
+                            </OffCanvasButton>
+                        )
+                    }
+                ></PageHeader>
+            </div>
 
             {hasCreatePermission && (
-                <OffCanvas id="roleFormCanvas" title={pageData.title}>
-                    <Form getRoles={getRoles} role={role} permissionsList={permissionsList} />
+                <OffCanvas
+                    id="roleFormCanvas"
+                    title={pageData.title}
+                    isOpen={isOffCanvasOpen}
+                    onClose={() => setIsOffCanvasOpen(false)}
+                >
+                    <Form
+                        getRoles={getRoles}
+                        role={role}
+                        permissionsList={permissionsList}
+                        onSuccess={() => setIsOffCanvasOpen(false)}
+                    />
                 </OffCanvas>
             )}
 
-            <div className="col-12">
-                <Table columns={columns} data={data} loading={loading} permission={hasListPermission} />
+            <div className="container mx-auto px-4 py-6">
+                <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-sm">
+                    <Table columns={columns} data={data} loading={loading} permission={hasListPermission} />
+                </div>
             </div>
         </Master>
     )

@@ -4,32 +4,35 @@ import InputError from '@/Components/InputError.jsx'
 
 export default function Fields({ data, setData, errors, organizations, getOrganizations }) {
     return (
-        <>
-            <div className="col-12 col-md-12">
-                <div className="form-floating form-floating-outline">
+        <div className="flex flex-col gap-6">
+            <div className="w-full">
+                <div className="group relative">
+                    <InputLabel htmlFor="col-name" required={true} className="mb-4">
+                        Name
+                    </InputLabel>
                     <TextInput
                         type="text"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                         id="col-name"
-                        placeholder="Name"
+                        placeholder="Enter client name"
                         required={true}
                         isFocused={false}
                     />
-                    <InputLabel htmlFor="col-name" required={true}>
-                        Name
-                    </InputLabel>
                     <InputError className="mt-2" message={errors.name} />
                 </div>
             </div>
-            <div className="col-12 col-md-12">
-                <div className="form-floating form-floating-outline">
+            <div className="w-full">
+                <div className="group relative">
+                    <InputLabel htmlFor="col-organization" required={false} className="mb-2">
+                        Organization
+                    </InputLabel>
                     <select
                         value={data.organization_id}
                         onChange={(e) => setData('organization_id', e.target.value)}
                         id="col-organization"
                         required={false}
-                        className="form-select rounded-md pb-2"
+                        className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-700 shadow-sm transition-all duration-200 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-0"
                     >
                         <option value="">Select Organization</option>
                         {organizations.map((organization) => (
@@ -38,60 +41,85 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                             </option>
                         ))}
                     </select>
-                    <InputLabel htmlFor="col-organization" required={false}>
-                        Organization
-                    </InputLabel>
                     <InputError className="mt-2" message={errors.organization_id} />
-                    <small className="text-muted flex justify-between">
-                        <span className={'mt-2'}>
+                    <div className="mt-2 flex flex-wrap items-center justify-between text-xs text-gray-500">
+                        <span className="flex-grow">
                             If the Organization is not listed, please{' '}
-                            <a href="#" className={'text-blue-700'} onClick={getOrganizations}>
+                            <button
+                                type="button"
+                                className="font-medium text-primary transition-colors duration-200 hover:text-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-0"
+                                onClick={getOrganizations}
+                            >
                                 click here
-                            </a>{' '}
+                            </button>{' '}
                             to refresh the list.
                         </span>
-                        <a target={'_blank'} href={route('organization.index')} className={'ml-5 mt-2 text-blue-700'}>
+                        <a
+                            target="_blank"
+                            href={route('organization.index')}
+                            className="bg-gray-50 mt-1 flex items-center rounded-md px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-100 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:mt-0"
+                        >
+                            <i className="ri-add-line mr-2 text-sm"></i>
                             Add Organization
                         </a>
-                    </small>
+                    </div>
                 </div>
             </div>
-            <div className="col-12 col-md-12">
-                <div className="form-floating form-floating-outline">
+            <div className="w-full">
+                <div className="group relative">
+                    <InputLabel htmlFor="col-emails" required={false} className="mb-2">
+                        Emails
+                    </InputLabel>
                     <TextInput
                         type="text"
                         value={data.emails}
                         onChange={(e) => setData('emails', e.target.value)}
                         id="col-emails"
-                        placeholder="Emails"
+                        placeholder="Enter email addresses"
                         required={false}
                         isFocused={false}
                     />
-                    <InputLabel htmlFor="col-emails" required={false}>
-                        Emails
-                    </InputLabel>
                     <InputError className="mt-2" message={errors.emails} />
-                    <small className="text-muted">Separate multiple emails with a comma.</small>
+                    <p className="mt-2 flex items-center text-xs text-gray-500">
+                        <i className="ri-information-line mr-2 text-sm text-gray-400"></i>
+                        Separate multiple emails with a comma.
+                    </p>
                 </div>
             </div>
-            <div className="col-12 col-md-12">
-                <div className="form-floating form-floating-outline">
+            <div className="w-full">
+                <div className="group relative">
+                    <InputLabel htmlFor="col-phones" required={false} className="mb-2">
+                        Phones
+                    </InputLabel>
                     <TextInput
                         type="text"
                         value={data.phones}
                         onChange={(e) => setData('phones', e.target.value)}
                         id="col-phones"
-                        placeholder="Phones"
+                        placeholder="Enter phone numbers"
                         required={false}
                         isFocused={false}
                     />
-                    <InputLabel htmlFor="col-phones" required={false}>
-                        Phones
-                    </InputLabel>
                     <InputError className="mt-2" message={errors.phones} />
-                    <small className="text-muted">Separate multiple emails with a comma.</small>
+                    <p className="mt-2 flex items-center text-xs text-gray-500">
+                        <svg
+                            className="mr-1.5 h-4 w-4 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path>
+                        </svg>
+                        Separate multiple phone numbers with a comma.
+                    </p>
                 </div>
             </div>
-        </>
+        </div>
     )
 }

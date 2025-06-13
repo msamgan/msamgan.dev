@@ -1,6 +1,9 @@
 export default function InputLabel({ value, className = '', children, required = false, ...props }) {
     return (
-        <label {...props} className={className}>
+        <label
+            {...props}
+            className={`mb-1.5 block text-sm font-medium text-gray-700 transition-colors duration-200 group-hover:text-gray-800 ${className}`}
+        >
             {value ? value : children} {required && <span className="text-red-500">*</span>}
         </label>
     )

@@ -16,6 +16,7 @@ use App\Notifications\PostUpdated;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -25,6 +26,11 @@ class PostController extends Controller
     public function index(): Response
     {
         return Inertia::render('Post/Index');
+    }
+
+    public function create(): Response
+    {
+        return Inertia::render('Post/Create');
     }
 
     /**
@@ -54,6 +60,16 @@ class PostController extends Controller
         return $post;
     }
 
+    public function edit(Post $post): Response
+    {
+        $post->content = json_decode($post->content_raw);
+        $post->load('tags');
+
+        return Inertia::render('Post/Edit', [
+            'post' => $post,
+        ]);
+    }
+
     public function update(UpdatePostRequest $request, Post $post, UpdatePost $updatePost, NotifyUser $notifyUser): void
     {
         $post = $updatePost->handle($post, $request->validated());
@@ -68,10 +84,17 @@ class PostController extends Controller
         $post->delete();
     }
 
-    public function posts(): Collection
+    public function posts(Request $request): Collection
     {
         return Post::query()
             ->with('tags')
+            ->when($request->get('q'), function ($query) use ($request): void {
+                $query->where('title', 'like', '%' . $request->get('q') . '%')
+                    ->orWhere('content_raw', 'like', '%' . $request->get('q') . '%');
+            })
+            ->when($request->get('status'), function ($query) use ($request): void {
+                $query->where('status', $request->get('status'));
+            })
             ->orderBy('created_at', 'desc')
             ->get();
     }

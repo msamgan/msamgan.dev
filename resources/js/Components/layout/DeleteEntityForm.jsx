@@ -48,20 +48,31 @@ export default function DeleteEntityForm({ action, refresh, className = '' }) {
 
     return (
         <section className={`space-y-6 ${className}`}>
-            <span className={'cursor-pointer'} onClick={confirmUserDeletion}>
-                <i className="ri-delete-bin-7-line text-danger me-1"></i> Delete
-            </span>
+            <button
+                type="button"
+                className="hover:bg-red-50 focus:bg-red-50 flex w-full items-center px-4 py-2 text-sm text-red-600 transition-colors duration-200 hover:text-red-700 focus:text-red-700 focus:outline-none"
+                onClick={confirmUserDeletion}
+            >
+                <i className="ri-delete-bin-line mr-2 text-sm text-red-500"></i>
+                Delete
+            </button>
 
             <Modal show={confirmingEntityDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900">Are you sure you want to delete ?</h2>
+                    <h2 className="text-xl font-semibold text-gray-800">Are you sure you want to delete?</h2>
 
-                    <p className="mt-1 text-sm text-gray-600">
+                    <p className="mt-3 text-sm leading-relaxed text-gray-600">
                         Once this is deleted, all of its resources and data will be permanently deleted. Please enter
                         your password to confirm you would like to permanently delete this data.
                     </p>
 
-                    <div className="form-floating form-floating-outline mt-6">
+                    <div className="mt-6">
+                        <InputLabel
+                            htmlFor="password"
+                            value="Password"
+                            required={true}
+                            className="mb-1 text-sm font-medium text-gray-700"
+                        />
                         <TextInput
                             id="password"
                             type="password"
@@ -69,17 +80,25 @@ export default function DeleteEntityForm({ action, refresh, className = '' }) {
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
                             isFocused
-                            placeholder="Password"
+                            placeholder="Enter your password"
+                            className="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-20"
                         />
-                        <InputLabel htmlFor="password" value="Password" required={true} />
                         <InputError message={errors.password} className="mt-2" />
                     </div>
 
-                    <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+                    <div className="mt-8 flex justify-end space-x-4">
+                        <SecondaryButton
+                            onClick={closeModal}
+                            className="hover:bg-gray-50 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        >
+                            Cancel
+                        </SecondaryButton>
 
-                        <DangerButton className="ms-3" disabled={processing}>
-                            Delete Account
+                        <DangerButton
+                            disabled={processing}
+                            className="border-transparent rounded-md border bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                        >
+                            Delete
                         </DangerButton>
                     </div>
                 </form>

@@ -8,6 +8,14 @@ Route::middleware(['auth', 'check_has_business'])->group(function (): void {
     Route::get('posts', [PostController::class, 'index'])
         ->middleware([PermissionEnum::PostList->can()])
         ->name('post.index');
+
+    Route::get('post/create', [PostController::class, 'create'])
+        ->middleware([PermissionEnum::PostCreate->can()])
+        ->name('post.create');
+
+    Route::get('post/{post}/edit', [PostController::class, 'edit'])
+        ->middleware([PermissionEnum::PostUpdate->can()])
+        ->name('post.edit');
 });
 
 Route::middleware(['auth', 'check_has_business'])->group(function (): void {
