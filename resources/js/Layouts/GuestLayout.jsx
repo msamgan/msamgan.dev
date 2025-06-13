@@ -3,15 +3,19 @@ import { Link } from '@inertiajs/react'
 
 export default function Guest({ children }) {
     return (
-        <div className="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
-            <div>
+        <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 py-8">
+            <div className="mb-6 transition-transform duration-300 hover:scale-105">
                 <Link href="/">
-                    <ApplicationLogo className="fill-current" />
+                    <ApplicationLogo className="h-16 w-auto" />
                 </Link>
             </div>
 
-            <div className="mt-12 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">
+            <div className="w-full max-w-md overflow-hidden rounded-xl bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl sm:p-10">
                 {children}
+            </div>
+
+            <div className="mt-8 text-center text-sm text-gray-500">
+                &copy; {new Date().getFullYear()} msamgan. All rights reserved.
             </div>
         </div>
     )

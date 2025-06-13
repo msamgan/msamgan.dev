@@ -12,27 +12,30 @@ export default function Master({ children, header, user }) {
 
     return (
         <div className="flex min-h-screen flex-col">
-            <div className="w-full">
+            <div className="w-full flex-none">
                 <TopHeader user={user} toggleMenu={toggleMenu} />
+            </div>
 
-                <div className="w-full">
-                    <div className="flex flex-col">
-                        <TopMenu />
-
-                        <div className="container mx-auto flex-grow px-4 py-6">
-                            {/*<h4 className="pt-4 text-2xl font-semibold">{header}</h4>*/}
-                            {children}
-                        </div>
-
-                        <Footer />
-                        {/* Overlay for mobile menu */}
-                        <div
-                            className={`fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out ${menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
-                            onClick={toggleMenu}
-                            aria-hidden="true"
-                        ></div>
-                    </div>
+            <div className="flex flex-col flex-grow">
+                <div className="w-full flex-none">
+                    <TopMenu />
                 </div>
+
+                <div className="flex flex-col flex-grow">
+                    <div className="container mx-auto flex-grow px-4 py-6">
+                        {/*<h4 className="pt-4 text-2xl font-semibold">{header}</h4>*/}
+                        {children}
+                    </div>
+
+                    <Footer />
+                </div>
+
+                {/* Overlay for mobile menu */}
+                <div
+                    className={`fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out ${menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+                    onClick={toggleMenu}
+                    aria-hidden="true"
+                ></div>
             </div>
         </div>
     )
