@@ -21,7 +21,6 @@
         />
 
         <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/remixicon/remixicon.css') }}" />
-        <!-- <link rel="stylesheet" href="../../assets/vendor/fonts/flag-icons.css" /> -->
 
         <!-- Scripts -->
         @routes
