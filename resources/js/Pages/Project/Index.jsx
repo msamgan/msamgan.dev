@@ -61,7 +61,7 @@ export default function Index({ auth }) {
                                     setIsOffCanvasOpen(true)
                                 }}
                                 className={
-                                    'hover:bg-gray-50 focus:bg-gray-50 flex w-full items-center px-4 py-2 text-sm text-gray-600 transition-colors duration-200 hover:text-primary focus:text-primary focus:outline-none'
+                                    'hover:bg-gray-50 focus:bg-gray-50 ml-4 flex w-full items-center px-4 py-2 text-sm text-gray-600 transition-colors duration-200 hover:text-primary focus:text-primary focus:outline-none'
                                 }
                                 id="projectFormCanvas"
                             >
