@@ -23,20 +23,7 @@ export default function Media({ getMedia }) {
     return (
         <div className="mb-10 mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-center">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mr-3 h-6 w-6 text-gray-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    />
-                </svg>
+                <i className="ri-upload-cloud-line mr-3 text-sm text-gray-600"></i>
                 <h3 className="text-lg font-medium text-gray-700">Upload Media</h3>
             </div>
 

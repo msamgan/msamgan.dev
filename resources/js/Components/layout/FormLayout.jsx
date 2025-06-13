@@ -24,20 +24,7 @@ export default function FormLayout({ children, submit, processing, recentlySucce
                     leaveTo="opacity-0"
                 >
                     <p className="bg-green-50 flex items-center rounded-md px-3 py-1.5 text-sm font-medium text-green-600">
-                        <svg
-                            className="mr-1.5 h-4 w-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M5 13l4 4L19 7"
-                            ></path>
-                        </svg>
+                        <i className="ri-check-line mr-2 text-sm text-green-600"></i>
                         Saved successfully
                     </p>
                 </Transition>

@@ -117,15 +117,7 @@ function SidebarDependentMenu({ menuItems, itemKey, index }) {
                         {itemKey}
                     </div>
                 </div>
-                <svg
-                    className={`h-4 w-4 transform transition-transform duration-200 ${isSubmenuOpen ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
+                <i className={`ri-arrow-down-s-line text-sm transform transition-transform duration-200 ${isSubmenuOpen ? 'rotate-180' : ''}`}></i>
             </button>
             <ul className={`bg-gray-50 space-y-1 pl-10 ${isSubmenuOpen ? 'block' : 'hidden'}`}>
                 {menuItems[itemKey].map((item, index) => (

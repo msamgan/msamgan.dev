@@ -32,15 +32,7 @@ export default function DependentMenu({ menuItems, itemKey, index }) {
                 >
                     {itemKey}
                 </div>
-                <svg
-                    className="h-4 w-4 opacity-70"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
+                <i className="ri-arrow-down-s-line text-sm opacity-70"></i>
             </a>
             <ul className="absolute left-0 z-10 mt-1 hidden min-w-[220px] rounded-lg bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5 group-[.open]:block">
                 {menuItems[itemKey].map((item, index) => (
