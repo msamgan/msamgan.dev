@@ -34,10 +34,7 @@ const TableContainer = ({ columns, data, tdClassName }) => {
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
                             {data.map((row, index) => (
-                                <tr
-                                    key={index}
-                                    className="transition-colors duration-200 hover:bg-gray-50"
-                                >
+                                <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                                     {Object.values(row).map((cell, cellIndex) => {
                                         const isActionColumn = columns[cellIndex] === 'Actions'
                                         return (

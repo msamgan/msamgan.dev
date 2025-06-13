@@ -11,10 +11,7 @@ export default function FormLayout({ children, submit, processing, recentlySucce
             </div>
 
             <div className={`flex items-center justify-end gap-4 ${w}`}>
-                <PrimaryButton
-                    disabled={processing}
-                    id={'savePostBtn'}
-                >
+                <PrimaryButton disabled={processing} id={'savePostBtn'}>
                     Save Changes
                 </PrimaryButton>
                 <Transition
@@ -26,7 +23,7 @@ export default function FormLayout({ children, submit, processing, recentlySucce
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <p className="flex items-center rounded-md bg-green-50 px-3 py-1.5 text-sm font-medium text-green-600">
+                    <p className="bg-green-50 flex items-center rounded-md px-3 py-1.5 text-sm font-medium text-green-600">
                         <svg
                             className="mr-1.5 h-4 w-4"
                             fill="none"

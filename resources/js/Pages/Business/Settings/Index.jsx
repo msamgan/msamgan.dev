@@ -7,55 +7,52 @@ export default function Index({ auth }) {
         <Master user={auth.user} header={'Business Settings'}>
             <Head title="Business Settings" />
 
-            <div className="row gx-6">
-                <div className="col-12 col-lg-2">
-                    <div className="d-flex justify-content-between flex-column mb-md-0 mb-4">
-                        <ul className="nav nav-align-left nav-pills flex-column">
-                            <li className="nav-item mb-1">
-                                <a className="nav-link active" href={route('business.settings')}>
-                                    <i className="ri-store-2-line me-2"></i>
-                                    <span className="align-middle">General Details</span>
-                                </a>
-                            </li>
-                            {/*<li className="nav-item mb-1">
-								<a className="nav-link" href={route('business.settings')}>
-									<i className="ri-map-2-line me-2"></i>
-									<span className="align-middle">Locations</span>
-								</a>
-							</li>
-							<li className="nav-item mb-1">
-								<a className="nav-link" href="#">
-									<i className="ri-bank-card-line me-2"></i>
-									<span className="align-middle">Businesses</span>
-								</a>
-							</li>*/}
-                        </ul>
+            <div className="flex flex-col md:flex-row gap-6">
+                <div className="w-full md:w-64 flex-shrink-0">
+                    <div className="overflow-hidden rounded-lg bg-white shadow">
+                        <div className="border-b border-gray-200 px-6 py-5">
+                            <h3 className="text-base font-medium text-gray-900">Settings</h3>
+                        </div>
+                        <nav className="flex flex-col p-4">
+                            <a
+                                className="flex items-center rounded-md px-3 py-2 text-sm font-medium text-white bg-primary"
+                                href={route('business.settings')}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="mr-3 h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                                <span>General Details</span>
+                            </a>
+                            {/*<a
+                                className="flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 mt-1"
+                                href={route('business.settings')}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="mr-3 h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                <span>Locations</span>
+                            </a>
+                            <a
+                                className="flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 mt-1"
+                                href="#"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="mr-3 h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                                    <line x1="2" y1="10" x2="22" y2="10"></line>
+                                </svg>
+                                <span>Businesses</span>
+                            </a>*/}
+                        </nav>
                     </div>
                 </div>
-                <div className="col-12 col-lg-10 pt-lg-0 pt-6">
-                    <div className="col-xl-12">
-                        <div className="nav-align-top mb-6">
-                            <ul className="nav nav-pills mb-4" role="tablist">
-                                <li className="nav-item">
-                                    <button
-                                        type="button"
-                                        className="nav-link active"
-                                        role="tab"
-                                        data-bs-toggle="tab"
-                                        data-bs-target="#navs-pills-top-general"
-                                        aria-controls="navs-pills-top-general"
-                                        aria-selected="true"
-                                    >
-                                        General
-                                    </button>
-                                </li>
-                            </ul>
-                            <div className="tab-content bg-transparent p-0 shadow-none">
-                                <div className="tab-pane fade show active" id="navs-pills-top-general" role="tabpanel">
-                                    <GeneralInfo business={auth.user.business} />
-                                </div>
-                            </div>
+                <div className="flex-1">
+                    <div className="overflow-hidden rounded-lg bg-white shadow">
+                        <div className="border-b border-gray-200 px-6 py-5">
+                            <h2 className="text-lg font-medium text-gray-900">General</h2>
                         </div>
+                        <GeneralInfo business={auth.user.business} />
                     </div>
                 </div>
             </div>

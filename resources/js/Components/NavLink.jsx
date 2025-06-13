@@ -9,7 +9,8 @@ export default function NavLink({ active = false, className = '', children, ...p
                 (active
                     ? 'border-indigo-500 text-gray-900'
                     : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-700') +
-                ' ' + className
+                ' ' +
+                className
             }
         >
             {children}

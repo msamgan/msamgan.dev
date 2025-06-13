@@ -16,12 +16,12 @@ export default function Master({ children, header, user }) {
                 <TopHeader user={user} toggleMenu={toggleMenu} />
             </div>
 
-            <div className="flex flex-col flex-grow">
+            <div className="flex flex-grow flex-col">
                 <div className="w-full flex-none">
                     <TopMenu />
                 </div>
 
-                <div className="flex flex-col flex-grow">
+                <div className="flex flex-grow flex-col">
                     <div className="container mx-auto flex-grow px-4 py-6">
                         {/*<h4 className="pt-4 text-2xl font-semibold">{header}</h4>*/}
                         {children}

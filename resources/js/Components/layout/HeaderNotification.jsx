@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { formatDuration } from '@/Utils/methods.js'
 import { routes } from '@/Utils/routes/index.js'
 
@@ -37,14 +37,16 @@ export default function HeaderNotification({ user }) {
     return (
         <li className="relative mx-4 xl:mx-1" ref={dropdownRef}>
             <button
-                className="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary bg-opacity-10 text-gray-700 transition duration-150 ease-in-out hover:bg-primary hover:bg-opacity-20 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                className="relative flex h-10 w-10 items-center justify-center rounded-full border text-gray-700 transition duration-150 ease-in-out hover:bg-primary hover:bg-opacity-20 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 onClick={() => setIsOpen(!isOpen)}
                 onKeyDown={handleKeyDown}
                 aria-expanded={isOpen}
                 aria-haspopup="true"
                 aria-label="Notifications"
             >
-                <i className="ri-notification-2-line text-2xl text-primary flex items-center justify-center"></i>
+                <svg className={`h-5 w-5`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5 18H19V11.0314C19 7.14806 15.866 4 12 4C8.13401 4 5 7.14806 5 11.0314V18ZM12 2C16.9706 2 21 6.04348 21 11.0314V20H3V11.0314C3 6.04348 7.02944 2 12 2ZM9.5 21H14.5C14.5 22.3807 13.3807 23.5 12 23.5C10.6193 23.5 9.5 22.3807 9.5 21Z"></path>
+                </svg>
                 {unreadNotifications > 0 && (
                     <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-white bg-red-600"></span>
                 )}

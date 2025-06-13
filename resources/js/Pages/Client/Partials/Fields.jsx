@@ -57,7 +57,7 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                         <a
                             target="_blank"
                             href={route('organization.index')}
-                            className="mt-1 flex items-center rounded-md bg-gray-50 px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-100 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:mt-0"
+                            className="bg-gray-50 mt-1 flex items-center rounded-md px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-100 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:mt-0"
                         >
                             <svg
                                 className="mr-1.5 h-4 w-4"
@@ -94,8 +94,19 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                     />
                     <InputError className="mt-2" message={errors.emails} />
                     <p className="mt-2 flex items-center text-xs text-gray-500">
-                        <svg className="mr-1.5 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        <svg
+                            className="mr-1.5 h-4 w-4 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path>
                         </svg>
                         Separate multiple emails with a comma.
                     </p>
@@ -117,8 +128,19 @@ export default function Fields({ data, setData, errors, organizations, getOrgani
                     />
                     <InputError className="mt-2" message={errors.phones} />
                     <p className="mt-2 flex items-center text-xs text-gray-500">
-                        <svg className="mr-1.5 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        <svg
+                            className="mr-1.5 h-4 w-4 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path>
                         </svg>
                         Separate multiple phone numbers with a comma.
                     </p>

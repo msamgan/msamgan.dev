@@ -10,7 +10,7 @@ export default function Authenticated({ user, header, children }) {
 
     return (
         <div className="flex min-h-screen flex-col bg-gray-100">
-            <nav className="border-b border-gray-200 bg-white shadow-sm flex-none">
+            <nav className="flex-none border-b border-gray-200 bg-white shadow-sm">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
                         <div className="flex items-center">
@@ -21,7 +21,11 @@ export default function Authenticated({ user, header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:ml-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')} className="font-medium">
+                                <NavLink
+                                    href={route('dashboard')}
+                                    active={route().current('dashboard')}
+                                    className="font-medium"
+                                >
                                     Dashboard
                                 </NavLink>
                             </div>
@@ -34,7 +38,7 @@ export default function Authenticated({ user, header, children }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium leading-5 text-gray-600 transition duration-150 ease-in-out hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                className="hover:bg-gray-50 inline-flex items-center rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium leading-5 text-gray-600 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                             >
                                                 {user.name}
 
@@ -99,7 +103,7 @@ export default function Authenticated({ user, header, children }) {
                         </ResponsiveNavLink>
                     </div>
 
-                    <div className="border-t border-gray-200 bg-gray-50 pb-3 pt-4">
+                    <div className="bg-gray-50 border-t border-gray-200 pb-3 pt-4">
                         <div className="px-4">
                             <div className="text-base font-medium text-gray-800">{user.name}</div>
                             <div className="text-sm font-medium text-gray-500">{user.email}</div>
@@ -116,7 +120,7 @@ export default function Authenticated({ user, header, children }) {
             </nav>
 
             {header && (
-                <header className="bg-white shadow flex-none">
+                <header className="flex-none bg-white shadow">
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">{header}</div>
                 </header>
             )}

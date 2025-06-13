@@ -9,21 +9,21 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
         <Master user={auth.user} header={'Profile'}>
             <Head title="Profile" />
 
-            <div className="mx-auto space-y-10">
-                <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+            <div className="mx-auto space-y-6">
+                <div className="overflow-hidden rounded-lg bg-white shadow">
                     <UpdateProfileInformationForm
                         mustVerifyEmail={mustVerifyEmail}
                         status={status}
-                        className="max-w-xl"
+                        className="max-w-full"
                     />
                 </div>
 
-                <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                    <UpdatePasswordForm className="max-w-xl" />
+                <div className="overflow-hidden rounded-lg bg-white shadow">
+                    <UpdatePasswordForm className="max-w-full" />
                 </div>
 
-                {/*<div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-					<DeleteUserForm className="max-w-xl" />
+                {/*<div className="overflow-hidden rounded-lg bg-white shadow">
+					<DeleteUserForm className="max-w-full" />
 				</div>*/}
             </div>
         </Master>
