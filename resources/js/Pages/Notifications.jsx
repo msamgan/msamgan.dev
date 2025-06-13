@@ -58,42 +58,48 @@ export default function Notifications({ auth }) {
             <Head title="Notifications" />
             <PageHeader title={'Notifications'} subtitle={'Your activity and system notifications'}></PageHeader>
 
-            <div className="max-w-5xl mx-auto">
+            <div className="mx-auto max-w-5xl">
                 {Object.keys(groupedNotifications).length > 0 ? (
                     Object.keys(groupedNotifications)
                         .sort((a, b) => new Date(b) - new Date(a)) // Sort dates in descending order
                         .map((date) => (
                             <div key={date} className="mb-8">
-                                <h3 className="text-sm font-medium text-gray-500 mb-4 px-4">{formatDate(date)}</h3>
+                                <h3 className="mb-4 px-4 text-sm font-medium text-gray-500">{formatDate(date)}</h3>
                                 <div className="space-y-3">
                                     {groupedNotifications[date].map((notification, index) => {
                                         const isUnread = !notification.read_at
                                         return (
                                             <div
                                                 key={index}
-                                                className={`bg-white rounded-lg border ${
-                                                    isUnread ? 'border-primary border-l-4' : 'border-gray-100'
-                                                } shadow-sm hover:shadow transition-all duration-200 p-4 md:p-5`}
+                                                className={`rounded-lg border bg-white ${
+                                                    isUnread ? 'border-l-4 border-primary' : 'border-gray-100'
+                                                } p-4 shadow-sm transition-all duration-200 hover:shadow md:p-5`}
                                             >
                                                 <div className="flex items-start">
-                                                    <div className={`flex-shrink-0 mr-4 p-2 rounded-full ${
-                                                        isUnread ? 'bg-primary bg-opacity-10 text-primary' : 'bg-gray-100 text-gray-500'
-                                                    }`}>
-                                                        <i className={`${getNotificationIcon(notification)} text-lg`}></i>
+                                                    <div
+                                                        className={`mr-4 flex-shrink-0 rounded-full p-2 ${
+                                                            isUnread
+                                                                ? 'bg-primary bg-opacity-10 text-primary'
+                                                                : 'bg-gray-100 text-gray-500'
+                                                        }`}
+                                                    >
+                                                        <i
+                                                            className={`${getNotificationIcon(notification)} text-lg`}
+                                                        ></i>
                                                     </div>
                                                     <div className="flex-grow">
-                                                        <h6 className="font-medium text-gray-900 mb-1">
+                                                        <h6 className="mb-1 font-medium text-gray-900">
                                                             {notification.data.title}
                                                             {isUnread && (
-                                                                <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary bg-opacity-10 text-primary">
+                                                                <span className="ml-2 inline-flex items-center rounded bg-primary bg-opacity-10 px-2 py-0.5 text-xs font-medium text-primary">
                                                                     New
                                                                 </span>
                                                             )}
                                                         </h6>
-                                                        <p className="text-gray-600 text-sm mb-1">
+                                                        <p className="mb-1 text-sm text-gray-600">
                                                             {notification.data.message}
                                                         </p>
-                                                        <p className="text-gray-400 text-xs">
+                                                        <p className="text-xs text-gray-400">
                                                             {formatDuration(notification.created_at)}
                                                         </p>
                                                     </div>
@@ -105,11 +111,11 @@ export default function Notifications({ auth }) {
                             </div>
                         ))
                 ) : (
-                    <div className="text-center py-12">
-                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
+                    <div className="py-12 text-center">
+                        <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
                             <i className="ri-notification-off-line text-2xl text-gray-400"></i>
                         </div>
-                        <h3 className="text-lg font-medium text-gray-900 mb-2">No notifications yet</h3>
+                        <h3 className="mb-2 text-lg font-medium text-gray-900">No notifications yet</h3>
                         <p className="text-gray-500">When you get notifications, they'll show up here</p>
                     </div>
                 )}

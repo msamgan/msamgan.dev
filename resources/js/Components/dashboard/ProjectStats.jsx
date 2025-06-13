@@ -9,23 +9,17 @@ const ProjectStats = ({ projects }) => {
             {projects && (
                 <div className="mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
                     <StatsCard
-                        icon={
-                            <i className="ri-shopping-cart-line text-gray-100 text-4xl"></i>
-                        }
+                        icon={<i className="ri-shopping-cart-line text-4xl text-gray-100"></i>}
                         title="Leads"
                         value={projects.lead ? projects.lead.length : 0}
                     />
                     <StatsCard
-                        icon={
-                            <i className="ri-emotion-happy-line text-gray-100 text-4xl"></i>
-                        }
+                        icon={<i className="ri-emotion-happy-line text-4xl text-gray-100"></i>}
                         title="Active"
                         value={projects.active ? projects.active.length : 0}
                     />
                     <StatsCard
-                        icon={
-                            <i className="ri-check-double-line text-gray-100 text-4xl"></i>
-                        }
+                        icon={<i className="ri-check-double-line text-4xl text-gray-100"></i>}
                         title="Complete"
                         value={projects.completed ? projects.completed.length : 0}
                     />

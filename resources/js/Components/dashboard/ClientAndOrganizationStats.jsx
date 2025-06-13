@@ -8,16 +8,12 @@ const ClientAndOrganizationStats = ({ client, organization }) => {
             </header>
             <div className="mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
                 <StatsCard
-                    icon={
-                        <i className="ri-user-line text-gray-100 text-4xl"></i>
-                    }
+                    icon={<i className="ri-user-line text-4xl text-gray-100"></i>}
                     title="Clients"
                     value={client}
                 />
                 <StatsCard
-                    icon={
-                        <i className="ri-building-line text-gray-100 text-4xl"></i>
-                    }
+                    icon={<i className="ri-building-line text-4xl text-gray-100"></i>}
                     title="Organizations"
                     value={organization}
                 />

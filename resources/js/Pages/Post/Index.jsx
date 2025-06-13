@@ -1,16 +1,13 @@
 import Master from '@/Layouts/Master.jsx'
-import { Head } from '@inertiajs/react'
+import { Head, Link } from '@inertiajs/react'
 import { formatDate, hasPermission, makeGetCall, ucfisrt } from '@/Utils/methods.js'
 import { permissions } from '@/Utils/permissions/index.js'
 import { useEffect, useState } from 'react'
 import Actions from '@/Components/helpers/Actions.jsx'
 import Name from '@/Components/helpers/Name.jsx'
-import OffCanvasButton from '@/Components/off_canvas/OffCanvasButton.jsx'
 import Table from '@/Components/layout/Table.jsx'
-import { columns, pageObject } from '@/Pages/Post/helper.js'
+import { columns } from '@/Pages/Post/helper.js'
 import PageHeader from '@/Components/PageHeader.jsx'
-import OffCanvas from '@/Components/off_canvas/OffCanvas.jsx'
-import Form from '@/Pages/Post/Partials/Form.jsx'
 import DeleteEntityForm from '@/Components/layout/DeleteEntityForm.jsx'
 import { services } from '@/Utils/services/index.js'
 import Badge from '@/Components/helpers/Badge.jsx'
@@ -26,19 +23,12 @@ export default function Index({ auth }) {
 
     const [posts, setPosts] = useState([])
     const [data, setData] = useState([])
-    const [post, setPost] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [pageData, setPageData] = useState(pageObject(null))
-    const [isOffCanvasOpen, setIsOffCanvasOpen] = useState(false)
     const [params, setParams] = useState({})
     const [showFilters, setShowFilters] = useState(false)
 
     const getPosts = (filters = {}) => {
         makeGetCall(services.post.list(filters), setPosts, setLoading)
-    }
-
-    const getPost = (id) => {
-        makeGetCall(services.post.show(id), setPost, setLoading)
     }
 
     const CreateTitleAttribute = ({ title, tags, featured_image, status, published_at }) => {
@@ -92,20 +82,15 @@ export default function Index({ auth }) {
                 <Actions
                     edit={
                         hasUpdatePermission ? (
-                            <OffCanvasButton
-                                onClick={() => {
-                                    getPost(post.id)
-                                    setPageData(pageObject(post))
-                                    setIsOffCanvasOpen(true)
-                                }}
+                            <Link
+                                href={services.post.edit(post.id)}
                                 className={
                                     'hover:bg-gray-50 focus:bg-gray-50 ml-4 flex w-full items-center px-4 py-2 text-sm text-gray-600 transition-colors duration-200 hover:text-primary focus:text-primary focus:outline-none'
                                 }
-                                id="postFormCanvas"
                             >
                                 <i className="ri-edit-line mr-2 text-sm text-primary"></i>
                                 Edit
-                            </OffCanvasButton>
+                            </Link>
                         ) : null
                     }
                     deleteAction={
@@ -159,35 +144,19 @@ export default function Index({ auth }) {
                     action={
                         hasCreatePermission && (
                             <div className={'flex gap-2'}>
-                                <OffCanvasButton
-                                    onClick={() => {
-                                        setPost(null)
-                                        setPageData(pageObject(null))
-                                        setIsOffCanvasOpen(true)
-                                    }}
-                                    id="postFormCanvas"
+                                <Link
+                                    href={services.post.create}
                                     className="border-transparent inline-flex items-center rounded-md border bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                                 >
                                     <i className="ri-add-line mr-2 text-sm"></i>
                                     Create Post
-                                </OffCanvasButton>
+                                </Link>
                                 <ToggleFilterButton showFilters={showFilters} setShowFilters={setShowFilters} />
                             </div>
                         )
                     }
                 ></PageHeader>
             </div>
-
-            {hasCreatePermission && (
-                <OffCanvas
-                    id="postFormCanvas"
-                    title={pageData.title}
-                    isOpen={isOffCanvasOpen}
-                    onClose={() => setIsOffCanvasOpen(false)}
-                >
-                    <Form getPosts={getPosts} postData={post} onSuccess={() => setIsOffCanvasOpen(false)} />
-                </OffCanvas>
-            )}
 
             <div className="container mx-auto px-4 py-6">
                 <div className="mt-8 overflow-hidden rounded-lg bg-white shadow-sm">

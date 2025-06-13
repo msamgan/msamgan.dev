@@ -117,7 +117,9 @@ function SidebarDependentMenu({ menuItems, itemKey, index }) {
                         {itemKey}
                     </div>
                 </div>
-                <i className={`ri-arrow-down-s-line text-sm transform transition-transform duration-200 ${isSubmenuOpen ? 'rotate-180' : ''}`}></i>
+                <i
+                    className={`ri-arrow-down-s-line transform text-sm transition-transform duration-200 ${isSubmenuOpen ? 'rotate-180' : ''}`}
+                ></i>
             </button>
             <ul className={`bg-gray-50 space-y-1 pl-10 ${isSubmenuOpen ? 'block' : 'hidden'}`}>
                 {menuItems[itemKey].map((item, index) => (

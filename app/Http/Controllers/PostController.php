@@ -28,6 +28,11 @@ class PostController extends Controller
         return Inertia::render('Post/Index');
     }
 
+    public function create(): Response
+    {
+        return Inertia::render('Post/Create');
+    }
+
     /**
      * @throws Exception
      */
@@ -53,6 +58,16 @@ class PostController extends Controller
         $post->load('tags');
 
         return $post;
+    }
+
+    public function edit(Post $post): Response
+    {
+        $post->content = json_decode($post->content_raw);
+        $post->load('tags');
+
+        return Inertia::render('Post/Edit', [
+            'post' => $post,
+        ]);
     }
 
     public function update(UpdatePostRequest $request, Post $post, UpdatePost $updatePost, NotifyUser $notifyUser): void

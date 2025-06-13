@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.ce-toolbar__plus {
+    margin-right: 0.2rem;
+}
+
+.ce-toolbar__settings-btn {
+    margin-right: 4rem;
+}
+
 /* FilePond custom styles */
 .filepond-wrapper {
     background-color: #f9fafb;

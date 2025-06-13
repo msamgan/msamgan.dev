@@ -9,7 +9,7 @@ import { services } from '@/Utils/services/index.js'
 import { makeGetCall, objectIsEmpty } from '@/Utils/methods.js'
 import { initEditor } from '@/Pages/Post/Partials/editor.js'
 
-export default function Form({ getPosts, postData = null, onSuccess }) {
+export default function Form({ postData = null }) {
     const [action, setAction] = useState(routes.post.store)
     const { data, setData, post, errors, processing, recentlySuccessful, reset } = useForm(dataObject(null))
     const [content, setContent] = useState({})
@@ -45,14 +45,8 @@ export default function Form({ getPosts, postData = null, onSuccess }) {
                     axios.get(services.post.last).then((response) => {
                         setData(dataObject(response.data))
                         setAction(routes.post.update(response.data.id))
+                        window.location.href = services.post.edit(response.data.id)
                     })
-                }
-
-                getPosts()
-
-                // Call onSuccess callback if provided
-                if (typeof onSuccess === 'function') {
-                    onSuccess()
                 }
             },
             onError: () => {},

@@ -8,16 +8,12 @@ const PostStats = ({ publishedPosts, draftPosts }) => {
             </header>
             <div className="mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
                 <StatsCard
-                    icon={
-                        <i className="ri-article-line text-gray-100 text-4xl"></i>
-                    }
+                    icon={<i className="ri-article-line text-4xl text-gray-100"></i>}
                     title="Published"
                     value={publishedPosts}
                 />
                 <StatsCard
-                    icon={
-                        <i className="ri-draft-line text-gray-100 text-4xl"></i>
-                    }
+                    icon={<i className="ri-draft-line text-4xl text-gray-100"></i>}
                     title="Draft"
                     value={draftPosts}
                 />
