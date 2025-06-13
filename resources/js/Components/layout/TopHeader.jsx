@@ -4,7 +4,7 @@ import TopHeaderRight from '@/Components/layout/TopHeaderRight.jsx'
 
 export default function TopHeader({ user, toggleMenu }) {
     return (
-        <nav className="fixed top-0 z-40 flex w-full items-center bg-white py-2 shadow-md" id="layout-navbar">
+        <nav className="fixed top-0 z-40 flex w-full items-center bg-white py-2 shadow-md lg:ml-64 lg:w-[calc(100%-16rem)]" id="layout-navbar">
             <div className="container mx-auto flex items-center justify-between px-4">
                 <div className="flex items-center">
                     {/* Mobile menu button */}
