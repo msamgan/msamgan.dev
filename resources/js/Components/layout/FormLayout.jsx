@@ -4,7 +4,7 @@ export default function FormLayout({ children, submit, processing, recentlySucce
     return (
         <form onSubmit={submit} className="space-y-8">
             <div className={w}>
-                <div className="rounded-lg border border-gray-200 bg-white shadow-sm">
+                <div className="bg-white">
                     <div className="grid grid-cols-1 gap-6">{children}</div>
                 </div>
             </div>

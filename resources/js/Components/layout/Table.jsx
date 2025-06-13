@@ -5,8 +5,7 @@ const TableContainer = ({ columns, data, tdClassName }) => {
     return (
         <div className="mt-4">
             <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
-                <div className="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4">
-                    <h3 className="text-lg font-medium text-gray-800">Data Table</h3>
+                <div className="flex items-center justify-end border-b border-gray-200 bg-white px-6 py-4">
                     <div className="flex items-center">
                         <span className="text-sm font-medium text-gray-600">Total Records:</span>
                         <span className="ml-2 rounded-full bg-primary px-3 py-1 text-xs font-medium text-white">
