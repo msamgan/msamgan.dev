@@ -5,7 +5,7 @@ export default function FormLayout({ children, submit, processing, recentlySucce
     return (
         <form onSubmit={submit} className="space-y-8">
             <div className={w}>
-                <div className="bg-white">
+                <div className="rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-200">
                     <div className="grid grid-cols-1 gap-6">{children}</div>
                 </div>
             </div>
@@ -26,7 +26,7 @@ export default function FormLayout({ children, submit, processing, recentlySucce
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <p className="flex items-center text-sm font-medium text-green-600">
+                    <p className="flex items-center rounded-md bg-green-50 px-3 py-1.5 text-sm font-medium text-green-600">
                         <svg
                             className="mr-1.5 h-4 w-4"
                             fill="none"

@@ -2,7 +2,7 @@ export default function InputLabel({ value, className = '', children, required =
     return (
         <label
             {...props}
-            className={`text-sm font-medium text-gray-700 transition-colors duration-200 group-hover:text-gray-800 ${className}`}
+            className={`mb-1.5 block text-sm font-medium text-gray-700 transition-colors duration-200 group-hover:text-gray-800 ${className}`}
         >
             {value ? value : children} {required && <span className="text-red-500">*</span>}
         </label>

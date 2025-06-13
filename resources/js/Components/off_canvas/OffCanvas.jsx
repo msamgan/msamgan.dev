@@ -38,20 +38,20 @@ export default function OffCanvas({ id, title, w = 'w-full sm:w-1/2', children, 
             ></div>
 
             {/* Panel */}
-            <div className={`${w} fixed inset-y-0 right-0 flex max-w-full bg-white pl-0 sm:pl-4 md:pl-10`}>
+            <div className={`${w} fixed inset-y-0 right-0 flex max-w-full pl-0 sm:pl-4 md:pl-10`}>
                 <div
                     className={`w-full transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
                     id={id}
                 >
-                    <div className="bg-gray-50 flex h-full flex-col overflow-y-auto rounded-lg shadow-md">
+                    <div className="flex h-full flex-col overflow-y-auto rounded-l-xl bg-white shadow-xl ring-1 ring-gray-200">
                         {/* Header */}
-                        <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
-                            <h5 id={id + 'Label'} className="text-xl font-semibold text-gray-800">
+                        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4">
+                            <h5 id={id + 'Label'} className="text-lg font-medium text-gray-800">
                                 {title}
                             </h5>
                             <button
                                 type="button"
-                                className="rounded-full p-2 text-gray-400 transition-colors duration-200 hover:bg-gray-100 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                                className="rounded-full p-2 text-gray-500 transition-all duration-200 hover:bg-gray-100 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-1"
                                 onClick={onClose}
                                 aria-label="Close"
                             >
@@ -75,7 +75,7 @@ export default function OffCanvas({ id, title, w = 'w-full sm:w-1/2', children, 
                         </div>
 
                         {/* Body */}
-                        <div className={`flex-1 space-y-4 overflow-y-auto p-6 ${childrenClass}`}>{children}</div>
+                        <div className={`flex-1 overflow-y-auto p-6 ${childrenClass}`}>{children}</div>
                     </div>
                 </div>
             </div>

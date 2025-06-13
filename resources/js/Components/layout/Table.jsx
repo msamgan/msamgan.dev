@@ -4,59 +4,62 @@ import DisplayMessage from '@/Components/DisplayMessage.jsx'
 const TableContainer = ({ columns, data, tdClassName }) => {
     return (
         <div className="mt-4">
-            <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
-                <div className="flex items-center justify-end border-b border-gray-200 bg-white px-6 py-4">
+            <div className="overflow-hidden rounded-lg border border-gray-200 shadow-sm ring-1 ring-black ring-opacity-5">
+                <div className="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-3">
+                    <h3 className="text-base font-medium text-gray-700">Data Table</h3>
                     <div className="flex items-center">
                         <span className="text-sm font-medium text-gray-600">Total Records:</span>
-                        <span className="ml-2 rounded-full bg-primary px-3 py-1 text-xs font-medium text-white">
+                        <span className="ml-2 rounded-full bg-primary/90 px-3 py-1 text-xs font-medium text-white shadow-sm">
                             {data.length}
                         </span>
                     </div>
                 </div>
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                        <tr>
-                            {columns.map((column, index) => {
-                                const isActionColumn = column === 'Actions'
-                                return (
-                                    <th
-                                        key={index}
-                                        className={`px-6 py-3 text-xs font-medium uppercase tracking-wider text-gray-600 ${isActionColumn ? 'text-right' : 'text-left'}`}
-                                        scope="col"
-                                    >
-                                        {column}
-                                    </th>
-                                )
-                            })}
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200 bg-white">
-                        {data.map((row, index) => (
-                            <tr
-                                key={index}
-                                className={`${index % 2 === 1 ? 'bg-gray-50' : 'bg-white'} transition-colors duration-150 hover:bg-gray-100`}
-                            >
-                                {Object.values(row).map((cell, cellIndex) => {
-                                    const isActionColumn = columns[cellIndex] === 'Actions'
+                <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                {columns.map((column, index) => {
+                                    const isActionColumn = column === 'Actions'
                                     return (
-                                        <td
-                                            key={cellIndex}
-                                            className={`whitespace-nowrap px-6 py-4 text-sm ${
-                                                isActionColumn
-                                                    ? 'w-24 text-right'
-                                                    : tdClassName.filter(
-                                                          (item) => item.column === columns[cellIndex],
-                                                      )[0]?.className || 'text-gray-700'
-                                            }`}
+                                        <th
+                                            key={index}
+                                            className={`whitespace-nowrap px-6 py-3.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 ${isActionColumn ? 'text-right' : ''}`}
+                                            scope="col"
                                         >
-                                            {cell}
-                                        </td>
+                                            {column}
+                                        </th>
                                     )
                                 })}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 bg-white">
+                            {data.map((row, index) => (
+                                <tr
+                                    key={index}
+                                    className="transition-colors duration-200 hover:bg-gray-50"
+                                >
+                                    {Object.values(row).map((cell, cellIndex) => {
+                                        const isActionColumn = columns[cellIndex] === 'Actions'
+                                        return (
+                                            <td
+                                                key={cellIndex}
+                                                className={`whitespace-nowrap px-6 py-4 text-sm ${
+                                                    isActionColumn
+                                                        ? 'w-24 text-right'
+                                                        : tdClassName.filter(
+                                                              (item) => item.column === columns[cellIndex],
+                                                          )[0]?.className || 'text-gray-700'
+                                                }`}
+                                            >
+                                                {cell}
+                                            </td>
+                                        )
+                                    })}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )
