@@ -61,20 +61,7 @@ export default function Fields({ data, setData, errors, projects, getProjects, d
                             href={route('project.index')}
                             className="mt-1 flex items-center text-gray-700 underline transition-colors duration-200 hover:text-black focus:outline-none sm:mt-0"
                         >
-                            <svg
-                                className="mr-1.5 h-4 w-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                                ></path>
-                            </svg>
+                            <i className="ri-add-line mr-2 text-sm text-gray-600"></i>
                             Add Project
                         </a>
                     </div>
