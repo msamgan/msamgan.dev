@@ -45,7 +45,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </p>
             </div>
 
-            <form onSubmit={updatePassword} className="p-6 space-y-6">
+            <form onSubmit={updatePassword} className="space-y-6 p-6">
                 <div className="w-full">
                     <div className="group relative">
                         <InputLabel htmlFor="current_password" required={true} className="mb-2">

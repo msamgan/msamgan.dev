@@ -28,17 +28,15 @@ export default function GeneralInfo({ business }) {
     }
 
     return (
-        <form onSubmit={submit} className="p-6 space-y-8">
+        <form onSubmit={submit} className="space-y-8 p-6">
             {/* General Information Section */}
             <div className="space-y-6">
                 <div>
                     <h3 className="text-base font-medium text-gray-900">General Information</h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                        Basic information about your business.
-                    </p>
+                    <p className="mt-1 text-sm text-gray-500">Basic information about your business.</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div className="w-full">
                         <div className="group relative">
                             <InputLabel htmlFor="business-name" required={true} className="mb-2">
@@ -173,7 +171,7 @@ export default function GeneralInfo({ business }) {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div className="group relative">
                             <InputLabel htmlFor="unitSystemDropdown" required={true} className="mb-2">
                                 Unit System
@@ -221,9 +219,7 @@ export default function GeneralInfo({ business }) {
             <div className="space-y-6">
                 <div>
                     <h3 className="text-base font-medium text-gray-900">Store Currency</h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                        The currency your products are sold in.
-                    </p>
+                    <p className="mt-1 text-sm text-gray-500">The currency your products are sold in.</p>
                 </div>
 
                 <div className="w-full max-w-md">
@@ -251,9 +247,7 @@ export default function GeneralInfo({ business }) {
             <div className="border-t border-gray-200 pt-6"></div>
 
             <div className="flex items-center justify-end gap-4">
-                <PrimaryButton disabled={processing}>
-                    Save Changes
-                </PrimaryButton>
+                <PrimaryButton disabled={processing}>Save Changes</PrimaryButton>
                 <Transition
                     show={recentlySuccessful}
                     enter="transition ease-in-out"
